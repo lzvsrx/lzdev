@@ -7,18 +7,39 @@
 body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   line-height: 1.6;
-  color: #333;
-  background-color: #f5f5f5;
+  color: #e0e0e0;
+  background: linear-gradient(135deg, #0a0e27 0%, #1a1f3a 50%, #0a0e27 100%);
+  position: relative;
+  overflow-x: hidden;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: 
+    radial-gradient(circle at 20% 50%, rgba(102, 126, 234, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 80% 80%, rgba(118, 75, 162, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 40% 20%, rgba(102, 126, 234, 0.05) 0%, transparent 50%);
+  pointer-events: none;
+  z-index: 1;
 }
 
 .App {
   min-height: 100vh;
+  position: relative;
+  z-index: 2;
 }
 
 .container {
   max-width: 1200px;
   margin: 0 auto;
   padding: 0 20px;
+  position: relative;
+  z-index: 2;
 }
 
 /* Header */
@@ -27,9 +48,21 @@ body {
   color: white;
   padding: 100px 0 80px;
   text-align: center;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
   position: relative;
   overflow: hidden;
+  border-bottom: 2px solid #667eea;
+}
+
+.header::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #764ba2, transparent);
+  box-shadow: 0 0 20px rgba(102, 126, 234, 0.8);
 }
 
 .header::before {
@@ -68,7 +101,11 @@ body {
   font-size: 3rem;
   font-weight: 700;
   margin-bottom: 10px;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+  text-shadow: 0 0 20px rgba(102, 126, 234, 0.8), 0 0 40px rgba(102, 126, 234, 0.5);
+  background: linear-gradient(135deg, #ffffff 0%, #e0e0ff 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
 .title {
@@ -183,12 +220,13 @@ section h2 {
   font-size: 2.8rem;
   text-align: center;
   margin-bottom: 60px;
-  color: #2c3e50;
+  color: #e0e0ff;
   position: relative;
   padding-bottom: 20px;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 2px;
+  text-shadow: 0 0 20px rgba(102, 126, 234, 0.6);
 }
 
 section h2::after {
@@ -218,7 +256,11 @@ section h2::before {
 
 /* About Section */
 .about-section {
-  background: white;
+  background: rgba(26, 31, 58, 0.6);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  border-top: 1px solid rgba(102, 126, 234, 0.3);
+  border-bottom: 1px solid rgba(102, 126, 234, 0.3);
 }
 
 .about-section p {
@@ -227,13 +269,15 @@ section h2::before {
   text-align: center;
   max-width: 800px;
   margin: 0 auto;
-  color: #555;
+  color: #e0e0e0;
 }
 
 /* Languages Section */
 .languages-section {
-  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  background: rgba(26, 31, 58, 0.4);
   position: relative;
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
 }
 
 .languages-section::before {
@@ -257,14 +301,15 @@ section h2::before {
 }
 
 .skill-item {
-  background: white;
+  background: rgba(26, 31, 58, 0.8);
   padding: 25px;
   border-radius: 15px;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
   transition: all 0.3s ease;
   border-left: 4px solid #667eea;
   position: relative;
   overflow: hidden;
+  border: 1px solid rgba(102, 126, 234, 0.3);
 }
 
 .skill-item::before {
@@ -299,7 +344,7 @@ section h2::before {
 .skill-name {
   font-weight: 600;
   font-size: 1.1rem;
-  color: #2c3e50;
+  color: #e0e0ff;
 }
 
 .skill-percentage {
@@ -311,9 +356,10 @@ section h2::before {
 .skill-bar {
   width: 100%;
   height: 12px;
-  background: #e0e0e0;
+  background: rgba(102, 126, 234, 0.2);
   border-radius: 10px;
   overflow: hidden;
+  border: 1px solid rgba(102, 126, 234, 0.3);
 }
 
 .skill-progress {
@@ -325,8 +371,12 @@ section h2::before {
 
 /* Databases Section */
 .databases-section {
-  background: white;
+  background: rgba(26, 31, 58, 0.6);
   position: relative;
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  border-top: 1px solid rgba(102, 126, 234, 0.3);
+  border-bottom: 1px solid rgba(102, 126, 234, 0.3);
 }
 
 .databases-section::before {
@@ -391,8 +441,10 @@ section h2::before {
 
 /* Services Section */
 .services-section {
-  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  background: rgba(26, 31, 58, 0.4);
   position: relative;
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
 }
 
 .services-section::before {
@@ -416,15 +468,16 @@ section h2::before {
 }
 
 .service-card {
-  background: white;
+  background: rgba(26, 31, 58, 0.8);
   padding: 35px;
   border-radius: 15px;
   text-align: center;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
   transition: all 0.3s ease;
   position: relative;
   overflow: hidden;
   border-top: 4px solid #667eea;
+  border: 1px solid rgba(102, 126, 234, 0.3);
 }
 
 .service-card::before {
@@ -466,19 +519,24 @@ section h2::before {
 
 .service-card h3 {
   font-size: 1.5rem;
-  color: #2c3e50;
+  color: #e0e0ff;
   margin-bottom: 15px;
+  text-shadow: 0 0 10px rgba(102, 126, 234, 0.5);
 }
 
 .service-card p {
-  color: #666;
+  color: #b0b0d0;
   line-height: 1.6;
 }
 
 /* Projects Section */
 .projects-section {
-  background: white;
+  background: rgba(26, 31, 58, 0.6);
   position: relative;
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  border-top: 1px solid rgba(102, 126, 234, 0.3);
+  border-bottom: 1px solid rgba(102, 126, 234, 0.3);
 }
 
 .projects-section::before {
@@ -500,15 +558,16 @@ section h2::before {
 }
 
 .project-card-item {
-  background: white;
+  background: rgba(26, 31, 58, 0.8);
   padding: 35px;
   border-radius: 15px;
   text-align: center;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
   transition: all 0.3s ease;
   border-top: 4px solid #667eea;
   position: relative;
   overflow: hidden;
+  border: 1px solid rgba(102, 126, 234, 0.3);
 }
 
 .project-card-item::before {
@@ -545,13 +604,14 @@ section h2::before {
 
 .project-card-item h3 {
   font-size: 1.5rem;
-  color: #2c3e50;
+  color: #e0e0ff;
   margin-bottom: 15px;
   font-weight: 600;
+  text-shadow: 0 0 10px rgba(102, 126, 234, 0.5);
 }
 
 .project-card-item p {
-  color: #666;
+  color: #b0b0d0;
   line-height: 1.6;
   margin-bottom: 20px;
   font-size: 0.95rem;
@@ -608,9 +668,11 @@ section h2::before {
 
 /* Showcase Section */
 .showcase-section {
-  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  background: rgba(26, 31, 58, 0.4);
   padding: 100px 0;
   position: relative;
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
 }
 
 .showcase-section::before {
@@ -636,10 +698,11 @@ section h2::before {
   gap: 40px;
   align-items: center;
   margin-bottom: 60px;
-  background: white;
+  background: rgba(26, 31, 58, 0.8);
   padding: 40px;
   border-radius: 20px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+  border: 1px solid rgba(102, 126, 234, 0.3);
 }
 
 .showcase-image {
@@ -656,9 +719,10 @@ section h2::before {
 
 .showcase-info h3 {
   font-size: 2.2rem;
-  color: #2c3e50;
+  color: #e0e0ff;
   margin-bottom: 10px;
   font-weight: 700;
+  text-shadow: 0 0 20px rgba(102, 126, 234, 0.6);
 }
 
 .showcase-subtitle {
@@ -666,12 +730,13 @@ section h2::before {
   color: #667eea;
   font-weight: 600;
   margin-bottom: 20px;
+  text-shadow: 0 0 10px rgba(102, 126, 234, 0.5);
 }
 
 .showcase-description {
   font-size: 1.1rem;
   line-height: 1.8;
-  color: #555;
+  color: #d0d0e0;
   margin-bottom: 25px;
 }
 
@@ -706,11 +771,12 @@ section h2::before {
 }
 
 .gallery-item {
-  background: white;
+  background: rgba(26, 31, 58, 0.8);
   border-radius: 15px;
   overflow: hidden;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
   transition: all 0.3s ease;
+  border: 1px solid rgba(102, 126, 234, 0.3);
 }
 
 .gallery-item:hover {
@@ -731,13 +797,14 @@ section h2::before {
 
 .gallery-caption h4 {
   font-size: 1.3rem;
-  color: #2c3e50;
+  color: #e0e0ff;
   margin-bottom: 10px;
   font-weight: 600;
+  text-shadow: 0 0 10px rgba(102, 126, 234, 0.5);
 }
 
 .gallery-caption p {
-  color: #666;
+  color: #b0b0d0;
   line-height: 1.6;
   font-size: 0.95rem;
 }
@@ -749,14 +816,15 @@ section h2::before {
 }
 
 .detail-card {
-  background: white;
+  background: rgba(26, 31, 58, 0.8);
   padding: 30px;
   border-radius: 15px;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
   transition: all 0.3s ease;
   border-left: 4px solid #667eea;
   position: relative;
   overflow: hidden;
+  border: 1px solid rgba(102, 126, 234, 0.3);
 }
 
 .detail-card::before {
@@ -789,23 +857,26 @@ section h2::before {
 
 .detail-card h4 {
   font-size: 1.3rem;
-  color: #2c3e50;
+  color: #e0e0ff;
   margin-bottom: 10px;
   font-weight: 600;
+  text-shadow: 0 0 10px rgba(102, 126, 234, 0.5);
 }
 
 .detail-card p {
-  color: #666;
+  color: #b0b0d0;
   line-height: 1.6;
   font-size: 0.95rem;
 }
 
 /* Footer */
 .footer {
-  background: #2c3e50;
-  color: white;
+  background: linear-gradient(135deg, #0a0e27 0%, #1a1f3a 100%);
+  color: #e0e0e0;
   padding: 30px 0;
   text-align: center;
+  border-top: 2px solid #667eea;
+  box-shadow: 0 -5px 20px rgba(102, 126, 234, 0.4);
 }
 
 .footer p {
