@@ -7,6 +7,7 @@ import {
   Boxes,
   BriefcaseBusiness,
   CalendarClock,
+  CheckCircle2,
   Camera,
   Code2,
   Cpu,
@@ -30,8 +31,12 @@ import {
   Search,
   Server,
   ShieldCheck,
+  Sparkles,
   Smartphone,
   Star,
+  Target,
+  Trophy,
+  TrendingUp,
   Upload,
   Users,
   Wrench,
@@ -172,6 +177,71 @@ const showcaseDetails = [
   },
 ];
 
+const featuredProjectNames = [
+  'lzdev',
+  'lojacoresefragranciasbyberenice',
+  'jogosunity',
+  'Crystal-assistant',
+];
+
+const projectCaseStudies = [
+  {
+    Icon: Trophy,
+    title: 'Portfolio lzvsrxdevs',
+    repoName: 'lzdev',
+    problem: 'Reunir certificados, contatos e repositorios em uma experiencia unica e facil de avaliar.',
+    solution: 'Interface em React com busca de certificados, lista completa do GitHub e links de contato diretos.',
+    impact: 'Mostra presenca profissional, organizacao tecnica e velocidade para publicar melhorias.',
+  },
+  {
+    Icon: BarChart3,
+    title: 'Cores & Fragrancias by Berenice',
+    repoName: 'lojacoresefragranciasbyberenice',
+    problem: 'Controlar produtos, vendas, usuarios, estoque e relatorios sem depender de planilhas soltas.',
+    solution: 'Sistema com dashboard, cadastros, perfis de acesso, exportacao e relatorios financeiros.',
+    impact: 'Transforma uma rotina operacional em um fluxo rastreavel e mais profissional.',
+  },
+  {
+    Icon: Gamepad2,
+    title: 'Projetos de jogos e Unity',
+    repoName: 'jogosunity',
+    problem: 'Demonstrar logica, interatividade, fisica, cenas e experiencia em desenvolvimento de jogos.',
+    solution: 'Projetos com Unity, C#, mecanicas, audio, cena 3D e polimento visual.',
+    impact: 'Complementa o perfil full stack com raciocinio de produto, gameplay e sistemas interativos.',
+  },
+];
+
+const workflowSteps = [
+  {
+    Icon: Search,
+    title: 'Diagnostico',
+    text: 'Entendo o objetivo, publico, conteudo e restricoes antes de escrever codigo.',
+  },
+  {
+    Icon: Target,
+    title: 'Planejamento',
+    text: 'Transformo a necessidade em telas, dados, prioridades e um caminho de entrega claro.',
+  },
+  {
+    Icon: Code2,
+    title: 'Desenvolvimento',
+    text: 'Construo com componentes, responsividade, acessibilidade, versionamento e boas praticas.',
+  },
+  {
+    Icon: CheckCircle2,
+    title: 'Validacao',
+    text: 'Testo build, navegacao, seguranca, links e comportamento antes de publicar.',
+  },
+];
+
+const visibilityOptions = [
+  { value: 'all', label: 'Todos' },
+  { value: 'public', label: 'Publicos' },
+  { value: 'private', label: 'Privados' },
+] as const;
+
+type VisibilityFilter = (typeof visibilityOptions)[number]['value'];
+
 function ExternalIcon() {
   return <ExternalLink aria-hidden="true" className="icon" />;
 }
@@ -186,6 +256,8 @@ function IconBadge({ Icon }: { Icon: IconComponent }) {
 
 function App() {
   const [query, setQuery] = useState('');
+  const [projectQuery, setProjectQuery] = useState('');
+  const [visibilityFilter, setVisibilityFilter] = useState<VisibilityFilter>('all');
 
   const filteredCertificates = useMemo(() => {
     const normalizedQuery = query.trim().toLowerCase();
@@ -205,8 +277,58 @@ function App() {
     });
   }, [query]);
 
+  const portfolioStats = useMemo(() => {
+    const publicRepositories = githubRepositories.filter((project) => !project.private).length;
+    const privateRepositories = githubRepositories.length - publicRepositories;
+    const liveProjects = githubRepositories.filter((project) => Boolean(project.homepage)).length;
+    const technologies = new Set(githubRepositories.map((project) => project.language).filter(Boolean));
+
+    return [
+      { Icon: FolderGit2, value: githubRepositories.length, label: 'repositorios mapeados' },
+      { Icon: Globe, value: liveProjects, label: 'projetos com site publicado' },
+      { Icon: LockKeyhole, value: privateRepositories, label: 'repositorios privados listados' },
+      { Icon: Code2, value: technologies.size, label: 'tecnologias identificadas' },
+    ];
+  }, []);
+
+  const featuredProjects = useMemo(() => (
+    featuredProjectNames
+      .map((name) => githubRepositories.find((project) => project.name === name))
+      .filter((project): project is (typeof githubRepositories)[number] => Boolean(project))
+  ), []);
+
+  const filteredProjects = useMemo(() => {
+    const normalizedQuery = projectQuery.trim().toLowerCase();
+
+    return githubRepositories.filter((project) => {
+      const matchesVisibility =
+        visibilityFilter === 'all' ||
+        (visibilityFilter === 'public' && !project.private) ||
+        (visibilityFilter === 'private' && project.private);
+
+      if (!matchesVisibility) {
+        return false;
+      }
+
+      if (!normalizedQuery) {
+        return true;
+      }
+
+      const searchable = [
+        project.name,
+        project.description,
+        project.language,
+        project.homepage,
+        project.private ? 'privado' : 'publico',
+      ].filter(Boolean).join(' ').toLowerCase();
+
+      return searchable.includes(normalizedQuery);
+    });
+  }, [projectQuery, visibilityFilter]);
+
   return (
     <main className="site-shell">
+      <a className="skip-link" href="#conteudo">Pular para o conteudo</a>
       <nav className="topbar" aria-label="Navegacao principal">
         <a className="brand" href="#inicio"><Rocket aria-hidden="true" className="inline-icon" /> lzvsrxdevs</a>
         <div className="nav-links">
@@ -231,6 +353,18 @@ function App() {
             <a className="ghost-button" href="https://github.com/lzvsrx" target="_blank" rel="noopener noreferrer">
               <FolderGit2 aria-hidden="true" className="inline-icon" /> GitHub <ExternalIcon />
             </a>
+            <a className="ghost-button" href="https://wa.me/5535999215995" target="_blank" rel="noopener noreferrer">
+              <MessageCircle aria-hidden="true" className="inline-icon" /> WhatsApp <ExternalIcon />
+            </a>
+          </div>
+          <div className="hero-metrics" aria-label="Resumo do portfolio">
+            {portfolioStats.map((stat) => (
+              <article className="metric-card" key={stat.label}>
+                <stat.Icon aria-hidden="true" className="inline-icon" />
+                <strong>{stat.value}</strong>
+                <span>{stat.label}</span>
+              </article>
+            ))}
           </div>
           <div className="social-chip-row" aria-label="Links sociais">
             {socialLinks.map((link) => {
@@ -257,6 +391,7 @@ function App() {
       </section>
 
       <section className="section about-section" id="sobre">
+        <div id="conteudo" className="anchor-target" aria-hidden="true" />
         <div className="section-heading">
           <p className="eyebrow">Sobre Mim</p>
           <h2>Desenvolvimento web, apps e manutencao de computadores</h2>
@@ -265,6 +400,12 @@ function App() {
           Especializado em desenvolvimento web e manutencao de computadores, com atuacao em
           sites profissionais, sistemas personalizados, aplicativos mobile, automacoes e suporte tecnico.
         </p>
+        <div className="proof-strip" aria-label="Pontos fortes do portfolio">
+          <span><Sparkles aria-hidden="true" className="inline-icon" />Projetos reais e publicados</span>
+          <span><ShieldCheck aria-hidden="true" className="inline-icon" />Boas praticas de seguranca</span>
+          <span><Award aria-hidden="true" className="inline-icon" />Certificados verificaveis</span>
+          <span><TrendingUp aria-hidden="true" className="inline-icon" />Evolucao constante no GitHub</span>
+        </div>
       </section>
 
       <section className="section languages-section" id="habilidades">
@@ -327,8 +468,54 @@ function App() {
             incluindo publicos e privados.
           </p>
         </div>
+        <div className="featured-projects" aria-label="Projetos em destaque">
+          {featuredProjects.map((project) => (
+            <article className="featured-project-card" key={project.name}>
+              <IconBadge Icon={project.private ? LockKeyhole : Trophy} />
+              <div>
+                <p className="mini-label">Destaque</p>
+                <h3>{project.name}</h3>
+                <p>{project.description ?? `Projeto em ${project.language ?? 'desenvolvimento'} com foco pratico no portfolio.`}</p>
+              </div>
+              <div className="repo-actions">
+                <a href={project.url} target="_blank" rel="noopener noreferrer">
+                  <FolderGit2 aria-hidden="true" className="inline-icon" /> Codigo <ExternalIcon />
+                </a>
+                {project.homepage ? (
+                  <a href={project.homepage} target="_blank" rel="noopener noreferrer">
+                    <Globe aria-hidden="true" className="inline-icon" /> Demo <ExternalIcon />
+                  </a>
+                ) : null}
+              </div>
+            </article>
+          ))}
+        </div>
+        <div className="project-toolbar" aria-label="Filtros de repositorios">
+          <label htmlFor="project-search"><Search aria-hidden="true" className="inline-icon" />Buscar projeto</label>
+          <input
+            id="project-search"
+            type="search"
+            value={projectQuery}
+            onChange={(event) => setProjectQuery(event.target.value)}
+            placeholder="Nome, tecnologia, status ou link"
+          />
+          <div className="segmented-control" aria-label="Visibilidade dos repositorios">
+            {visibilityOptions.map((option) => (
+              <button
+                key={option.value}
+                type="button"
+                className={visibilityFilter === option.value ? 'active' : ''}
+                onClick={() => setVisibilityFilter(option.value)}
+                aria-pressed={visibilityFilter === option.value}
+              >
+                {option.label}
+              </button>
+            ))}
+          </div>
+          <span>{filteredProjects.length} de {githubRepositories.length}</span>
+        </div>
         <div className="projects-grid project-summary-grid">
-          {githubRepositories.map((project) => {
+          {filteredProjects.map((project) => {
             const updatedAt = new Intl.DateTimeFormat('pt-BR', {
               day: '2-digit',
               month: '2-digit',
@@ -364,10 +551,58 @@ function App() {
             );
           })}
         </div>
+        {filteredProjects.length === 0 ? (
+          <p className="empty-state">Nenhum projeto encontrado com esse filtro.</p>
+        ) : null}
         <div className="github-profile-link">
           <a href="https://github.com/lzvsrx" target="_blank" rel="noopener noreferrer" className="profile-link-btn">
             <FolderGit2 aria-hidden="true" className="inline-icon" /> Ver todos os repositorios no GitHub <ExternalIcon />
           </a>
+        </div>
+      </section>
+
+      <section className="section case-study-section">
+        <div className="section-heading">
+          <p className="eyebrow">Estudos de Caso</p>
+          <h2>Projetos explicados pelo problema, solucao e impacto</h2>
+        </div>
+        <div className="case-study-grid">
+          {projectCaseStudies.map((study) => {
+            const project = githubRepositories.find((item) => item.name === study.repoName);
+
+            return (
+              <article className="case-study-card" key={study.title}>
+                <IconBadge Icon={study.Icon} />
+                <h3>{study.title}</h3>
+                <dl>
+                  <div>
+                    <dt>Problema</dt>
+                    <dd>{study.problem}</dd>
+                  </div>
+                  <div>
+                    <dt>Solucao</dt>
+                    <dd>{study.solution}</dd>
+                  </div>
+                  <div>
+                    <dt>Impacto</dt>
+                    <dd>{study.impact}</dd>
+                  </div>
+                </dl>
+                {project ? (
+                  <div className="repo-actions">
+                    <a href={project.url} target="_blank" rel="noopener noreferrer">
+                      <FolderGit2 aria-hidden="true" className="inline-icon" /> Repositorio <ExternalIcon />
+                    </a>
+                    {project.homepage ? (
+                      <a href={project.homepage} target="_blank" rel="noopener noreferrer">
+                        <Globe aria-hidden="true" className="inline-icon" /> Demo <ExternalIcon />
+                      </a>
+                    ) : null}
+                  </div>
+                ) : null}
+              </article>
+            );
+          })}
         </div>
       </section>
 
@@ -410,6 +645,23 @@ function App() {
               <IconBadge Icon={detail.Icon} />
               <h3>{detail.title}</h3>
               <p>{detail.text}</p>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section className="section workflow-section">
+        <div className="section-heading">
+          <p className="eyebrow">Como Trabalho</p>
+          <h2>Processo claro para entregar projetos funcionais</h2>
+        </div>
+        <div className="workflow-grid">
+          {workflowSteps.map((step, index) => (
+            <article className="workflow-card" key={step.title}>
+              <span className="workflow-number">{String(index + 1).padStart(2, '0')}</span>
+              <IconBadge Icon={step.Icon} />
+              <h3>{step.title}</h3>
+              <p>{step.text}</p>
             </article>
           ))}
         </div>

@@ -17,15 +17,20 @@ Este repositorio foi reconstruido com base no projeto original `luizotaviodevs`,
 
 - Pagina unica responsiva para desktop e mobile.
 - Navegacao por ancoras: Sobre, Habilidades, Projetos, Certificados e Contato.
-- Hero com foto de perfil, links sociais e total de certificados publicados.
+- Hero com foto de perfil, links sociais, chamada para WhatsApp e metricas rapidas.
 - Linguagens de programacao com barras de progresso.
 - Lista de bancos de dados usados.
 - Servicos de informatica e desenvolvimento.
-- Grade de projetos GitHub.
+- Projetos em destaque com links para codigo e demos.
 - Secao de projetos com todos os repositorios publicos e privados do GitHub.
+- Busca e filtro por visibilidade na lista de repositorios.
+- Estudos de caso com problema, solucao e impacto.
+- Secao de processo de trabalho: diagnostico, planejamento, desenvolvimento e validacao.
 - Showcase completo do projeto Cores & Fragrancias by Berenice.
 - Busca de certificados por titulo, codigo, tipo ou nome do arquivo.
 - Links diretos para abrir certificados em PDF ou imagem.
+- SEO com canonical, metatags Open Graph/Twitter, `robots.txt` e `sitemap.xml`.
+- Acessibilidade com skip link, foco visivel e suporte a reducao de movimento.
 - Build otimizado para producao em `dist`.
 
 ## Tecnologias
@@ -60,6 +65,7 @@ Este repositorio foi reconstruido com base no projeto original `luizotaviodevs`,
 |   |-- logo512.png
 |   |-- manifest.json
 |   |-- profile.jpg
+|   |-- sitemap.xml
 |   `-- robots.txt
 `-- src/
     |-- App.css
@@ -195,6 +201,9 @@ Medidas aplicadas:
 - links externos com `rel="noopener noreferrer"`;
 - `Content-Security-Policy` basica no `index.html`;
 - `object-src 'none'` para reduzir superficie de plugins e embeds;
+- metadados SEO sem scripts inline para preservar a CSP;
+- `robots.txt` com sitemap publico;
+- foco visivel e skip link para melhorar acessibilidade por teclado;
 - build com typecheck obrigatorio;
 - `dist/` ignorado pelo Git;
 - dependencias antigas removidas: `react-scripts`, `web-vitals` e tipos do CRA.
