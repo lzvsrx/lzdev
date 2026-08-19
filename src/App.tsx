@@ -27,7 +27,6 @@ import {
   MonitorCog,
   Package,
   Phone,
-  Rocket,
   Search,
   Server,
   ShieldCheck,
@@ -330,7 +329,7 @@ function App() {
     <main className="site-shell">
       <a className="skip-link" href="#conteudo">Pular para o conteudo</a>
       <nav className="topbar" aria-label="Navegacao principal">
-        <a className="brand" href="#inicio"><Rocket aria-hidden="true" className="inline-icon" /> Luiz Otavio Valenzi Sousa</a>
+        <a className="brand" href="#inicio"><img src="/icone.png" alt="" className="brand-icon" aria-hidden="true" /> Luiz Otavio Valenzi Sousa</a>
         <div className="nav-links">
           <a href="#sobre"><BriefcaseBusiness aria-hidden="true" className="inline-icon" />Sobre</a>
           <a href="#habilidades"><Code2 aria-hidden="true" className="inline-icon" />Habilidades</a>

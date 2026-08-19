@@ -99,6 +99,13 @@ a {
   text-decoration: none;
 }
 
+.brand-icon {
+  width: 24px;
+  height: 24px;
+  flex: 0 0 auto;
+  object-fit: contain;
+}
+
 .nav-links {
   display: flex;
   align-items: center;
