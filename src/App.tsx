@@ -6,6 +6,7 @@ import { githubRepositories } from './repositories';
 const socialLinks = [
   { label: 'LinkedIn', href: 'https://www.linkedin.com/in/luiz-otavio-valenzi-sousa-1180bb360/' },
   { label: 'Instagram', href: 'https://www.instagram.com/luizotaviovs/' },
+  { label: 'Instagram LZ World Games', href: 'https://www.instagram.com/lzworldgames/' },
   { label: 'GitHub', href: 'https://github.com/lzvsrx' },
   { label: 'Repositorio', href: 'https://github.com/lzvsrx/lzworldstech-dev' },
 ];
