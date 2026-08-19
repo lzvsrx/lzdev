@@ -34,6 +34,7 @@ Este repositorio foi reconstruido com base no projeto original `luizotaviodevs`,
 - Protocolo automatico para acompanhamento do pedido.
 - Area de controle para consultar status, proxima etapa e previsao de entrega.
 - Painel administrativo local para editar conteudos, links, tecnologias, bancos, servicos e pedidos.
+- Andamento dos projetos administravel pelo painel, com status, porcentagem, previsao e etapa atual.
 - Exportacao e importacao de backup administrativo em JSON.
 - SEO com canonical, metatags Open Graph/Twitter, `robots.txt` e `sitemap.xml`.
 - Acessibilidade com skip link, foco visivel e suporte a reducao de movimento.
@@ -192,7 +193,19 @@ Itens administraveis:
 - bancos de dados;
 - servicos oferecidos;
 - pedidos salvos no navegador, com status, previsao e proxima etapa;
+- andamento de cada projeto/repositorio exibido no site;
 - backup JSON com conteudos e pedidos.
+
+### Andamento dos projetos
+
+No painel administrativo, a area `Andamento dos projetos` permite escolher um repositorio e definir:
+
+- status do projeto;
+- porcentagem de progresso;
+- previsao de entrega;
+- etapa atual.
+
+Essas informacoes aparecem automaticamente nos cards da secao `Projetos GitHub`.
 
 Observacao importante: este projeto e um site estatico. Por isso, o painel administrativo usa `localStorage`; as alteracoes ficam salvas no navegador onde foram feitas. Para manter essas alteracoes em outro navegador ou publicar como conteudo fixo, use o backup JSON ou atualize os dados diretamente no codigo.
 

@@ -263,6 +263,14 @@ type EditableService = {
   text: string;
 };
 
+type ProjectProgress = {
+  projectName: string;
+  status: string;
+  progress: number;
+  estimatedDelivery: string;
+  currentStep: string;
+};
+
 type AdminContent = {
   heroTitle: string;
   heroSubtitle: string;
@@ -272,6 +280,7 @@ type AdminContent = {
   skills: EditableSkill[];
   databases: string[];
   services: EditableService[];
+  projectProgresses: ProjectProgress[];
 };
 
 type OrderStatus = 'Pedido recebido' | 'Em analise' | 'Em andamento' | 'Em revisao' | 'Entregue';
@@ -310,6 +319,13 @@ const defaultAdminContent: AdminContent = {
   skills: skills.map(({ name, percentage }) => ({ name, percentage })),
   databases,
   services: services.map(({ title, text }) => ({ title, text })),
+  projectProgresses: githubRepositories.slice(0, 8).map((project) => ({
+    projectName: project.name,
+    status: project.archived ? 'Arquivado' : 'Disponivel',
+    progress: project.homepage ? 100 : 70,
+    estimatedDelivery: project.homepage ? 'Publicado' : 'Em evolucao',
+    currentStep: project.homepage ? 'Projeto publicado e disponivel para acesso.' : 'Projeto em desenvolvimento ou manutencao.',
+  })),
 };
 
 function readAdminContent(): AdminContent {
@@ -319,7 +335,21 @@ function readAdminContent(): AdminContent {
 
   try {
     const storedContent = window.localStorage.getItem(adminContentStorageKey);
-    return storedContent ? { ...defaultAdminContent, ...JSON.parse(storedContent) as AdminContent } : defaultAdminContent;
+    if (!storedContent) {
+      return defaultAdminContent;
+    }
+
+    const parsedContent = JSON.parse(storedContent) as Partial<AdminContent>;
+
+    return {
+      ...defaultAdminContent,
+      ...parsedContent,
+      links: parsedContent.links ?? defaultAdminContent.links,
+      skills: parsedContent.skills ?? defaultAdminContent.skills,
+      databases: parsedContent.databases ?? defaultAdminContent.databases,
+      services: parsedContent.services ?? defaultAdminContent.services,
+      projectProgresses: parsedContent.projectProgresses ?? defaultAdminContent.projectProgresses,
+    };
   } catch {
     return defaultAdminContent;
   }
@@ -520,17 +550,21 @@ function App() {
         return true;
       }
 
+      const projectProgress = adminContent.projectProgresses.find((progress) => progress.projectName === project.name);
       const searchable = [
         project.name,
         project.description,
         project.language,
         project.homepage,
+        projectProgress?.status,
+        projectProgress?.currentStep,
+        projectProgress?.estimatedDelivery,
         project.private ? 'privado' : 'publico',
       ].filter(Boolean).join(' ').toLowerCase();
 
       return searchable.includes(normalizedQuery);
     });
-  }, [projectQuery, visibilityFilter]);
+  }, [adminContent.projectProgresses, projectQuery, visibilityFilter]);
 
   const trackedOrders = useMemo(() => {
     const ordersByProtocol = new Map<string, TrackedOrder>();
@@ -636,6 +670,43 @@ function App() {
     updateAdminContent({
       ...adminContent,
       services: adminContent.services.filter((_, serviceIndex) => serviceIndex !== index),
+    });
+  }
+
+  function updateProjectProgress(index: number, field: keyof ProjectProgress, value: string) {
+    const nextProjectProgresses = adminContent.projectProgresses.map((progress, progressIndex) => (
+      progressIndex === index
+        ? { ...progress, [field]: field === 'progress' ? Number(value) : value }
+        : progress
+    ));
+
+    updateAdminContent({ ...adminContent, projectProgresses: nextProjectProgresses });
+  }
+
+  function addProjectProgress() {
+    const projectWithoutProgress = githubRepositories.find((project) => (
+      !adminContent.projectProgresses.some((progress) => progress.projectName === project.name)
+    ));
+
+    updateAdminContent({
+      ...adminContent,
+      projectProgresses: [
+        ...adminContent.projectProgresses,
+        {
+          projectName: projectWithoutProgress?.name ?? 'Novo projeto',
+          status: 'Em andamento',
+          progress: 50,
+          estimatedDelivery: 'A definir',
+          currentStep: 'Descreva a etapa atual do projeto.',
+        },
+      ],
+    });
+  }
+
+  function removeProjectProgress(index: number) {
+    updateAdminContent({
+      ...adminContent,
+      projectProgresses: adminContent.projectProgresses.filter((_, progressIndex) => progressIndex !== index),
     });
   }
 
@@ -945,6 +1016,7 @@ function App() {
               month: '2-digit',
               year: 'numeric',
             }).format(new Date(project.updatedAt));
+            const projectProgress = adminContent.projectProgresses.find((progress) => progress.projectName === project.name);
 
             return (
             <article className="project-summary-card" key={project.name}>
@@ -961,6 +1033,19 @@ function App() {
                 <span>{project.private ? <Lock aria-hidden="true" className="inline-icon" /> : <Globe aria-hidden="true" className="inline-icon" />}{project.private ? 'Privado' : 'Publico'}</span>
                 {project.archived ? <span><Package aria-hidden="true" className="inline-icon" />Arquivado</span> : null}
               </div>
+              {projectProgress ? (
+                <div className="project-progress-box" aria-label={`Andamento do projeto ${project.name}`}>
+                  <div className="project-progress-header">
+                    <span><TrendingUp aria-hidden="true" className="inline-icon" />{projectProgress.status}</span>
+                    <strong>{projectProgress.progress}%</strong>
+                  </div>
+                  <div className="project-progress-track" aria-hidden="true">
+                    <div style={{ width: `${Math.min(100, Math.max(0, projectProgress.progress))}%` }} />
+                  </div>
+                  <p><strong>Entrega:</strong> {projectProgress.estimatedDelivery}</p>
+                  <p>{projectProgress.currentStep}</p>
+                </div>
+              ) : null}
               <div className="repo-actions">
                 <a href={project.url} target="_blank" rel="noopener noreferrer">
                 <FolderGit2 aria-hidden="true" className="inline-icon" /> Ver projeto <ExternalIcon />
@@ -1314,6 +1399,7 @@ function App() {
               <article><strong>{adminContent.links.length}</strong><span>links administraveis</span></article>
               <article><strong>{adminContent.skills.length}</strong><span>tecnologias</span></article>
               <article><strong>{adminContent.services.length}</strong><span>servicos</span></article>
+              <article><strong>{adminContent.projectProgresses.length}</strong><span>andamentos de projetos</span></article>
               <article><strong>{storedOrders.length}</strong><span>pedidos locais</span></article>
               <article><strong>{certificates.length}</strong><span>certificados publicados</span></article>
               <article><strong>{githubRepositories.length}</strong><span>repositorios no site</span></article>
@@ -1449,6 +1535,72 @@ function App() {
                       onChange={(event) => updateAdminService(index, 'text', event.target.value)}
                     />
                     <button type="button" onClick={() => removeAdminService(index)}><Trash2 aria-hidden="true" className="inline-icon" /> Remover</button>
+                  </div>
+                ))}
+              </div>
+            </article>
+
+            <article className="admin-panel">
+              <div className="admin-panel-header">
+                <h3><TrendingUp aria-hidden="true" className="inline-icon" /> Andamento dos projetos</h3>
+                <button type="button" onClick={addProjectProgress}><Plus aria-hidden="true" className="inline-icon" /> Adicionar andamento</button>
+              </div>
+              <div className="admin-list">
+                {adminContent.projectProgresses.map((projectProgress, index) => (
+                  <div className="admin-project-progress-row" key={`${projectProgress.projectName}-${index}`}>
+                    <label>
+                      Projeto
+                      <select
+                        aria-label={`Projeto do andamento ${index + 1}`}
+                        value={projectProgress.projectName}
+                        onChange={(event) => updateProjectProgress(index, 'projectName', event.target.value)}
+                      >
+                        <option value={projectProgress.projectName}>{projectProgress.projectName}</option>
+                        {githubRepositories.map((project) => (
+                          <option key={project.name} value={project.name}>{project.name}</option>
+                        ))}
+                      </select>
+                    </label>
+                    <label>
+                      Status
+                      <input
+                        aria-label={`Status do projeto ${projectProgress.projectName}`}
+                        value={projectProgress.status}
+                        onChange={(event) => updateProjectProgress(index, 'status', event.target.value)}
+                        placeholder="Ex: Em andamento"
+                      />
+                    </label>
+                    <label>
+                      Progresso
+                      <input
+                        aria-label={`Progresso do projeto ${projectProgress.projectName}`}
+                        type="number"
+                        min="0"
+                        max="100"
+                        value={projectProgress.progress}
+                        onChange={(event) => updateProjectProgress(index, 'progress', event.target.value)}
+                      />
+                    </label>
+                    <label>
+                      Previsao de entrega
+                      <input
+                        aria-label={`Previsao do projeto ${projectProgress.projectName}`}
+                        value={projectProgress.estimatedDelivery}
+                        onChange={(event) => updateProjectProgress(index, 'estimatedDelivery', event.target.value)}
+                        placeholder="Ex: 25/08/2026"
+                      />
+                    </label>
+                    <label className="admin-project-step">
+                      Etapa atual
+                      <textarea
+                        aria-label={`Etapa atual do projeto ${projectProgress.projectName}`}
+                        rows={3}
+                        value={projectProgress.currentStep}
+                        onChange={(event) => updateProjectProgress(index, 'currentStep', event.target.value)}
+                        placeholder="Explique o que esta sendo feito agora."
+                      />
+                    </label>
+                    <button type="button" onClick={() => removeProjectProgress(index)}><Trash2 aria-hidden="true" className="inline-icon" /> Remover andamento</button>
                   </div>
                 ))}
               </div>

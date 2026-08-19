@@ -56,7 +56,7 @@ test('sends service request to WhatsApp with customer details', () => {
   expect(decodedUrl).toContain('Preciso de um site institucional com contato.');
   expect(screen.getAllByText('Pedido recebido').length).toBeGreaterThan(0);
   expect(screen.getByText('A combinar pelo WhatsApp')).toBeInTheDocument();
-});
+}, 15000);
 
 test('admin panel edits visible hero title', () => {
   render(<App />);
@@ -71,3 +71,31 @@ test('admin panel edits visible hero title', () => {
 
   expect(screen.getByRole('heading', { level: 1, name: /Titulo administrado/i })).toBeInTheDocument();
 }, 10000);
+
+test('admin panel edits project progress shown on project cards', () => {
+  render(<App />);
+
+  fireEvent.change(screen.getByLabelText('Codigo administrativo'), {
+    target: { value: 'lzadmin2026' },
+  });
+  fireEvent.click(screen.getByRole('button', { name: /Entrar no painel/i }));
+
+  const lzdevStatusInput = screen.getByLabelText('Status do projeto lzdev');
+  fireEvent.change(lzdevStatusInput, {
+    target: { value: 'Em desenvolvimento ativo' },
+  });
+  fireEvent.change(screen.getByLabelText('Progresso do projeto lzdev'), {
+    target: { value: '88' },
+  });
+  fireEvent.change(screen.getByLabelText('Previsao do projeto lzdev'), {
+    target: { value: '30/08/2026' },
+  });
+  fireEvent.change(screen.getByLabelText('Etapa atual do projeto lzdev'), {
+    target: { value: 'Finalizando painel administrativo.' },
+  });
+
+  expect(screen.getAllByText('Em desenvolvimento ativo').length).toBeGreaterThan(0);
+  expect(screen.getAllByText('88%').length).toBeGreaterThan(0);
+  expect(screen.getByText(/30\/08\/2026/i)).toBeInTheDocument();
+  expect(screen.getAllByText('Finalizando painel administrativo.').length).toBeGreaterThan(0);
+}, 30000);

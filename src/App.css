@@ -716,6 +716,60 @@ textarea:focus-visible {
   font-weight: 800;
 }
 
+.project-progress-box {
+  display: grid;
+  gap: 8px;
+  margin: 0 0 18px;
+  padding: 12px;
+  border: 1px solid rgba(102, 126, 234, 0.3);
+  border-radius: 8px;
+  background: rgba(10, 14, 39, 0.28);
+}
+
+.project-progress-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.project-progress-header span {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: #8debd4;
+  font-size: 0.82rem;
+  font-weight: 900;
+}
+
+.project-progress-header strong {
+  color: var(--accent);
+}
+
+.project-progress-track {
+  height: 10px;
+  overflow: hidden;
+  border: 1px solid rgba(102, 126, 234, 0.3);
+  border-radius: 999px;
+  background: rgba(102, 126, 234, 0.16);
+}
+
+.project-progress-track div {
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, #25d366 0%, #667eea 100%);
+}
+
+.project-progress-box p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.project-progress-box p strong {
+  color: var(--accent);
+}
+
 .repo-actions {
   display: flex;
   flex-wrap: wrap;
@@ -1278,6 +1332,29 @@ textarea:focus-visible {
   grid-template-columns: minmax(160px, 0.7fr) repeat(3, minmax(160px, 1fr));
 }
 
+.admin-project-progress-row {
+  display: grid;
+  grid-template-columns: minmax(180px, 1fr) minmax(150px, 0.7fr) minmax(110px, 0.4fr) minmax(160px, 0.8fr);
+  gap: 10px;
+  align-items: start;
+  padding: 12px;
+  border: 1px solid rgba(102, 126, 234, 0.3);
+  border-radius: 8px;
+  background: rgba(10, 14, 39, 0.28);
+}
+
+.admin-project-progress-row label {
+  margin: 0;
+}
+
+.admin-project-step {
+  grid-column: span 3;
+}
+
+.admin-project-progress-row button {
+  align-self: end;
+}
+
 .admin-order-row strong {
   color: #8debd4;
   overflow-wrap: anywhere;
@@ -1380,12 +1457,14 @@ textarea:focus-visible {
   .admin-row,
   .compact-admin-row,
   .service-admin-row,
-  .admin-order-row {
+  .admin-order-row,
+  .admin-project-progress-row {
     grid-template-columns: 1fr;
   }
 
   .admin-order-row textarea,
-  .admin-order-row button {
+  .admin-order-row button,
+  .admin-project-step {
     grid-column: auto;
   }
 
