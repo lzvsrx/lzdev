@@ -178,7 +178,13 @@ Os pedidos enviados pelo formulario ficam salvos no navegador do cliente via `lo
 
 A secao `Administracao` permite controlar conteudos diretamente pelo site.
 
-Codigo padrao:
+Login padrao:
+
+```text
+admin
+```
+
+Senha padrao:
 
 ```text
 lzadmin2026

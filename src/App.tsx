@@ -306,7 +306,10 @@ const initialServiceRequest: ServiceRequest = {
 const orderStorageKey = 'lzdev-service-orders';
 const adminContentStorageKey = 'lzdev-admin-content';
 const siteCatalogStorageKey = 'lzdev-site-catalog';
-const adminAccessCode = 'lzadmin2026';
+const adminCredentials = {
+  username: 'admin',
+  password: 'lzadmin2026',
+};
 
 const orderStatusSteps: OrderStatus[] = ['Pedido recebido', 'Em analise', 'Em andamento', 'Em revisao', 'Entregue'];
 
@@ -442,7 +445,8 @@ function App() {
   const [storedOrders, setStoredOrders] = useState<TrackedOrder[]>(() => readStoredOrders());
   const [trackingQuery, setTrackingQuery] = useState('');
   const [adminContent, setAdminContent] = useState<AdminContent>(() => readAdminContent());
-  const [adminCode, setAdminCode] = useState('');
+  const [adminLogin, setAdminLogin] = useState({ username: '', password: '' });
+  const [adminLoginError, setAdminLoginError] = useState('');
   const [isAdminUnlocked, setIsAdminUnlocked] = useState(false);
   const [importContent, setImportContent] = useState('');
   const [databaseStatus] = useState('Banco de dados local ativo: IndexedDB com fallback automatico.');
@@ -773,7 +777,12 @@ function App() {
 
   function unlockAdmin(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    setIsAdminUnlocked(adminCode === adminAccessCode);
+    const isValidLogin =
+      adminLogin.username.trim() === adminCredentials.username &&
+      adminLogin.password === adminCredentials.password;
+
+    setIsAdminUnlocked(isValidLogin);
+    setAdminLoginError(isValidLogin ? '' : 'Login ou senha incorretos. Tente novamente.');
   }
 
   function exportAdminBackup() {
@@ -1409,20 +1418,30 @@ function App() {
 
         {!isAdminUnlocked ? (
           <form className="admin-login" onSubmit={unlockAdmin}>
-            <label htmlFor="admin-code">
-              Codigo administrativo
+            <label htmlFor="admin-username">
+              Login administrativo
               <input
-                id="admin-code"
+                id="admin-username"
+                type="text"
+                value={adminLogin.username}
+                onChange={(event) => setAdminLogin({ ...adminLogin, username: event.target.value })}
+                placeholder="Digite seu login"
+                autoComplete="username"
+              />
+            </label>
+            <label htmlFor="admin-password">
+              Senha administrativa
+              <input
+                id="admin-password"
                 type="password"
-                value={adminCode}
-                onChange={(event) => setAdminCode(event.target.value)}
-                placeholder="Digite o codigo de administracao"
+                value={adminLogin.password}
+                onChange={(event) => setAdminLogin({ ...adminLogin, password: event.target.value })}
+                placeholder="Digite sua senha"
+                autoComplete="current-password"
               />
             </label>
             <button type="submit"><LockKeyhole aria-hidden="true" className="inline-icon" /> Entrar no painel</button>
-            {adminCode && adminCode !== adminAccessCode ? (
-              <p className="admin-warning">Codigo incorreto. Tente novamente.</p>
-            ) : null}
+            {adminLoginError ? <p className="admin-warning">{adminLoginError}</p> : null}
           </form>
         ) : (
           <div className="admin-dashboard">

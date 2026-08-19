@@ -61,7 +61,10 @@ test('sends service request to WhatsApp with customer details', () => {
 test('admin panel edits visible hero title', () => {
   render(<App />);
 
-  fireEvent.change(screen.getByLabelText('Codigo administrativo'), {
+  fireEvent.change(screen.getByLabelText('Login administrativo'), {
+    target: { value: 'admin' },
+  });
+  fireEvent.change(screen.getByLabelText('Senha administrativa'), {
     target: { value: 'lzadmin2026' },
   });
   fireEvent.click(screen.getByRole('button', { name: /Entrar no painel/i }));
@@ -75,7 +78,10 @@ test('admin panel edits visible hero title', () => {
 test('admin panel edits project progress shown on project cards', () => {
   render(<App />);
 
-  fireEvent.change(screen.getByLabelText('Codigo administrativo'), {
+  fireEvent.change(screen.getByLabelText('Login administrativo'), {
+    target: { value: 'admin' },
+  });
+  fireEvent.change(screen.getByLabelText('Senha administrativa'), {
     target: { value: 'lzadmin2026' },
   });
   fireEvent.click(screen.getByRole('button', { name: /Entrar no painel/i }));
