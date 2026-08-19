@@ -66,6 +66,9 @@ a {
 }
 
 .brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
   color: var(--accent);
   font-size: 1.1rem;
   font-weight: 800;
@@ -82,6 +85,9 @@ a {
 }
 
 .nav-links a {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
   text-decoration: none;
 }
 
@@ -190,11 +196,15 @@ h1 {
   transform: translateY(-2px);
 }
 
-.icon {
+.icon,
+.inline-icon {
   width: 17px;
   height: 17px;
-  fill: currentColor;
   flex: 0 0 auto;
+}
+
+.inline-icon {
+  stroke-width: 2.4;
 }
 
 .hero-media {
@@ -214,7 +224,7 @@ h1 {
 
 .hero-stats {
   display: grid;
-  grid-template-columns: auto 1fr;
+  grid-template-columns: auto auto 1fr;
   gap: 14px;
   align-items: center;
   margin-top: 14px;
@@ -228,6 +238,13 @@ h1 {
   color: var(--primary);
   font-size: 2.2rem;
   line-height: 1;
+}
+
+.stat-icon {
+  width: 34px;
+  height: 34px;
+  color: var(--primary);
+  filter: drop-shadow(0 0 10px rgba(102, 126, 234, 0.5));
 }
 
 .hero-stats span {
@@ -245,6 +262,7 @@ h1 {
 .social-chip-row a {
   display: inline-flex;
   align-items: center;
+  gap: 8px;
   min-height: 38px;
   padding: 8px 12px;
   border: 2px solid rgba(255, 255, 255, 0.28);
@@ -308,6 +326,7 @@ h1 {
 .certificate-type {
   display: inline-flex;
   align-items: center;
+  gap: 7px;
   min-height: 30px;
   padding: 6px 10px;
   border-radius: 999px;
@@ -401,6 +420,14 @@ h1 {
   box-shadow: 0 3px 10px rgba(102, 126, 234, 0.3);
 }
 
+.card-icon svg,
+.detail-icon svg,
+.database-item span svg {
+  width: 25px;
+  height: 25px;
+  stroke-width: 2.2;
+}
+
 .service-card h3,
 .project-summary-card h3,
 .database-item h3,
@@ -435,6 +462,9 @@ h1 {
 }
 
 .skill-name {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
   color: var(--accent);
   font-size: 1.05rem;
   font-weight: 800;
@@ -484,6 +514,7 @@ h1 {
 .repo-meta span {
   display: inline-flex;
   align-items: center;
+  gap: 6px;
   min-height: 28px;
   padding: 5px 9px;
   border: 1px solid rgba(102, 126, 234, 0.3);
@@ -639,6 +670,12 @@ h1 {
   font-weight: 800;
 }
 
+.certificate-toolbar label {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
 .certificate-toolbar input {
   width: 100%;
   min-height: 46px;
@@ -684,6 +721,7 @@ h1 {
 
 .links-grid a {
   justify-content: space-between;
+  gap: 10px;
   background: linear-gradient(135deg, #333 0%, #24292e 100%);
   color: #fff;
   border-radius: 8px;

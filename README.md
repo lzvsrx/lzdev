@@ -36,6 +36,7 @@ Este repositorio foi reconstruido com base no projeto original `luizotaviodevs`,
 - Vite 7
 - Vitest
 - Testing Library
+- Lucide React
 - CSS puro responsivo
 
 ## Estrutura do projeto
