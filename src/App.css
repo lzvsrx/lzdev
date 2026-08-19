@@ -1287,6 +1287,32 @@ textarea:focus-visible {
   font-weight: 800;
 }
 
+.database-panel p {
+  color: #8debd4;
+  font-weight: 900;
+}
+
+.database-record-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 10px;
+}
+
+.database-record-grid span {
+  display: grid;
+  gap: 6px;
+  padding: 12px;
+  border: 1px solid rgba(102, 126, 234, 0.3);
+  border-radius: 8px;
+  background: rgba(10, 14, 39, 0.28);
+  color: var(--muted);
+}
+
+.database-record-grid strong {
+  color: var(--accent);
+  overflow-wrap: anywhere;
+}
+
 .admin-panel h3,
 .admin-panel-header h3 {
   display: inline-flex;

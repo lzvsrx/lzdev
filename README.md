@@ -35,6 +35,7 @@ Este repositorio foi reconstruido com base no projeto original `luizotaviodevs`,
 - Area de controle para consultar status, proxima etapa e previsao de entrega.
 - Painel administrativo local para editar conteudos, links, tecnologias, bancos, servicos e pedidos.
 - Andamento dos projetos administravel pelo painel, com status, porcentagem, previsao e etapa atual.
+- Banco de dados local em IndexedDB para salvar conteudos, pedidos, andamentos e catalogo do site.
 - Exportacao e importacao de backup administrativo em JSON.
 - SEO com canonical, metatags Open Graph/Twitter, `robots.txt` e `sitemap.xml`.
 - Acessibilidade com skip link, foco visivel e suporte a reducao de movimento.
@@ -207,7 +208,27 @@ No painel administrativo, a area `Andamento dos projetos` permite escolher um re
 
 Essas informacoes aparecem automaticamente nos cards da secao `Projetos GitHub`.
 
-Observacao importante: este projeto e um site estatico. Por isso, o painel administrativo usa `localStorage`; as alteracoes ficam salvas no navegador onde foram feitas. Para manter essas alteracoes em outro navegador ou publicar como conteudo fixo, use o backup JSON ou atualize os dados diretamente no codigo.
+Observacao importante: este projeto e um site estatico. Por isso, o painel administrativo usa banco local do navegador; as alteracoes ficam salvas no navegador onde foram feitas. Para manter essas alteracoes em outro navegador ou publicar como conteudo fixo, use o backup JSON ou atualize os dados diretamente no codigo.
+
+## Banco de dados
+
+O site salva os dados administraveis em um banco local do navegador usando IndexedDB, com fallback automatico para `localStorage` quando o navegador bloquear IndexedDB.
+
+Banco:
+
+```text
+lzdev-site-database
+```
+
+Registros salvos:
+
+- `lzdev-admin-content`: textos, links, tecnologias, bancos de dados, servicos e andamento dos projetos;
+- `lzdev-service-orders`: pedidos, protocolos, status, previsao de entrega e proxima etapa;
+- `lzdev-site-catalog`: catalogo estatico do site com certificados, repositorios, showcase, processos e projetos em destaque.
+
+O backup JSON do painel inclui conteudo administrativo, pedidos e catalogo do site.
+
+Observacao: por ser um banco local do navegador, os dados ficam no dispositivo onde foram editados. Para um banco central compartilhado entre todos os dispositivos, e necessario conectar um backend como Supabase, Firebase, PostgreSQL, MySQL ou API propria com credenciais de producao.
 
 ## Repositorios GitHub
 

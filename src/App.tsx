@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import {
   Award,
   BadgeCheck,
@@ -49,6 +49,7 @@ import {
 import './App.css';
 import { certificates } from './certificates';
 import { githubRepositories } from './repositories';
+import { readCachedRecord, readDatabaseRecord, writeDatabaseRecord } from './siteDatabase';
 
 type IconComponent = LucideIcon;
 
@@ -304,6 +305,7 @@ const initialServiceRequest: ServiceRequest = {
 
 const orderStorageKey = 'lzdev-service-orders';
 const adminContentStorageKey = 'lzdev-admin-content';
+const siteCatalogStorageKey = 'lzdev-site-catalog';
 const adminAccessCode = 'lzadmin2026';
 
 const orderStatusSteps: OrderStatus[] = ['Pedido recebido', 'Em analise', 'Em andamento', 'Em revisao', 'Entregue'];
@@ -328,39 +330,32 @@ const defaultAdminContent: AdminContent = {
   })),
 };
 
+const siteCatalog = {
+  certificates,
+  githubRepositories,
+  showcaseFeatures: showcaseFeatures.map(({ label }) => ({ label })),
+  showcaseGallery: showcaseGallery.map(({ image, title, text }) => ({ image, title, text })),
+  showcaseDetails: showcaseDetails.map(({ title, text }) => ({ title, text })),
+  workflowSteps: workflowSteps.map(({ title, text }) => ({ title, text })),
+  featuredProjectNames,
+};
+
 function readAdminContent(): AdminContent {
-  if (typeof window === 'undefined') {
-    return defaultAdminContent;
-  }
+  const parsedContent = readCachedRecord<Partial<AdminContent>>(adminContentStorageKey, {});
 
-  try {
-    const storedContent = window.localStorage.getItem(adminContentStorageKey);
-    if (!storedContent) {
-      return defaultAdminContent;
-    }
-
-    const parsedContent = JSON.parse(storedContent) as Partial<AdminContent>;
-
-    return {
-      ...defaultAdminContent,
-      ...parsedContent,
-      links: parsedContent.links ?? defaultAdminContent.links,
-      skills: parsedContent.skills ?? defaultAdminContent.skills,
-      databases: parsedContent.databases ?? defaultAdminContent.databases,
-      services: parsedContent.services ?? defaultAdminContent.services,
-      projectProgresses: parsedContent.projectProgresses ?? defaultAdminContent.projectProgresses,
-    };
-  } catch {
-    return defaultAdminContent;
-  }
+  return {
+    ...defaultAdminContent,
+    ...parsedContent,
+    links: parsedContent.links ?? defaultAdminContent.links,
+    skills: parsedContent.skills ?? defaultAdminContent.skills,
+    databases: parsedContent.databases ?? defaultAdminContent.databases,
+    services: parsedContent.services ?? defaultAdminContent.services,
+    projectProgresses: parsedContent.projectProgresses ?? defaultAdminContent.projectProgresses,
+  };
 }
 
 function writeAdminContent(content: AdminContent) {
-  try {
-    window.localStorage.setItem(adminContentStorageKey, JSON.stringify(content));
-  } catch {
-    // O painel continua atualizando a tela atual mesmo se o navegador bloquear localStorage.
-  }
+  void writeDatabaseRecord(adminContentStorageKey, content);
 }
 
 function getLinkIcon(label: string) {
@@ -399,24 +394,11 @@ function getServiceIcon(title: string) {
 }
 
 function readStoredOrders(): TrackedOrder[] {
-  if (typeof window === 'undefined') {
-    return [];
-  }
-
-  try {
-    const storedOrders = window.localStorage.getItem(orderStorageKey);
-    return storedOrders ? JSON.parse(storedOrders) as TrackedOrder[] : [];
-  } catch {
-    return [];
-  }
+  return readCachedRecord<TrackedOrder[]>(orderStorageKey, []);
 }
 
 function writeStoredOrders(orders: TrackedOrder[]) {
-  try {
-    window.localStorage.setItem(orderStorageKey, JSON.stringify(orders));
-  } catch {
-    // O acompanhamento continua funcionando na tela atual mesmo se o navegador bloquear localStorage.
-  }
+  void writeDatabaseRecord(orderStorageKey, orders);
 }
 
 function formatDisplayDate(date: Date) {
@@ -463,6 +445,7 @@ function App() {
   const [adminCode, setAdminCode] = useState('');
   const [isAdminUnlocked, setIsAdminUnlocked] = useState(false);
   const [importContent, setImportContent] = useState('');
+  const [databaseStatus] = useState('Banco de dados local ativo: IndexedDB com fallback automatico.');
 
   const editableLinks = useMemo(() => (
     adminContent.links.map((link) => ({
@@ -494,6 +477,46 @@ function App() {
       Icon: getServiceIcon(service.title),
     }))
   ), [adminContent.services]);
+
+  useEffect(() => {
+    let isMounted = true;
+
+    async function hydrateDatabase() {
+      const [databaseAdminContent, databaseOrders] = await Promise.all([
+        readDatabaseRecord(adminContentStorageKey, defaultAdminContent),
+        readDatabaseRecord(orderStorageKey, [] as TrackedOrder[]),
+      ]);
+
+      if (!isMounted) {
+        return;
+      }
+
+      const normalizedAdminContent = {
+        ...defaultAdminContent,
+        ...databaseAdminContent,
+        links: databaseAdminContent.links ?? defaultAdminContent.links,
+        skills: databaseAdminContent.skills ?? defaultAdminContent.skills,
+        databases: databaseAdminContent.databases ?? defaultAdminContent.databases,
+        services: databaseAdminContent.services ?? defaultAdminContent.services,
+        projectProgresses: databaseAdminContent.projectProgresses ?? defaultAdminContent.projectProgresses,
+      };
+
+      if (JSON.stringify(normalizedAdminContent) !== JSON.stringify(readAdminContent())) {
+        setAdminContent(normalizedAdminContent);
+      }
+
+      if (JSON.stringify(databaseOrders) !== JSON.stringify(readStoredOrders())) {
+        setStoredOrders(databaseOrders);
+      }
+    }
+
+    void hydrateDatabase();
+    void writeDatabaseRecord(siteCatalogStorageKey, siteCatalog);
+
+    return () => {
+      isMounted = false;
+    };
+  }, []);
 
   const filteredCertificates = useMemo(() => {
     const normalizedQuery = query.trim().toLowerCase();
@@ -754,7 +777,15 @@ function App() {
   }
 
   function exportAdminBackup() {
-    const backup = JSON.stringify({ adminContent, storedOrders }, null, 2);
+    const backup = JSON.stringify({
+      adminContent,
+      storedOrders,
+      siteCatalog,
+      database: {
+        engine: 'IndexedDB',
+        records: [adminContentStorageKey, orderStorageKey, siteCatalogStorageKey],
+      },
+    }, null, 2);
     setImportContent(backup);
   }
 
@@ -1404,6 +1435,16 @@ function App() {
               <article><strong>{certificates.length}</strong><span>certificados publicados</span></article>
               <article><strong>{githubRepositories.length}</strong><span>repositorios no site</span></article>
             </div>
+
+            <article className="admin-panel database-panel">
+              <h3><Database aria-hidden="true" className="inline-icon" /> Banco de dados do site</h3>
+              <p>{databaseStatus}</p>
+              <div className="database-record-grid">
+                <span><strong>{adminContentStorageKey}</strong>Conteudos editaveis, links, tecnologias, bancos, servicos e andamento dos projetos.</span>
+                <span><strong>{orderStorageKey}</strong>Pedidos, protocolos, status, previsoes e proximas etapas.</span>
+                <span><strong>{siteCatalogStorageKey}</strong>Catalogo do site com certificados, repositorios, showcase e processos.</span>
+              </div>
+            </article>
 
             <article className="admin-panel">
               <h3><FileText aria-hidden="true" className="inline-icon" /> Textos principais</h3>
