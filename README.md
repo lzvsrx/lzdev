@@ -102,6 +102,8 @@ Atualmente o site publica 106 documentos entre PDFs e imagens.
 - LinkedIn: `https://www.linkedin.com/in/luiz-otavio-valenzi-sousa-1180bb360/`
 - Instagram: `https://www.instagram.com/luizotaviovs/`
 - Instagram LZ World Games: `https://www.instagram.com/lzworldgames/`
+- WhatsApp: `https://wa.me/5535999215995`
+- Telefone: `(35) 99921-5995`
 - GitHub: `https://github.com/lzvsrx`
 - Repositorio original: `https://github.com/lzvsrx/luizotaviodevs`
 - Projeto lzworldstech-dev: `https://github.com/lzvsrx/lzworldstech-dev`
