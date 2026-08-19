@@ -310,7 +310,7 @@ type GitHubSyncSettings = {
   owner: string;
   repo: string;
   branch: string;
-  token: string;
+  syncSecret: string;
   autoSync: boolean;
 };
 
@@ -352,7 +352,7 @@ const defaultGitHubSyncSettings: GitHubSyncSettings = {
   owner: 'lzvsrx',
   repo: 'lzdev',
   branch: 'main',
-  token: '',
+  syncSecret: '',
   autoSync: false,
 };
 
@@ -426,24 +426,13 @@ function readGitHubSyncSettings(): GitHubSyncSettings {
   return {
     ...defaultGitHubSyncSettings,
     ...storedSettings,
-    token: '',
+    syncSecret: '',
   };
 }
 
 function writeGitHubSyncSettings(settings: GitHubSyncSettings) {
-  const { token: _token, ...safeSettings } = settings;
+  const { syncSecret: _syncSecret, ...safeSettings } = settings;
   void writeDatabaseRecord(githubSyncStorageKey, safeSettings);
-}
-
-function encodeBase64(value: string) {
-  const bytes = new TextEncoder().encode(value);
-  let binary = '';
-
-  bytes.forEach((byte) => {
-    binary += String.fromCharCode(byte);
-  });
-
-  return window.btoa(binary);
 }
 
 function buildGitHubSyncFiles(adminContent: AdminContent, storedOrders: TrackedOrder[]): GitHubSyncFile[] {
@@ -494,50 +483,24 @@ function buildGitHubSyncFiles(adminContent: AdminContent, storedOrders: TrackedO
   ];
 }
 
-async function getGitHubFileSha(settings: GitHubSyncSettings, path: string) {
-  const url = `https://api.github.com/repos/${settings.owner}/${settings.repo}/contents/${path}?ref=${encodeURIComponent(settings.branch)}`;
-  const response = await fetch(url, {
+async function publishGitHubFiles(settings: GitHubSyncSettings, files: GitHubSyncFile[]) {
+  const response = await fetch('/api/sync-github', {
+    method: 'POST',
     headers: {
-      Accept: 'application/vnd.github+json',
-      Authorization: `Bearer ${settings.token}`,
-      'X-GitHub-Api-Version': '2022-11-28',
-    },
-  });
-
-  if (response.status === 404) {
-    return undefined;
-  }
-
-  if (!response.ok) {
-    throw new Error(`Nao foi possivel ler ${path} no GitHub.`);
-  }
-
-  const file = await response.json() as { sha?: string };
-  return file.sha;
-}
-
-async function publishGitHubFile(settings: GitHubSyncSettings, file: GitHubSyncFile) {
-  const sha = await getGitHubFileSha(settings, file.path);
-  const content = `${JSON.stringify(file.content, null, 2)}\n`;
-  const response = await fetch(`https://api.github.com/repos/${settings.owner}/${settings.repo}/contents/${file.path}`, {
-    method: 'PUT',
-    headers: {
-      Accept: 'application/vnd.github+json',
-      Authorization: `Bearer ${settings.token}`,
       'Content-Type': 'application/json',
-      'X-GitHub-Api-Version': '2022-11-28',
+      'x-sync-secret': settings.syncSecret,
     },
     body: JSON.stringify({
+      owner: settings.owner,
+      repo: settings.repo,
       branch: settings.branch,
-      message: `Sync site data: ${file.path}`,
-      content: encodeBase64(content),
-      sha,
+      files,
     }),
   });
 
   if (!response.ok) {
     const errorBody = await response.text();
-    throw new Error(`Falha ao salvar ${file.path}: ${errorBody}`);
+    throw new Error(errorBody || 'Falha ao sincronizar dados com o GitHub.');
   }
 }
 
@@ -641,7 +604,7 @@ function App() {
   const [isAdminUnlocked, setIsAdminUnlocked] = useState(false);
   const [importContent, setImportContent] = useState('');
   const [githubSync, setGitHubSync] = useState<GitHubSyncSettings>(() => readGitHubSyncSettings());
-  const [githubSyncStatus, setGitHubSyncStatus] = useState('Configure o token do GitHub para sincronizar os dados salvos no repositorio.');
+  const [githubSyncStatus, setGitHubSyncStatus] = useState('Configure a senha de sincronizacao para o site publicar os dados salvos no repositorio.');
   const [databaseStatus] = useState('Banco de dados local ativo: IndexedDB com fallback automatico.');
 
   const editableLinks = useMemo(() => (
@@ -720,7 +683,7 @@ function App() {
   }, []);
 
   useEffect(() => {
-    if (!isAdminUnlocked || !githubSync.autoSync || !githubSync.token.trim()) {
+    if (!isAdminUnlocked || !githubSync.autoSync || !githubSync.syncSecret.trim()) {
       return undefined;
     }
 
@@ -995,19 +958,17 @@ function App() {
   }
 
   async function syncDataToGitHub(mode: 'manual' | 'automatico' = 'manual') {
-    const hasRequiredSettings = githubSync.owner.trim() && githubSync.repo.trim() && githubSync.branch.trim() && githubSync.token.trim();
+    const hasRequiredSettings = githubSync.owner.trim() && githubSync.repo.trim() && githubSync.branch.trim() && githubSync.syncSecret.trim();
 
     if (!hasRequiredSettings) {
-      setGitHubSyncStatus('Preencha dono, repositorio, branch e token antes de sincronizar.');
+      setGitHubSyncStatus('Preencha dono, repositorio, branch e senha de sincronizacao antes de sincronizar.');
       return;
     }
 
     try {
       setGitHubSyncStatus(mode === 'automatico' ? 'Sincronizando automaticamente com o GitHub...' : 'Sincronizando dados com o GitHub...');
 
-      for (const file of githubSyncFiles) {
-        await publishGitHubFile(githubSync, file);
-      }
+      await publishGitHubFiles(githubSync, githubSyncFiles);
 
       setGitHubSyncStatus(`Sincronizacao concluida: ${githubSyncFiles.length} arquivos salvos em ${githubSync.owner}/${githubSync.repo}.`);
     } catch (error) {
@@ -1709,7 +1670,7 @@ function App() {
             <article className="admin-panel github-sync-panel">
               <h3><FolderGit2 aria-hidden="true" className="inline-icon" /> Sincronizacao GitHub</h3>
               <p className="admin-panel-note">
-                Salva automaticamente os dados do painel em arquivos JSON dentro do repositorio. O token e usado apenas nesta sessao e nao fica salvo no codigo.
+                Salva automaticamente os dados do painel em arquivos JSON dentro do repositorio usando uma API protegida. O token do GitHub fica somente no servidor.
               </p>
               <div className="form-grid">
                 <label htmlFor="github-owner">
@@ -1736,14 +1697,14 @@ function App() {
                     onChange={(event) => updateGitHubSyncField('branch', event.target.value)}
                   />
                 </label>
-                <label htmlFor="github-token">
-                  Token do GitHub
+                <label htmlFor="github-sync-secret">
+                  Senha de sincronizacao
                   <input
-                    id="github-token"
+                    id="github-sync-secret"
                     type="password"
-                    value={githubSync.token}
-                    onChange={(event) => updateGitHubSyncField('token', event.target.value)}
-                    placeholder="Token com permissao Contents: Read and write"
+                    value={githubSync.syncSecret}
+                    onChange={(event) => updateGitHubSyncField('syncSecret', event.target.value)}
+                    placeholder="Mesma senha configurada em GITHUB_SYNC_SECRET"
                     autoComplete="off"
                   />
                 </label>

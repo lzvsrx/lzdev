@@ -221,7 +221,7 @@ Essas informacoes aparecem automaticamente nos cards da secao `Projetos GitHub`.
 
 ### Sincronizacao GitHub
 
-O painel administrativo possui uma area `Sincronizacao GitHub` para enviar automaticamente os dados salvos no banco local para o repositorio.
+O painel administrativo possui uma area `Sincronizacao GitHub` para enviar automaticamente os dados salvos no banco local para o repositorio. O painel chama a rota protegida `/api/sync-github`, e essa API usa variaveis de ambiente do servidor para sobrescrever os arquivos JSON no GitHub.
 
 Configuracao padrao:
 
@@ -236,9 +236,19 @@ Arquivos atualizados no GitHub:
 - `data/site-catalog.json`: catalogo publicado com certificados, repositorios, showcase e processos;
 - `data/database-backup.json`: backup completo reunindo todos os registros.
 
-Para funcionar, informe no painel um token do GitHub com permissao de escrita em conteudo do repositorio, como `Contents: Read and write`. O token nao fica salvo no codigo do projeto; ele e usado somente na sessao atual do painel. Depois de preencher o token, use `Sincronizar agora` ou ative `Sincronizar automaticamente depois de cada alteracao salva`.
+Variaveis necessarias no servidor ou na Vercel:
 
-Observacao importante: este projeto e um site estatico. Por seguranca, nao existe token do GitHub embutido no codigo publico. A sincronizacao automatica depende do administrador abrir o painel, informar um token valido e manter a opcao automatica ativa.
+```text
+GITHUB_TOKEN=token_com_permissao_contents_read_write
+GITHUB_SYNC_SECRET=senha_forte_para_liberar_a_sincronizacao
+GITHUB_SYNC_OWNER=lzvsrx
+GITHUB_SYNC_REPO=lzdev
+GITHUB_SYNC_BRANCH=main
+```
+
+No painel, preencha a `Senha de sincronizacao` com o mesmo valor de `GITHUB_SYNC_SECRET`. Depois use `Sincronizar agora` ou ative `Sincronizar automaticamente depois de cada alteracao salva`.
+
+Observacao importante: por seguranca, o token do GitHub nunca fica embutido no codigo publico do site. Ele deve existir somente nas variaveis de ambiente do servidor/deploy. A API tambem limita os caminhos que podem ser sobrescritos, permitindo apenas os arquivos da pasta `data/`.
 
 ## Banco de dados
 
