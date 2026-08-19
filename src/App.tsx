@@ -306,6 +306,20 @@ type AdminContent = {
   projectProgresses: ProjectProgress[];
 };
 
+type GitHubSyncSettings = {
+  owner: string;
+  repo: string;
+  branch: string;
+  token: string;
+  autoSync: boolean;
+};
+
+type GitHubSyncFile = {
+  label: string;
+  path: string;
+  content: unknown;
+};
+
 type OrderStatus = 'Pedido recebido' | 'Em analise' | 'Em andamento' | 'Em revisao' | 'Entregue';
 
 type TrackedOrder = ServiceRequest & {
@@ -328,9 +342,18 @@ const initialServiceRequest: ServiceRequest = {
 const orderStorageKey = 'lzdev-service-orders';
 const adminContentStorageKey = 'lzdev-admin-content';
 const siteCatalogStorageKey = 'lzdev-site-catalog';
+const githubSyncStorageKey = 'lzdev-github-sync-settings';
 const adminCredentials = {
   username: 'admin',
   password: 'lzadmin2026',
+};
+
+const defaultGitHubSyncSettings: GitHubSyncSettings = {
+  owner: 'lzvsrx',
+  repo: 'lzdev',
+  branch: 'main',
+  token: '',
+  autoSync: false,
 };
 
 const orderStatusSteps: OrderStatus[] = ['Pedido recebido', 'Em analise', 'Em andamento', 'Em revisao', 'Entregue'];
@@ -395,6 +418,127 @@ function readAdminContent(): AdminContent {
 
 function writeAdminContent(content: AdminContent) {
   void writeDatabaseRecord(adminContentStorageKey, content);
+}
+
+function readGitHubSyncSettings(): GitHubSyncSettings {
+  const storedSettings = readCachedRecord<Partial<GitHubSyncSettings>>(githubSyncStorageKey, {});
+
+  return {
+    ...defaultGitHubSyncSettings,
+    ...storedSettings,
+    token: '',
+  };
+}
+
+function writeGitHubSyncSettings(settings: GitHubSyncSettings) {
+  const { token: _token, ...safeSettings } = settings;
+  void writeDatabaseRecord(githubSyncStorageKey, safeSettings);
+}
+
+function encodeBase64(value: string) {
+  const bytes = new TextEncoder().encode(value);
+  let binary = '';
+
+  bytes.forEach((byte) => {
+    binary += String.fromCharCode(byte);
+  });
+
+  return window.btoa(binary);
+}
+
+function buildGitHubSyncFiles(adminContent: AdminContent, storedOrders: TrackedOrder[]): GitHubSyncFile[] {
+  const updatedAt = new Date().toISOString();
+
+  return [
+    {
+      label: 'Conteudos administraveis',
+      path: 'data/admin-content.json',
+      content: {
+        recordKey: adminContentStorageKey,
+        updatedAt,
+        data: adminContent,
+      },
+    },
+    {
+      label: 'Pedidos e acompanhamentos',
+      path: 'data/service-orders.json',
+      content: {
+        recordKey: orderStorageKey,
+        updatedAt,
+        data: storedOrders,
+      },
+    },
+    {
+      label: 'Catalogo publicado do site',
+      path: 'data/site-catalog.json',
+      content: {
+        recordKey: siteCatalogStorageKey,
+        updatedAt,
+        data: siteCatalog,
+      },
+    },
+    {
+      label: 'Backup completo do banco local',
+      path: 'data/database-backup.json',
+      content: {
+        updatedAt,
+        database: {
+          engine: 'IndexedDB',
+          records: [adminContentStorageKey, orderStorageKey, siteCatalogStorageKey],
+        },
+        adminContent,
+        storedOrders,
+        siteCatalog,
+      },
+    },
+  ];
+}
+
+async function getGitHubFileSha(settings: GitHubSyncSettings, path: string) {
+  const url = `https://api.github.com/repos/${settings.owner}/${settings.repo}/contents/${path}?ref=${encodeURIComponent(settings.branch)}`;
+  const response = await fetch(url, {
+    headers: {
+      Accept: 'application/vnd.github+json',
+      Authorization: `Bearer ${settings.token}`,
+      'X-GitHub-Api-Version': '2022-11-28',
+    },
+  });
+
+  if (response.status === 404) {
+    return undefined;
+  }
+
+  if (!response.ok) {
+    throw new Error(`Nao foi possivel ler ${path} no GitHub.`);
+  }
+
+  const file = await response.json() as { sha?: string };
+  return file.sha;
+}
+
+async function publishGitHubFile(settings: GitHubSyncSettings, file: GitHubSyncFile) {
+  const sha = await getGitHubFileSha(settings, file.path);
+  const content = `${JSON.stringify(file.content, null, 2)}\n`;
+  const response = await fetch(`https://api.github.com/repos/${settings.owner}/${settings.repo}/contents/${file.path}`, {
+    method: 'PUT',
+    headers: {
+      Accept: 'application/vnd.github+json',
+      Authorization: `Bearer ${settings.token}`,
+      'Content-Type': 'application/json',
+      'X-GitHub-Api-Version': '2022-11-28',
+    },
+    body: JSON.stringify({
+      branch: settings.branch,
+      message: `Sync site data: ${file.path}`,
+      content: encodeBase64(content),
+      sha,
+    }),
+  });
+
+  if (!response.ok) {
+    const errorBody = await response.text();
+    throw new Error(`Falha ao salvar ${file.path}: ${errorBody}`);
+  }
 }
 
 function getLinkIcon(label: string) {
@@ -496,6 +640,8 @@ function App() {
   const [adminLoginError, setAdminLoginError] = useState('');
   const [isAdminUnlocked, setIsAdminUnlocked] = useState(false);
   const [importContent, setImportContent] = useState('');
+  const [githubSync, setGitHubSync] = useState<GitHubSyncSettings>(() => readGitHubSyncSettings());
+  const [githubSyncStatus, setGitHubSyncStatus] = useState('Configure o token do GitHub para sincronizar os dados salvos no repositorio.');
   const [databaseStatus] = useState('Banco de dados local ativo: IndexedDB com fallback automatico.');
 
   const editableLinks = useMemo(() => (
@@ -528,6 +674,10 @@ function App() {
       Icon: getServiceIcon(service.title),
     }))
   ), [adminContent.services]);
+
+  const githubSyncFiles = useMemo(() => (
+    buildGitHubSyncFiles(adminContent, storedOrders)
+  ), [adminContent, storedOrders]);
 
   useEffect(() => {
     let isMounted = true;
@@ -568,6 +718,18 @@ function App() {
       isMounted = false;
     };
   }, []);
+
+  useEffect(() => {
+    if (!isAdminUnlocked || !githubSync.autoSync || !githubSync.token.trim()) {
+      return undefined;
+    }
+
+    const timeoutId = window.setTimeout(() => {
+      void syncDataToGitHub('automatico');
+    }, 2500);
+
+    return () => window.clearTimeout(timeoutId);
+  }, [adminContent, storedOrders, isAdminUnlocked, githubSync, githubSyncFiles]);
 
   const filteredCertificates = useMemo(() => {
     const normalizedQuery = query.trim().toLowerCase();
@@ -820,6 +982,38 @@ function App() {
     const nextOrders = storedOrders.filter((_, orderIndex) => orderIndex !== index);
     setStoredOrders(nextOrders);
     writeStoredOrders(nextOrders);
+  }
+
+  function updateGitHubSyncField(field: keyof GitHubSyncSettings, value: string | boolean) {
+    const nextSettings = {
+      ...githubSync,
+      [field]: value,
+    };
+
+    setGitHubSync(nextSettings);
+    writeGitHubSyncSettings(nextSettings);
+  }
+
+  async function syncDataToGitHub(mode: 'manual' | 'automatico' = 'manual') {
+    const hasRequiredSettings = githubSync.owner.trim() && githubSync.repo.trim() && githubSync.branch.trim() && githubSync.token.trim();
+
+    if (!hasRequiredSettings) {
+      setGitHubSyncStatus('Preencha dono, repositorio, branch e token antes de sincronizar.');
+      return;
+    }
+
+    try {
+      setGitHubSyncStatus(mode === 'automatico' ? 'Sincronizando automaticamente com o GitHub...' : 'Sincronizando dados com o GitHub...');
+
+      for (const file of githubSyncFiles) {
+        await publishGitHubFile(githubSync, file);
+      }
+
+      setGitHubSyncStatus(`Sincronizacao concluida: ${githubSyncFiles.length} arquivos salvos em ${githubSync.owner}/${githubSync.repo}.`);
+    } catch (error) {
+      const message = error instanceof Error ? error.message : 'Erro desconhecido ao sincronizar com o GitHub.';
+      setGitHubSyncStatus(message);
+    }
   }
 
   function unlockAdmin(event: React.FormEvent<HTMLFormElement>) {
@@ -1510,6 +1704,70 @@ function App() {
                 <span><strong>{orderStorageKey}</strong>Pedidos, protocolos, status, previsoes e proximas etapas.</span>
                 <span><strong>{siteCatalogStorageKey}</strong>Catalogo do site com certificados, repositorios, showcase e processos.</span>
               </div>
+            </article>
+
+            <article className="admin-panel github-sync-panel">
+              <h3><FolderGit2 aria-hidden="true" className="inline-icon" /> Sincronizacao GitHub</h3>
+              <p className="admin-panel-note">
+                Salva automaticamente os dados do painel em arquivos JSON dentro do repositorio. O token e usado apenas nesta sessao e nao fica salvo no codigo.
+              </p>
+              <div className="form-grid">
+                <label htmlFor="github-owner">
+                  Dono do repositorio
+                  <input
+                    id="github-owner"
+                    value={githubSync.owner}
+                    onChange={(event) => updateGitHubSyncField('owner', event.target.value)}
+                  />
+                </label>
+                <label htmlFor="github-repo">
+                  Repositorio
+                  <input
+                    id="github-repo"
+                    value={githubSync.repo}
+                    onChange={(event) => updateGitHubSyncField('repo', event.target.value)}
+                  />
+                </label>
+                <label htmlFor="github-branch">
+                  Branch
+                  <input
+                    id="github-branch"
+                    value={githubSync.branch}
+                    onChange={(event) => updateGitHubSyncField('branch', event.target.value)}
+                  />
+                </label>
+                <label htmlFor="github-token">
+                  Token do GitHub
+                  <input
+                    id="github-token"
+                    type="password"
+                    value={githubSync.token}
+                    onChange={(event) => updateGitHubSyncField('token', event.target.value)}
+                    placeholder="Token com permissao Contents: Read and write"
+                    autoComplete="off"
+                  />
+                </label>
+              </div>
+              <label htmlFor="github-auto-sync" className="github-auto-sync">
+                <input
+                  id="github-auto-sync"
+                  type="checkbox"
+                  checked={githubSync.autoSync}
+                  onChange={(event) => updateGitHubSyncField('autoSync', event.target.checked)}
+                />
+                Sincronizar automaticamente depois de cada alteracao salva
+              </label>
+              <div className="sync-file-list" aria-label="Arquivos enviados para o GitHub">
+                {githubSyncFiles.map((file) => (
+                  <span key={file.path}><strong>{file.path}</strong>{file.label}</span>
+                ))}
+              </div>
+              <div className="admin-actions">
+                <button type="button" onClick={() => void syncDataToGitHub('manual')}>
+                  <Upload aria-hidden="true" className="inline-icon" /> Sincronizar agora
+                </button>
+              </div>
+              <p className="github-sync-status">{githubSyncStatus}</p>
             </article>
 
             <article className="admin-panel">

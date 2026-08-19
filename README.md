@@ -37,6 +37,7 @@ Este repositorio foi reconstruido com base no projeto original `luizotaviodevs`,
 - Painel administrativo local para editar conteudos, links, tecnologias, bancos, servicos e pedidos.
 - Andamento dos projetos administravel pelo painel, com status, porcentagem, previsao e etapa atual.
 - Banco de dados local em IndexedDB para salvar conteudos, pedidos, andamentos e catalogo do site.
+- Sincronizacao GitHub pelo painel administrativo para publicar os dados salvos em arquivos JSON versionados.
 - Exportacao e importacao de backup administrativo em JSON.
 - SEO com canonical, metatags Open Graph/Twitter, `robots.txt` e `sitemap.xml`.
 - Acessibilidade com skip link, foco visivel e suporte a reducao de movimento.
@@ -205,6 +206,7 @@ Itens administraveis:
 - pedidos salvos no navegador, com status, previsao e proxima etapa;
 - andamento de cada projeto/repositorio exibido no site;
 - backup JSON com conteudos e pedidos.
+- sincronizacao com GitHub dos dados salvos no banco local.
 
 ### Andamento dos projetos
 
@@ -217,7 +219,26 @@ No painel administrativo, a area `Andamento dos projetos` permite escolher um re
 
 Essas informacoes aparecem automaticamente nos cards da secao `Projetos GitHub`.
 
-Observacao importante: este projeto e um site estatico. Por isso, o painel administrativo usa banco local do navegador; as alteracoes ficam salvas no navegador onde foram feitas. Para manter essas alteracoes em outro navegador ou publicar como conteudo fixo, use o backup JSON ou atualize os dados diretamente no codigo.
+### Sincronizacao GitHub
+
+O painel administrativo possui uma area `Sincronizacao GitHub` para enviar automaticamente os dados salvos no banco local para o repositorio.
+
+Configuracao padrao:
+
+- dono do repositorio: `lzvsrx`;
+- repositorio: `lzdev`;
+- branch: `main`.
+
+Arquivos atualizados no GitHub:
+
+- `data/admin-content.json`: textos, links, tecnologias, bancos, servicos e andamento dos projetos;
+- `data/service-orders.json`: pedidos, protocolos, status, previsoes e proximas etapas;
+- `data/site-catalog.json`: catalogo publicado com certificados, repositorios, showcase e processos;
+- `data/database-backup.json`: backup completo reunindo todos os registros.
+
+Para funcionar, informe no painel um token do GitHub com permissao de escrita em conteudo do repositorio, como `Contents: Read and write`. O token nao fica salvo no codigo do projeto; ele e usado somente na sessao atual do painel. Depois de preencher o token, use `Sincronizar agora` ou ative `Sincronizar automaticamente depois de cada alteracao salva`.
+
+Observacao importante: este projeto e um site estatico. Por seguranca, nao existe token do GitHub embutido no codigo publico. A sincronizacao automatica depende do administrador abrir o painel, informar um token valido e manter a opcao automatica ativa.
 
 ## Banco de dados
 
@@ -237,7 +258,7 @@ Registros salvos:
 
 O backup JSON do painel inclui conteudo administrativo, pedidos e catalogo do site.
 
-Observacao: por ser um banco local do navegador, os dados ficam no dispositivo onde foram editados. Para um banco central compartilhado entre todos os dispositivos, e necessario conectar um backend como Supabase, Firebase, PostgreSQL, MySQL ou API propria com credenciais de producao.
+Quando a sincronizacao GitHub esta configurada no painel, os registros do banco local tambem sao publicados nos arquivos JSON da pasta `data/` do repositorio. Para um banco central compartilhado entre todos os dispositivos, ainda e recomendado conectar um backend como Supabase, Firebase, PostgreSQL, MySQL ou API propria com credenciais de producao.
 
 ## Repositorios GitHub
 

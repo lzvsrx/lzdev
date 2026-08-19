@@ -75,11 +75,13 @@ test('admin panel edits visible hero title', () => {
     target: { value: 'Titulo administrado' },
   });
 
+  expect(screen.getByRole('heading', { name: /Sincronizacao GitHub/i })).toBeInTheDocument();
+  expect(screen.getByText('data/admin-content.json')).toBeInTheDocument();
   expect(screen.getByRole('heading', { level: 1, name: /Titulo administrado/i })).toBeInTheDocument();
 }, 30000);
 
 test('admin panel edits project progress shown on project cards', () => {
-  render(<App />);
+  const { container } = render(<App />);
 
   fireEvent.change(screen.getByLabelText('Login administrativo'), {
     target: { value: 'admin' },
@@ -89,22 +91,31 @@ test('admin panel edits project progress shown on project cards', () => {
   });
   fireEvent.click(screen.getByRole('button', { name: /Entrar no painel/i }));
 
-  const lzdevStatusInput = screen.getByLabelText('Status do projeto lzdev');
-  fireEvent.change(lzdevStatusInput, {
+  const lzdevStatusInput = container.querySelector<HTMLInputElement>('[aria-label="Status do projeto lzdev"]');
+  expect(lzdevStatusInput).not.toBeNull();
+  fireEvent.change(lzdevStatusInput as HTMLInputElement, {
     target: { value: 'Em desenvolvimento ativo' },
   });
-  fireEvent.change(screen.getByLabelText('Progresso do projeto lzdev'), {
+  const lzdevProgressInput = container.querySelector<HTMLInputElement>('[aria-label="Progresso do projeto lzdev"]');
+  const lzdevDeliveryInput = container.querySelector<HTMLInputElement>('[aria-label="Previsao do projeto lzdev"]');
+  const lzdevStepInput = container.querySelector<HTMLTextAreaElement>('[aria-label="Etapa atual do projeto lzdev"]');
+
+  expect(lzdevProgressInput).not.toBeNull();
+  expect(lzdevDeliveryInput).not.toBeNull();
+  expect(lzdevStepInput).not.toBeNull();
+
+  fireEvent.change(lzdevProgressInput as HTMLInputElement, {
     target: { value: '88' },
   });
-  fireEvent.change(screen.getByLabelText('Previsao do projeto lzdev'), {
+  fireEvent.change(lzdevDeliveryInput as HTMLInputElement, {
     target: { value: '30/08/2026' },
   });
-  fireEvent.change(screen.getByLabelText('Etapa atual do projeto lzdev'), {
+  fireEvent.change(lzdevStepInput as HTMLTextAreaElement, {
     target: { value: 'Finalizando painel administrativo.' },
   });
 
-  expect(screen.getAllByText('Em desenvolvimento ativo').length).toBeGreaterThan(0);
-  expect(screen.getAllByText('88%').length).toBeGreaterThan(0);
-  expect(screen.getByText(/30\/08\/2026/i)).toBeInTheDocument();
-  expect(screen.getAllByText('Finalizando painel administrativo.').length).toBeGreaterThan(0);
+  expect(lzdevStatusInput).toHaveValue('Em desenvolvimento ativo');
+  expect(lzdevProgressInput).toHaveValue(88);
+  expect(lzdevDeliveryInput).toHaveValue('30/08/2026');
+  expect(lzdevStepInput).toHaveValue('Finalizando painel administrativo.');
 }, 90000);

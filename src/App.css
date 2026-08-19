@@ -1313,6 +1313,55 @@ textarea:focus-visible {
   overflow-wrap: anywhere;
 }
 
+.admin-panel-note {
+  margin: -4px 0 18px;
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+.admin-panel .github-auto-sync {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 16px;
+}
+
+.admin-panel .github-auto-sync input {
+  width: 18px;
+  min-height: 18px;
+  padding: 0;
+  accent-color: #667eea;
+}
+
+.sync-file-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 10px;
+  margin: 16px 0;
+}
+
+.sync-file-list span {
+  display: grid;
+  gap: 5px;
+  padding: 12px;
+  border: 1px solid rgba(102, 126, 234, 0.3);
+  border-radius: 8px;
+  background: rgba(10, 14, 39, 0.28);
+  color: var(--muted);
+}
+
+.sync-file-list strong {
+  color: #8debd4;
+  overflow-wrap: anywhere;
+}
+
+.github-sync-status {
+  margin: 14px 0 0;
+  color: #8debd4;
+  font-weight: 900;
+  overflow-wrap: anywhere;
+}
+
 .admin-panel h3,
 .admin-panel-header h3 {
   display: inline-flex;
