@@ -1,6 +1,7 @@
 import React, { useMemo, useState } from 'react';
 import './App.css';
 import { certificates } from './certificates';
+import { githubRepositories } from './repositories';
 
 const socialLinks = [
   { label: 'LinkedIn', href: 'https://www.linkedin.com/in/luiz-otavio-valenzi-sousa-1180bb360/' },
@@ -62,45 +63,6 @@ const services = [
     icon: 'APP',
     title: 'Criacao de Apps',
     text: 'Aplicativos mobile e web apps com tecnologias modernas e experiencia objetiva para o usuario.',
-  },
-];
-
-const projects = [
-  {
-    icon: 'PKG',
-    title: 'lzworldstech-dev',
-    href: 'https://github.com/lzvsrx/lzworldstech-dev',
-    text: 'Repositorio principal com projetos e contribuicoes.',
-  },
-  {
-    icon: 'SHOP',
-    title: 'Cores & Fragrancias',
-    href: 'https://github.com/lzvsrx',
-    text: 'Sistema de gerenciamento de estoque para loja de cosmeticos.',
-  },
-  {
-    icon: 'WEB',
-    title: 'Portfolio Projects',
-    href: 'https://github.com/lzvsrx?tab=repositories',
-    text: 'Colecao de projetos de desenvolvimento web e mobile.',
-  },
-  {
-    icon: 'FULL',
-    title: 'Full Stack Applications',
-    href: 'https://github.com/lzvsrx?tab=repositories',
-    text: 'Aplicacoes completas com frontend e backend.',
-  },
-  {
-    icon: 'APP',
-    title: 'Mobile Apps',
-    href: 'https://github.com/lzvsrx?tab=repositories',
-    text: 'Aplicativos mobile desenvolvidos com React Native e Flutter.',
-  },
-  {
-    icon: 'API',
-    title: 'Backend & APIs',
-    href: 'https://github.com/lzvsrx?tab=repositories',
-    text: 'Servicos backend, APIs REST e microsservicos.',
   },
 ];
 
@@ -297,19 +259,46 @@ function App() {
       <section className="section projects-section" id="projetos">
         <div className="section-heading">
           <p className="eyebrow">Projetos GitHub</p>
-          <h2>Projetos e repositorios do perfil</h2>
+          <h2>Todos os repositorios publicos do perfil</h2>
+          <p className="section-support">
+            {githubRepositories.length} repositorios carregados do GitHub de Luiz Otavio.
+          </p>
         </div>
         <div className="projects-grid project-summary-grid">
-          {projects.map((project) => (
-            <article className="project-summary-card" key={project.title}>
-              <span className="card-icon">{project.icon}</span>
-              <h3>{project.title}</h3>
-              <p>{project.text}</p>
-              <a href={project.href} target="_blank" rel="noopener noreferrer">
+          {githubRepositories.map((project) => {
+            const updatedAt = new Intl.DateTimeFormat('pt-BR', {
+              day: '2-digit',
+              month: '2-digit',
+              year: 'numeric',
+            }).format(new Date(project.updatedAt));
+
+            return (
+            <article className="project-summary-card" key={project.name}>
+              <span className="card-icon">{project.language ?? 'Repo'}</span>
+              <h3>{project.name}</h3>
+              <p>
+                {project.description ?? `Repositorio publico em ${project.language ?? 'desenvolvimento'}.`}
+              </p>
+              <div className="repo-meta" aria-label={`Metadados do repositorio ${project.name}`}>
+                <span>{project.language ?? 'Sem linguagem'}</span>
+                <span>Atualizado em {updatedAt}</span>
+                <span>{project.stars} estrelas</span>
+                <span>{project.forks} forks</span>
+                {project.archived ? <span>Arquivado</span> : null}
+              </div>
+              <div className="repo-actions">
+                <a href={project.url} target="_blank" rel="noopener noreferrer">
                 Ver projeto <ExternalIcon />
-              </a>
+                </a>
+                {project.homepage ? (
+                  <a href={project.homepage} target="_blank" rel="noopener noreferrer">
+                    Abrir site <ExternalIcon />
+                  </a>
+                ) : null}
+              </div>
             </article>
-          ))}
+            );
+          })}
         </div>
         <div className="github-profile-link">
           <a href="https://github.com/lzvsrx" target="_blank" rel="noopener noreferrer" className="profile-link-btn">

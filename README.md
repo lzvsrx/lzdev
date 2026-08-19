@@ -22,6 +22,7 @@ Este repositorio foi reconstruido com base no projeto original `luizotaviodevs`,
 - Lista de bancos de dados usados.
 - Servicos de informatica e desenvolvimento.
 - Grade de projetos GitHub.
+- Secao de projetos com todos os repositorios publicos do GitHub.
 - Showcase completo do projeto Cores & Fragrancias by Berenice.
 - Busca de certificados por titulo, codigo, tipo ou nome do arquivo.
 - Links diretos para abrir certificados em PDF ou imagem.
@@ -66,6 +67,7 @@ Este repositorio foi reconstruido com base no projeto original `luizotaviodevs`,
     |-- certificates.ts
     |-- index.css
     |-- index.tsx
+    |-- repositories.ts
     |-- setupTests.ts
     `-- vite-env.d.ts
 ```
@@ -102,6 +104,16 @@ Atualmente o site publica 106 documentos entre PDFs e imagens.
 - Repositorio original: `https://github.com/lzvsrx/luizotaviodevs`
 - Projeto lzworldstech-dev: `https://github.com/lzvsrx/lzworldstech-dev`
 - Todos os repositorios: `https://github.com/lzvsrx?tab=repositories`
+
+## Repositorios GitHub
+
+A secao `Projetos GitHub` usa os dados em:
+
+```text
+src/repositories.ts
+```
+
+Esse arquivo lista os repositorios publicos do perfil `lzvsrx`, com nome, URL, descricao, linguagem principal, data de atualizacao, estrelas, forks, homepage e estado de arquivamento.
 
 ## Como rodar localmente
 

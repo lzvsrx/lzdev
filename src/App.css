@@ -288,6 +288,14 @@ h1 {
   line-height: 1.8;
 }
 
+.section-support {
+  max-width: 680px;
+  margin: 14px 0 0;
+  color: var(--muted);
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
 .skills-list {
   display: flex;
   flex-wrap: wrap;
@@ -466,13 +474,38 @@ h1 {
   flex-direction: column;
 }
 
+.repo-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 4px 0 18px;
+}
+
+.repo-meta span {
+  display: inline-flex;
+  align-items: center;
+  min-height: 28px;
+  padding: 5px 9px;
+  border: 1px solid rgba(102, 126, 234, 0.3);
+  border-radius: 999px;
+  color: #d0d0e0;
+  font-size: 0.78rem;
+  font-weight: 800;
+}
+
+.repo-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: auto;
+}
+
 .project-summary-card a {
   display: inline-flex;
   align-items: center;
   align-self: flex-start;
   gap: 8px;
   min-height: 42px;
-  margin-top: auto;
   padding: 10px 14px;
   border-radius: 999px;
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
