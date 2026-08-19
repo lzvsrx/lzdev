@@ -63,6 +63,10 @@ const allLinks = [
   { label: 'Todos os repositorios', href: 'https://github.com/lzvsrx?tab=repositories', Icon: Boxes },
 ];
 
+const heroSocialLinks = socialLinks.filter(
+  (link) => !['WhatsApp', 'GitHub', 'Repositorio'].includes(link.label),
+);
+
 const skills = [
   { name: 'HTML', percentage: 95, Icon: Globe },
   { name: 'CSS', percentage: 90, Icon: Layers3 },
@@ -366,7 +370,7 @@ function App() {
             ))}
           </div>
           <div className="social-chip-row" aria-label="Links sociais">
-            {socialLinks.map((link) => {
+            {heroSocialLinks.map((link) => {
               const { Icon } = link;
 
               return (
