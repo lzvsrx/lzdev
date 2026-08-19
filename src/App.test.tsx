@@ -1,9 +1,10 @@
 import React from 'react';
-import { fireEvent, render, screen } from '@testing-library/react';
+import { cleanup, fireEvent, render, screen } from '@testing-library/react';
 import { afterEach, expect, test, vi } from 'vitest';
 import App from './App';
 
 afterEach(() => {
+  cleanup();
   vi.restoreAllMocks();
 });
 
@@ -47,9 +48,12 @@ test('sends service request to WhatsApp with customer details', () => {
   const decodedUrl = decodeURIComponent(String(whatsAppUrl));
 
   expect(decodedUrl).toContain('https://wa.me/5535999215995?text=');
+  expect(decodedUrl).toContain('Protocolo do pedido: LZ-');
   expect(decodedUrl).toContain('Nome do cliente: Cliente Teste');
   expect(decodedUrl).toContain('Contato do cliente: (35) 99999-0000');
   expect(decodedUrl).toContain('Servico desejado: Criacao de Sites');
   expect(decodedUrl).toContain('Valor/orcamento informado: R$ 500,00');
   expect(decodedUrl).toContain('Preciso de um site institucional com contato.');
+  expect(screen.getAllByText('Pedido recebido').length).toBeGreaterThan(0);
+  expect(screen.getByText('A combinar pelo WhatsApp')).toBeInTheDocument();
 });

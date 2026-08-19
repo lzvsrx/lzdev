@@ -254,6 +254,17 @@ type ServiceRequest = {
   details: string;
 };
 
+type OrderStatus = 'Pedido recebido' | 'Em analise' | 'Em andamento' | 'Em revisao' | 'Entregue';
+
+type TrackedOrder = ServiceRequest & {
+  protocol: string;
+  status: OrderStatus;
+  submittedAt: string;
+  lastUpdate: string;
+  estimatedDelivery: string;
+  nextStep: string;
+};
+
 const initialServiceRequest: ServiceRequest = {
   clientName: '',
   clientContact: '',
@@ -261,6 +272,54 @@ const initialServiceRequest: ServiceRequest = {
   budget: '',
   details: '',
 };
+
+const orderStorageKey = 'lzdev-service-orders';
+
+const orderStatusSteps: OrderStatus[] = ['Pedido recebido', 'Em analise', 'Em andamento', 'Em revisao', 'Entregue'];
+
+const publishedTrackedOrders: TrackedOrder[] = [];
+
+function readStoredOrders(): TrackedOrder[] {
+  if (typeof window === 'undefined') {
+    return [];
+  }
+
+  try {
+    const storedOrders = window.localStorage.getItem(orderStorageKey);
+    return storedOrders ? JSON.parse(storedOrders) as TrackedOrder[] : [];
+  } catch {
+    return [];
+  }
+}
+
+function writeStoredOrders(orders: TrackedOrder[]) {
+  try {
+    window.localStorage.setItem(orderStorageKey, JSON.stringify(orders));
+  } catch {
+    // O acompanhamento continua funcionando na tela atual mesmo se o navegador bloquear localStorage.
+  }
+}
+
+function formatDisplayDate(date: Date) {
+  return new Intl.DateTimeFormat('pt-BR', {
+    day: '2-digit',
+    month: '2-digit',
+    year: 'numeric',
+    hour: '2-digit',
+    minute: '2-digit',
+  }).format(date);
+}
+
+function createOrderProtocol(date = new Date()) {
+  const datePart = [
+    date.getFullYear(),
+    String(date.getMonth() + 1).padStart(2, '0'),
+    String(date.getDate()).padStart(2, '0'),
+  ].join('');
+  const randomPart = Math.random().toString(36).slice(2, 6).toUpperCase();
+
+  return `LZ-${datePart}-${randomPart}`;
+}
 
 function ExternalIcon() {
   return <ExternalLink aria-hidden="true" className="icon" />;
@@ -279,6 +338,8 @@ function App() {
   const [projectQuery, setProjectQuery] = useState('');
   const [visibilityFilter, setVisibilityFilter] = useState<VisibilityFilter>('all');
   const [serviceRequest, setServiceRequest] = useState<ServiceRequest>(initialServiceRequest);
+  const [storedOrders, setStoredOrders] = useState<TrackedOrder[]>(() => readStoredOrders());
+  const [trackingQuery, setTrackingQuery] = useState('');
 
   const filteredCertificates = useMemo(() => {
     const normalizedQuery = query.trim().toLowerCase();
@@ -347,6 +408,26 @@ function App() {
     });
   }, [projectQuery, visibilityFilter]);
 
+  const trackedOrders = useMemo(() => {
+    const ordersByProtocol = new Map<string, TrackedOrder>();
+
+    [...storedOrders, ...publishedTrackedOrders].forEach((order) => {
+      ordersByProtocol.set(order.protocol.toLowerCase(), order);
+    });
+
+    return Array.from(ordersByProtocol.values());
+  }, [storedOrders]);
+
+  const trackedOrder = useMemo(() => {
+    const normalizedQuery = trackingQuery.trim().toLowerCase();
+
+    if (!normalizedQuery) {
+      return storedOrders[0] ?? null;
+    }
+
+    return trackedOrders.find((order) => order.protocol.toLowerCase() === normalizedQuery) ?? null;
+  }, [storedOrders, trackedOrders, trackingQuery]);
+
   function updateServiceRequest(field: keyof ServiceRequest, value: string) {
     setServiceRequest((currentRequest) => ({
       ...currentRequest,
@@ -357,13 +438,32 @@ function App() {
   function handleServiceRequestSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
 
+    const now = new Date();
+    const order: TrackedOrder = {
+      ...serviceRequest,
+      protocol: createOrderProtocol(now),
+      status: 'Pedido recebido',
+      submittedAt: formatDisplayDate(now),
+      lastUpdate: formatDisplayDate(now),
+      estimatedDelivery: 'A combinar pelo WhatsApp',
+      nextStep: 'Aguardando confirmacao do servico, valor final e prazo de entrega.',
+    };
+
+    const updatedOrders = [order, ...storedOrders].slice(0, 12);
+    setStoredOrders(updatedOrders);
+    setTrackingQuery(order.protocol);
+    writeStoredOrders(updatedOrders);
+
     const message = [
       'Ola, Luiz Otavio! Quero pedir um servico pelo seu portfolio.',
       '',
+      `Protocolo do pedido: ${order.protocol}`,
       `Nome do cliente: ${serviceRequest.clientName}`,
       `Contato do cliente: ${serviceRequest.clientContact}`,
       `Servico desejado: ${serviceRequest.serviceType}`,
       `Valor/orcamento informado: ${serviceRequest.budget}`,
+      `Status inicial: ${order.status}`,
+      `Previsao de entrega: ${order.estimatedDelivery}`,
       '',
       'Descricao do que precisa ser feito:',
       serviceRequest.details,
@@ -375,6 +475,8 @@ function App() {
       'noopener,noreferrer',
     );
   }
+
+  const orderStatusIndex = trackedOrder ? orderStatusSteps.indexOf(trackedOrder.status) : -1;
 
   return (
     <main className="site-shell">
@@ -828,6 +930,64 @@ function App() {
             <Send aria-hidden="true" className="inline-icon" /> Enviar pedido pelo WhatsApp <ExternalIcon />
           </button>
         </form>
+        <div className="order-control-panel" aria-label="Acompanhamento do pedido">
+          <div className="section-heading compact-heading">
+            <p className="eyebrow">Controle do Cliente</p>
+            <h2>Acompanhe seu pedido</h2>
+            <p className="section-support">
+              Use o protocolo gerado no envio para consultar se o pedido foi recebido, esta em andamento e qual a previsao de entrega.
+            </p>
+          </div>
+          <label htmlFor="tracking-code" className="tracking-search">
+            Protocolo do pedido
+            <div>
+              <input
+                id="tracking-code"
+                type="search"
+                value={trackingQuery}
+                onChange={(event) => setTrackingQuery(event.target.value)}
+                placeholder="Ex: LZ-20260819-ABCD"
+              />
+              <button type="button" onClick={() => setTrackingQuery(trackingQuery.trim())}>
+                <Search aria-hidden="true" className="inline-icon" /> Consultar
+              </button>
+            </div>
+          </label>
+          {trackedOrder ? (
+            <article className="order-status-card">
+              <div className="order-status-header">
+                <span className="certificate-type"><CheckCircle2 aria-hidden="true" className="inline-icon" />{trackedOrder.status}</span>
+                <strong>{trackedOrder.protocol}</strong>
+              </div>
+              <div className="order-summary-grid">
+                <span><strong>Cliente</strong>{trackedOrder.clientName}</span>
+                <span><strong>Servico</strong>{trackedOrder.serviceType}</span>
+                <span><strong>Valor</strong>{trackedOrder.budget}</span>
+                <span><strong>Entrega</strong>{trackedOrder.estimatedDelivery}</span>
+                <span><strong>Atualizado</strong>{trackedOrder.lastUpdate}</span>
+                <span><strong>Contato</strong>{trackedOrder.clientContact}</span>
+              </div>
+              <p className="order-next-step">{trackedOrder.nextStep}</p>
+              <div className="order-timeline" aria-label={`Status atual: ${trackedOrder.status}`}>
+                {orderStatusSteps.map((status, index) => (
+                  <span
+                    key={status}
+                    className={index <= orderStatusIndex ? 'complete' : ''}
+                    aria-current={status === trackedOrder.status ? 'step' : undefined}
+                  >
+                    {status}
+                  </span>
+                ))}
+              </div>
+            </article>
+          ) : (
+            <p className="empty-state">
+              {trackingQuery.trim()
+                ? 'Nenhum pedido encontrado com esse protocolo.'
+                : 'Depois de enviar um pedido, o protocolo aparece aqui para acompanhamento.'}
+            </p>
+          )}
+        </div>
       </section>
 
       <section className="section links-section">

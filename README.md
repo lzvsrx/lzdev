@@ -31,6 +31,8 @@ Este repositorio foi reconstruido com base no projeto original `luizotaviodevs`,
 - Links diretos para abrir certificados em PDF ou imagem.
 - Formulario de pedido de servico com nome, contato, servico, valor/orcamento e descricao completa.
 - Envio do pedido diretamente para o WhatsApp com a mensagem ja formatada.
+- Protocolo automatico para acompanhamento do pedido.
+- Area de controle para consultar status, proxima etapa e previsao de entrega.
 - SEO com canonical, metatags Open Graph/Twitter, `robots.txt` e `sitemap.xml`.
 - Acessibilidade com skip link, foco visivel e suporte a reducao de movimento.
 - Build otimizado para producao em `dist`.
@@ -136,6 +138,37 @@ https://wa.me/5535999215995
 ```
 
 com uma mensagem pronta contendo todos os dados preenchidos.
+
+Cada pedido tambem gera um protocolo no formato:
+
+```text
+LZ-AAAAMMDD-CODIGO
+```
+
+Esse protocolo aparece na mensagem do WhatsApp e na area `Acompanhe seu pedido`.
+
+## Controle do pedido
+
+A area de acompanhamento permite consultar:
+
+- protocolo do pedido;
+- status atual;
+- servico solicitado;
+- valor/orcamento informado;
+- contato do cliente;
+- data da ultima atualizacao;
+- previsao de entrega;
+- proxima etapa.
+
+Estados previstos:
+
+- `Pedido recebido`;
+- `Em analise`;
+- `Em andamento`;
+- `Em revisao`;
+- `Entregue`.
+
+Os pedidos enviados pelo formulario ficam salvos no navegador do cliente via `localStorage`, permitindo que ele volte ao site e veja o protocolo recente. Para acompanhamento publico apos atualizacoes suas, os pedidos podem ser publicados no array `publishedTrackedOrders` em `src/App.tsx`.
 
 ## Repositorios GitHub
 
