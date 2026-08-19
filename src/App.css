@@ -445,7 +445,8 @@ textarea:focus-visible {
 .about-section,
 .projects-section,
 .links-section,
-.databases-section {
+.databases-section,
+.admin-section {
   background: rgba(26, 31, 58, 0.6);
 }
 
@@ -966,7 +967,11 @@ textarea:focus-visible {
 
 .service-request-form input,
 .service-request-form select,
-.service-request-form textarea {
+.service-request-form textarea,
+.admin-panel input,
+.admin-panel select,
+.admin-panel textarea,
+.admin-login input {
   width: 100%;
   min-height: 46px;
   padding: 10px 14px;
@@ -1141,6 +1146,154 @@ textarea:focus-visible {
   color: #fff;
 }
 
+.admin-login,
+.admin-dashboard,
+.admin-panel {
+  max-width: 1100px;
+}
+
+.admin-login,
+.admin-panel {
+  padding: 24px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--surface);
+  box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+}
+
+.admin-login {
+  display: grid;
+  gap: 14px;
+}
+
+.admin-login label,
+.admin-panel label {
+  display: grid;
+  gap: 8px;
+  color: var(--accent);
+  font-size: 0.92rem;
+  font-weight: 900;
+}
+
+.admin-login button,
+.admin-panel button,
+.admin-actions button,
+.admin-row button,
+.admin-order-row button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 42px;
+  padding: 10px 14px;
+  border: 0;
+  border-radius: 8px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: #fff;
+  font: inherit;
+  font-weight: 900;
+  cursor: pointer;
+}
+
+.admin-warning {
+  margin: 0;
+  color: #ffd6d6;
+  font-weight: 800;
+}
+
+.admin-dashboard {
+  display: grid;
+  gap: 18px;
+}
+
+.admin-summary-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 12px;
+}
+
+.admin-summary-grid article {
+  min-height: 92px;
+  padding: 16px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: rgba(10, 14, 39, 0.34);
+}
+
+.admin-summary-grid strong {
+  display: block;
+  color: #8debd4;
+  font-size: 1.8rem;
+  line-height: 1;
+}
+
+.admin-summary-grid span {
+  color: var(--muted);
+  font-size: 0.84rem;
+  font-weight: 800;
+}
+
+.admin-panel h3,
+.admin-panel-header h3 {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.admin-panel-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.admin-list {
+  display: grid;
+  gap: 12px;
+}
+
+.admin-row,
+.admin-order-row {
+  display: grid;
+  grid-template-columns: minmax(180px, 0.8fr) minmax(240px, 1fr) auto;
+  gap: 10px;
+  align-items: start;
+  padding: 12px;
+  border: 1px solid rgba(102, 126, 234, 0.3);
+  border-radius: 8px;
+  background: rgba(10, 14, 39, 0.28);
+}
+
+.compact-admin-row {
+  grid-template-columns: minmax(180px, 1fr) minmax(100px, 140px) auto;
+}
+
+.service-admin-row {
+  grid-template-columns: minmax(180px, 0.7fr) minmax(260px, 1fr) auto;
+}
+
+.admin-order-row {
+  grid-template-columns: minmax(160px, 0.7fr) repeat(3, minmax(160px, 1fr));
+}
+
+.admin-order-row strong {
+  color: #8debd4;
+  overflow-wrap: anywhere;
+}
+
+.admin-order-row textarea,
+.admin-order-row button {
+  grid-column: span 2;
+}
+
+.admin-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
 .certificates-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
@@ -1223,8 +1376,22 @@ textarea:focus-visible {
   }
 
   .tracking-search div,
-  .order-timeline {
+  .order-timeline,
+  .admin-row,
+  .compact-admin-row,
+  .service-admin-row,
+  .admin-order-row {
     grid-template-columns: 1fr;
+  }
+
+  .admin-order-row textarea,
+  .admin-order-row button {
+    grid-column: auto;
+  }
+
+  .admin-panel-header {
+    align-items: stretch;
+    flex-direction: column;
   }
 }
 

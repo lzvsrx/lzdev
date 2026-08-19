@@ -57,3 +57,17 @@ test('sends service request to WhatsApp with customer details', () => {
   expect(screen.getAllByText('Pedido recebido').length).toBeGreaterThan(0);
   expect(screen.getByText('A combinar pelo WhatsApp')).toBeInTheDocument();
 });
+
+test('admin panel edits visible hero title', () => {
+  render(<App />);
+
+  fireEvent.change(screen.getByLabelText('Codigo administrativo'), {
+    target: { value: 'lzadmin2026' },
+  });
+  fireEvent.click(screen.getByRole('button', { name: /Entrar no painel/i }));
+  fireEvent.change(screen.getByLabelText('Nome/titulo da tela inicial'), {
+    target: { value: 'Titulo administrado' },
+  });
+
+  expect(screen.getByRole('heading', { level: 1, name: /Titulo administrado/i })).toBeInTheDocument();
+}, 10000);

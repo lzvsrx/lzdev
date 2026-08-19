@@ -33,6 +33,8 @@ Este repositorio foi reconstruido com base no projeto original `luizotaviodevs`,
 - Envio do pedido diretamente para o WhatsApp com a mensagem ja formatada.
 - Protocolo automatico para acompanhamento do pedido.
 - Area de controle para consultar status, proxima etapa e previsao de entrega.
+- Painel administrativo local para editar conteudos, links, tecnologias, bancos, servicos e pedidos.
+- Exportacao e importacao de backup administrativo em JSON.
 - SEO com canonical, metatags Open Graph/Twitter, `robots.txt` e `sitemap.xml`.
 - Acessibilidade com skip link, foco visivel e suporte a reducao de movimento.
 - Build otimizado para producao em `dist`.
@@ -169,6 +171,30 @@ Estados previstos:
 - `Entregue`.
 
 Os pedidos enviados pelo formulario ficam salvos no navegador do cliente via `localStorage`, permitindo que ele volte ao site e veja o protocolo recente. Para acompanhamento publico apos atualizacoes suas, os pedidos podem ser publicados no array `publishedTrackedOrders` em `src/App.tsx`.
+
+## Painel administrativo
+
+A secao `Administracao` permite controlar conteudos diretamente pelo site.
+
+Codigo padrao:
+
+```text
+lzadmin2026
+```
+
+Itens administraveis:
+
+- nome/titulo da tela inicial;
+- texto principal da tela inicial;
+- titulo e texto da secao Sobre;
+- links sociais e de contato;
+- tecnologias e niveis;
+- bancos de dados;
+- servicos oferecidos;
+- pedidos salvos no navegador, com status, previsao e proxima etapa;
+- backup JSON com conteudos e pedidos.
+
+Observacao importante: este projeto e um site estatico. Por isso, o painel administrativo usa `localStorage`; as alteracoes ficam salvas no navegador onde foram feitas. Para manter essas alteracoes em outro navegador ou publicar como conteudo fixo, use o backup JSON ou atualize os dados diretamente no codigo.
 
 ## Repositorios GitHub
 

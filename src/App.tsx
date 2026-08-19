@@ -27,6 +27,9 @@ import {
   MonitorCog,
   Package,
   Phone,
+  Plus,
+  RotateCcw,
+  Save,
   Search,
   Send,
   Server,
@@ -40,6 +43,7 @@ import {
   Upload,
   Users,
   Wrench,
+  Trash2,
   type LucideIcon,
 } from 'lucide-react';
 import './App.css';
@@ -57,16 +61,6 @@ const socialLinks = [
   { label: 'GitHub', href: 'https://github.com/lzvsrx', Icon: FolderGit2 },
   { label: 'Repositorio', href: 'https://github.com/lzvsrx/lzworldstech-dev', Icon: FolderGit2 },
 ];
-
-const allLinks = [
-  ...socialLinks,
-  { label: 'Repo original', href: 'https://github.com/lzvsrx/luizotaviodevs', Icon: BookOpen },
-  { label: 'Todos os repositorios', href: 'https://github.com/lzvsrx?tab=repositories', Icon: Boxes },
-];
-
-const heroSocialLinks = socialLinks.filter(
-  (link) => !['WhatsApp', 'GitHub', 'Repositorio'].includes(link.label),
-);
 
 const skills = [
   { name: 'HTML', percentage: 95, Icon: Globe },
@@ -254,6 +248,32 @@ type ServiceRequest = {
   details: string;
 };
 
+type EditableLink = {
+  label: string;
+  href: string;
+};
+
+type EditableSkill = {
+  name: string;
+  percentage: number;
+};
+
+type EditableService = {
+  title: string;
+  text: string;
+};
+
+type AdminContent = {
+  heroTitle: string;
+  heroSubtitle: string;
+  aboutTitle: string;
+  aboutText: string;
+  links: EditableLink[];
+  skills: EditableSkill[];
+  databases: string[];
+  services: EditableService[];
+};
+
 type OrderStatus = 'Pedido recebido' | 'Em analise' | 'Em andamento' | 'Em revisao' | 'Entregue';
 
 type TrackedOrder = ServiceRequest & {
@@ -274,10 +294,79 @@ const initialServiceRequest: ServiceRequest = {
 };
 
 const orderStorageKey = 'lzdev-service-orders';
+const adminContentStorageKey = 'lzdev-admin-content';
+const adminAccessCode = 'lzadmin2026';
 
 const orderStatusSteps: OrderStatus[] = ['Pedido recebido', 'Em analise', 'Em andamento', 'Em revisao', 'Entregue'];
 
 const publishedTrackedOrders: TrackedOrder[] = [];
+
+const defaultAdminContent: AdminContent = {
+  heroTitle: 'Luiz Otavio Valenzi Sousa',
+  heroSubtitle: 'Desenvolvedor apaixonado por tecnologia, com experiencia em criacao de sites, aplicativos, programacao e servicos de informatica.',
+  aboutTitle: 'Desenvolvimento web, apps e manutencao de computadores',
+  aboutText: 'Especializado em desenvolvimento web e manutencao de computadores, com atuacao em sites profissionais, sistemas personalizados, aplicativos mobile, automacoes e suporte tecnico.',
+  links: socialLinks.map(({ label, href }) => ({ label, href })),
+  skills: skills.map(({ name, percentage }) => ({ name, percentage })),
+  databases,
+  services: services.map(({ title, text }) => ({ title, text })),
+};
+
+function readAdminContent(): AdminContent {
+  if (typeof window === 'undefined') {
+    return defaultAdminContent;
+  }
+
+  try {
+    const storedContent = window.localStorage.getItem(adminContentStorageKey);
+    return storedContent ? { ...defaultAdminContent, ...JSON.parse(storedContent) as AdminContent } : defaultAdminContent;
+  } catch {
+    return defaultAdminContent;
+  }
+}
+
+function writeAdminContent(content: AdminContent) {
+  try {
+    window.localStorage.setItem(adminContentStorageKey, JSON.stringify(content));
+  } catch {
+    // O painel continua atualizando a tela atual mesmo se o navegador bloquear localStorage.
+  }
+}
+
+function getLinkIcon(label: string) {
+  const normalizedLabel = label.toLowerCase();
+
+  if (normalizedLabel.includes('instagram')) return normalizedLabel.includes('game') ? Gamepad2 : Camera;
+  if (normalizedLabel.includes('whatsapp')) return MessageCircle;
+  if (normalizedLabel.includes('telefone')) return Phone;
+  if (normalizedLabel.includes('github') || normalizedLabel.includes('repo')) return FolderGit2;
+  if (normalizedLabel.includes('linkedin')) return BriefcaseBusiness;
+
+  return Globe;
+}
+
+function getSkillIcon(name: string) {
+  const normalizedName = name.toLowerCase();
+
+  if (normalizedName.includes('react native') || normalizedName.includes('flutter') || normalizedName.includes('swift') || normalizedName.includes('kotlin')) return Smartphone;
+  if (normalizedName.includes('php') || normalizedName.includes('node')) return Server;
+  if (normalizedName.includes('python')) return Cpu;
+  if (normalizedName.includes('html') || normalizedName.includes('css')) return Globe;
+
+  return Code2;
+}
+
+function getServiceIcon(title: string) {
+  const normalizedTitle = title.toLowerCase();
+
+  if (normalizedTitle.includes('format')) return MonitorCog;
+  if (normalizedTitle.includes('peca') || normalizedTitle.includes('peça')) return HardDrive;
+  if (normalizedTitle.includes('manut')) return Wrench;
+  if (normalizedTitle.includes('site')) return Globe;
+  if (normalizedTitle.includes('app')) return Smartphone;
+
+  return Code2;
+}
 
 function readStoredOrders(): TrackedOrder[] {
   if (typeof window === 'undefined') {
@@ -340,6 +429,41 @@ function App() {
   const [serviceRequest, setServiceRequest] = useState<ServiceRequest>(initialServiceRequest);
   const [storedOrders, setStoredOrders] = useState<TrackedOrder[]>(() => readStoredOrders());
   const [trackingQuery, setTrackingQuery] = useState('');
+  const [adminContent, setAdminContent] = useState<AdminContent>(() => readAdminContent());
+  const [adminCode, setAdminCode] = useState('');
+  const [isAdminUnlocked, setIsAdminUnlocked] = useState(false);
+  const [importContent, setImportContent] = useState('');
+
+  const editableLinks = useMemo(() => (
+    adminContent.links.map((link) => ({
+      ...link,
+      Icon: getLinkIcon(link.label),
+    }))
+  ), [adminContent.links]);
+
+  const editableHeroLinks = useMemo(() => (
+    editableLinks.filter((link) => !['WhatsApp', 'GitHub', 'Repositorio'].includes(link.label))
+  ), [editableLinks]);
+
+  const editableAllLinks = useMemo(() => ([
+    ...editableLinks,
+    { label: 'Repo original', href: 'https://github.com/lzvsrx/luizotaviodevs', Icon: BookOpen },
+    { label: 'Todos os repositorios', href: 'https://github.com/lzvsrx?tab=repositories', Icon: Boxes },
+  ]), [editableLinks]);
+
+  const editableSkills = useMemo(() => (
+    adminContent.skills.map((skill) => ({
+      ...skill,
+      Icon: getSkillIcon(skill.name),
+    }))
+  ), [adminContent.skills]);
+
+  const editableServices = useMemo(() => (
+    adminContent.services.map((service) => ({
+      ...service,
+      Icon: getServiceIcon(service.title),
+    }))
+  ), [adminContent.services]);
 
   const filteredCertificates = useMemo(() => {
     const normalizedQuery = query.trim().toLowerCase();
@@ -435,6 +559,155 @@ function App() {
     }));
   }
 
+  function updateAdminContent(nextContent: AdminContent) {
+    setAdminContent(nextContent);
+    writeAdminContent(nextContent);
+  }
+
+  function updateAdminField(field: keyof AdminContent, value: string) {
+    updateAdminContent({
+      ...adminContent,
+      [field]: value,
+    });
+  }
+
+  function updateAdminLink(index: number, field: keyof EditableLink, value: string) {
+    const nextLinks = adminContent.links.map((link, linkIndex) => (
+      linkIndex === index ? { ...link, [field]: value } : link
+    ));
+
+    updateAdminContent({ ...adminContent, links: nextLinks });
+  }
+
+  function addAdminLink() {
+    updateAdminContent({
+      ...adminContent,
+      links: [...adminContent.links, { label: 'Novo link', href: 'https://' }],
+    });
+  }
+
+  function removeAdminLink(index: number) {
+    updateAdminContent({
+      ...adminContent,
+      links: adminContent.links.filter((_, linkIndex) => linkIndex !== index),
+    });
+  }
+
+  function updateAdminSkill(index: number, field: keyof EditableSkill, value: string) {
+    const nextSkills = adminContent.skills.map((skill, skillIndex) => (
+      skillIndex === index
+        ? { ...skill, [field]: field === 'percentage' ? Number(value) : value }
+        : skill
+    ));
+
+    updateAdminContent({ ...adminContent, skills: nextSkills });
+  }
+
+  function addAdminSkill() {
+    updateAdminContent({
+      ...adminContent,
+      skills: [...adminContent.skills, { name: 'Nova tecnologia', percentage: 70 }],
+    });
+  }
+
+  function removeAdminSkill(index: number) {
+    updateAdminContent({
+      ...adminContent,
+      skills: adminContent.skills.filter((_, skillIndex) => skillIndex !== index),
+    });
+  }
+
+  function updateAdminService(index: number, field: keyof EditableService, value: string) {
+    const nextServices = adminContent.services.map((service, serviceIndex) => (
+      serviceIndex === index ? { ...service, [field]: value } : service
+    ));
+
+    updateAdminContent({ ...adminContent, services: nextServices });
+  }
+
+  function addAdminService() {
+    updateAdminContent({
+      ...adminContent,
+      services: [...adminContent.services, { title: 'Novo servico', text: 'Descreva o servico oferecido.' }],
+    });
+  }
+
+  function removeAdminService(index: number) {
+    updateAdminContent({
+      ...adminContent,
+      services: adminContent.services.filter((_, serviceIndex) => serviceIndex !== index),
+    });
+  }
+
+  function updateAdminDatabase(index: number, value: string) {
+    updateAdminContent({
+      ...adminContent,
+      databases: adminContent.databases.map((database, databaseIndex) => (
+        databaseIndex === index ? value : database
+      )),
+    });
+  }
+
+  function addAdminDatabase() {
+    updateAdminContent({
+      ...adminContent,
+      databases: [...adminContent.databases, 'Novo banco'],
+    });
+  }
+
+  function removeAdminDatabase(index: number) {
+    updateAdminContent({
+      ...adminContent,
+      databases: adminContent.databases.filter((_, databaseIndex) => databaseIndex !== index),
+    });
+  }
+
+  function updateStoredOrder(index: number, field: keyof TrackedOrder, value: string) {
+    const nextOrders = storedOrders.map((order, orderIndex) => (
+      orderIndex === index ? { ...order, [field]: value } : order
+    ));
+
+    setStoredOrders(nextOrders);
+    writeStoredOrders(nextOrders);
+  }
+
+  function removeStoredOrder(index: number) {
+    const nextOrders = storedOrders.filter((_, orderIndex) => orderIndex !== index);
+    setStoredOrders(nextOrders);
+    writeStoredOrders(nextOrders);
+  }
+
+  function unlockAdmin(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    setIsAdminUnlocked(adminCode === adminAccessCode);
+  }
+
+  function exportAdminBackup() {
+    const backup = JSON.stringify({ adminContent, storedOrders }, null, 2);
+    setImportContent(backup);
+  }
+
+  function importAdminBackup() {
+    try {
+      const parsedBackup = JSON.parse(importContent) as Partial<{ adminContent: AdminContent; storedOrders: TrackedOrder[] }>;
+
+      if (parsedBackup.adminContent) {
+        updateAdminContent({ ...defaultAdminContent, ...parsedBackup.adminContent });
+      }
+
+      if (parsedBackup.storedOrders) {
+        setStoredOrders(parsedBackup.storedOrders);
+        writeStoredOrders(parsedBackup.storedOrders);
+      }
+    } catch {
+      setImportContent('JSON invalido. Revise o backup e tente novamente.');
+    }
+  }
+
+  function resetAdminContent() {
+    updateAdminContent(defaultAdminContent);
+  }
+
   function handleServiceRequestSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
 
@@ -489,16 +762,16 @@ function App() {
           <a href="#projetos"><FolderGit2 aria-hidden="true" className="inline-icon" />Projetos</a>
           <a href="#certificados"><Award aria-hidden="true" className="inline-icon" />Certificados</a>
           <a href="#contato"><Globe aria-hidden="true" className="inline-icon" />Contato</a>
+          <a href="#admin"><LockKeyhole aria-hidden="true" className="inline-icon" />Admin</a>
         </div>
       </nav>
 
       <section className="hero" id="inicio">
         <div className="hero-copy">
           <p className="eyebrow">Desenvolvedor Full Stack</p>
-          <h1>Luiz Otavio Valenzi Sousa</h1>
+          <h1>{adminContent.heroTitle}</h1>
           <p className="hero-text">
-            Desenvolvedor apaixonado por tecnologia, com experiencia em criacao de sites,
-            aplicativos, programacao e servicos de informatica.
+            {adminContent.heroSubtitle}
           </p>
           <div className="hero-actions">
             <a className="primary-button" href="#certificados"><Award aria-hidden="true" className="inline-icon" />Ver certificados</a>
@@ -519,7 +792,7 @@ function App() {
             ))}
           </div>
           <div className="social-chip-row" aria-label="Links sociais">
-            {heroSocialLinks.map((link) => {
+            {editableHeroLinks.map((link) => {
               const { Icon } = link;
 
               return (
@@ -546,11 +819,10 @@ function App() {
         <div id="conteudo" className="anchor-target" aria-hidden="true" />
         <div className="section-heading">
           <p className="eyebrow">Sobre Mim</p>
-          <h2>Desenvolvimento web, apps e manutencao de computadores</h2>
+          <h2>{adminContent.aboutTitle}</h2>
         </div>
         <p className="about-text">
-          Especializado em desenvolvimento web e manutencao de computadores, com atuacao em
-          sites profissionais, sistemas personalizados, aplicativos mobile, automacoes e suporte tecnico.
+          {adminContent.aboutText}
         </p>
         <div className="proof-strip" aria-label="Pontos fortes do portfolio">
           <span><Sparkles aria-hidden="true" className="inline-icon" />Projetos reais e publicados</span>
@@ -566,7 +838,7 @@ function App() {
           <h2>Tecnologias e niveis do repositorio base</h2>
         </div>
         <div className="skills-grid">
-          {skills.map((skill) => (
+          {editableSkills.map((skill) => (
             <article className="skill-item" key={skill.name}>
               <div className="skill-info">
                 <span className="skill-name"><skill.Icon aria-hidden="true" className="inline-icon" />{skill.name}</span>
@@ -586,7 +858,7 @@ function App() {
           <h2>Persistencia e organizacao de dados</h2>
         </div>
         <div className="databases-grid">
-          {databases.map((database) => (
+          {adminContent.databases.map((database) => (
             <article className="database-item" key={database}>
               <IconBadge Icon={Database} />
               <h3>{database}</h3>
@@ -601,7 +873,7 @@ function App() {
           <h2>Do codigo ao computador pronto para uso</h2>
         </div>
         <div className="services-grid">
-          {services.map((service) => (
+          {editableServices.map((service) => (
             <article className="service-card" key={service.title}>
               <IconBadge Icon={service.Icon} />
               <h3>{service.title}</h3>
@@ -895,7 +1167,7 @@ function App() {
                 required
               >
                 <option value="">Selecione um servico</option>
-                {services.map((service) => (
+                {editableServices.map((service) => (
                   <option key={service.title} value={service.title}>{service.title}</option>
                 ))}
                 <option value="Outro servico">Outro servico</option>
@@ -996,7 +1268,7 @@ function App() {
           <h2>Contato e presenca online</h2>
         </div>
         <div className="links-grid">
-          {allLinks.map((link) => {
+          {editableAllLinks.map((link) => {
             const { Icon } = link;
 
             return (
@@ -1008,6 +1280,239 @@ function App() {
             );
           })}
         </div>
+      </section>
+
+      <section className="section admin-section" id="admin">
+        <div className="section-heading">
+          <p className="eyebrow">Administracao</p>
+          <h2>Painel de controle do site</h2>
+          <p className="section-support">
+            Edite conteudos, links, servicos, tecnologias, bancos de dados e pedidos salvos neste navegador.
+          </p>
+        </div>
+
+        {!isAdminUnlocked ? (
+          <form className="admin-login" onSubmit={unlockAdmin}>
+            <label htmlFor="admin-code">
+              Codigo administrativo
+              <input
+                id="admin-code"
+                type="password"
+                value={adminCode}
+                onChange={(event) => setAdminCode(event.target.value)}
+                placeholder="Digite o codigo de administracao"
+              />
+            </label>
+            <button type="submit"><LockKeyhole aria-hidden="true" className="inline-icon" /> Entrar no painel</button>
+            {adminCode && adminCode !== adminAccessCode ? (
+              <p className="admin-warning">Codigo incorreto. Tente novamente.</p>
+            ) : null}
+          </form>
+        ) : (
+          <div className="admin-dashboard">
+            <div className="admin-summary-grid">
+              <article><strong>{adminContent.links.length}</strong><span>links administraveis</span></article>
+              <article><strong>{adminContent.skills.length}</strong><span>tecnologias</span></article>
+              <article><strong>{adminContent.services.length}</strong><span>servicos</span></article>
+              <article><strong>{storedOrders.length}</strong><span>pedidos locais</span></article>
+              <article><strong>{certificates.length}</strong><span>certificados publicados</span></article>
+              <article><strong>{githubRepositories.length}</strong><span>repositorios no site</span></article>
+            </div>
+
+            <article className="admin-panel">
+              <h3><FileText aria-hidden="true" className="inline-icon" /> Textos principais</h3>
+              <div className="form-grid">
+                <label htmlFor="admin-hero-title">
+                  Nome/titulo da tela inicial
+                  <input
+                    id="admin-hero-title"
+                    value={adminContent.heroTitle}
+                    onChange={(event) => updateAdminField('heroTitle', event.target.value)}
+                  />
+                </label>
+                <label htmlFor="admin-about-title">
+                  Titulo da secao Sobre
+                  <input
+                    id="admin-about-title"
+                    value={adminContent.aboutTitle}
+                    onChange={(event) => updateAdminField('aboutTitle', event.target.value)}
+                  />
+                </label>
+              </div>
+              <label htmlFor="admin-hero-subtitle" className="full-field">
+                Texto da tela inicial
+                <textarea
+                  id="admin-hero-subtitle"
+                  rows={4}
+                  value={adminContent.heroSubtitle}
+                  onChange={(event) => updateAdminField('heroSubtitle', event.target.value)}
+                />
+              </label>
+              <label htmlFor="admin-about-text" className="full-field">
+                Texto da secao Sobre
+                <textarea
+                  id="admin-about-text"
+                  rows={4}
+                  value={adminContent.aboutText}
+                  onChange={(event) => updateAdminField('aboutText', event.target.value)}
+                />
+              </label>
+            </article>
+
+            <article className="admin-panel">
+              <div className="admin-panel-header">
+                <h3><Globe aria-hidden="true" className="inline-icon" /> Links</h3>
+                <button type="button" onClick={addAdminLink}><Plus aria-hidden="true" className="inline-icon" /> Adicionar link</button>
+              </div>
+              <div className="admin-list">
+                {adminContent.links.map((link, index) => (
+                  <div className="admin-row" key={`${link.label}-${index}`}>
+                    <input
+                      aria-label={`Nome do link ${index + 1}`}
+                      value={link.label}
+                      onChange={(event) => updateAdminLink(index, 'label', event.target.value)}
+                    />
+                    <input
+                      aria-label={`URL do link ${index + 1}`}
+                      value={link.href}
+                      onChange={(event) => updateAdminLink(index, 'href', event.target.value)}
+                    />
+                    <button type="button" onClick={() => removeAdminLink(index)}><Trash2 aria-hidden="true" className="inline-icon" /> Remover</button>
+                  </div>
+                ))}
+              </div>
+            </article>
+
+            <article className="admin-panel">
+              <div className="admin-panel-header">
+                <h3><Code2 aria-hidden="true" className="inline-icon" /> Tecnologias</h3>
+                <button type="button" onClick={addAdminSkill}><Plus aria-hidden="true" className="inline-icon" /> Adicionar tecnologia</button>
+              </div>
+              <div className="admin-list">
+                {adminContent.skills.map((skill, index) => (
+                  <div className="admin-row compact-admin-row" key={`${skill.name}-${index}`}>
+                    <input
+                      aria-label={`Nome da tecnologia ${index + 1}`}
+                      value={skill.name}
+                      onChange={(event) => updateAdminSkill(index, 'name', event.target.value)}
+                    />
+                    <input
+                      aria-label={`Nivel da tecnologia ${index + 1}`}
+                      type="number"
+                      min="0"
+                      max="100"
+                      value={skill.percentage}
+                      onChange={(event) => updateAdminSkill(index, 'percentage', event.target.value)}
+                    />
+                    <button type="button" onClick={() => removeAdminSkill(index)}><Trash2 aria-hidden="true" className="inline-icon" /> Remover</button>
+                  </div>
+                ))}
+              </div>
+            </article>
+
+            <article className="admin-panel">
+              <div className="admin-panel-header">
+                <h3><Database aria-hidden="true" className="inline-icon" /> Bancos de dados</h3>
+                <button type="button" onClick={addAdminDatabase}><Plus aria-hidden="true" className="inline-icon" /> Adicionar banco</button>
+              </div>
+              <div className="admin-list">
+                {adminContent.databases.map((database, index) => (
+                  <div className="admin-row compact-admin-row" key={`${database}-${index}`}>
+                    <input
+                      aria-label={`Banco de dados ${index + 1}`}
+                      value={database}
+                      onChange={(event) => updateAdminDatabase(index, event.target.value)}
+                    />
+                    <button type="button" onClick={() => removeAdminDatabase(index)}><Trash2 aria-hidden="true" className="inline-icon" /> Remover</button>
+                  </div>
+                ))}
+              </div>
+            </article>
+
+            <article className="admin-panel">
+              <div className="admin-panel-header">
+                <h3><Wrench aria-hidden="true" className="inline-icon" /> Servicos</h3>
+                <button type="button" onClick={addAdminService}><Plus aria-hidden="true" className="inline-icon" /> Adicionar servico</button>
+              </div>
+              <div className="admin-list">
+                {adminContent.services.map((service, index) => (
+                  <div className="admin-row service-admin-row" key={`${service.title}-${index}`}>
+                    <input
+                      aria-label={`Titulo do servico ${index + 1}`}
+                      value={service.title}
+                      onChange={(event) => updateAdminService(index, 'title', event.target.value)}
+                    />
+                    <textarea
+                      aria-label={`Descricao do servico ${index + 1}`}
+                      value={service.text}
+                      rows={3}
+                      onChange={(event) => updateAdminService(index, 'text', event.target.value)}
+                    />
+                    <button type="button" onClick={() => removeAdminService(index)}><Trash2 aria-hidden="true" className="inline-icon" /> Remover</button>
+                  </div>
+                ))}
+              </div>
+            </article>
+
+            <article className="admin-panel">
+              <h3><CalendarClock aria-hidden="true" className="inline-icon" /> Pedidos e entregas</h3>
+              <div className="admin-list">
+                {storedOrders.length ? storedOrders.map((order, index) => (
+                  <div className="admin-order-row" key={order.protocol}>
+                    <strong>{order.protocol}</strong>
+                    <input
+                      aria-label={`Cliente do pedido ${order.protocol}`}
+                      value={order.clientName}
+                      onChange={(event) => updateStoredOrder(index, 'clientName', event.target.value)}
+                    />
+                    <select
+                      aria-label={`Status do pedido ${order.protocol}`}
+                      value={order.status}
+                      onChange={(event) => updateStoredOrder(index, 'status', event.target.value)}
+                    >
+                      {orderStatusSteps.map((status) => (
+                        <option key={status} value={status}>{status}</option>
+                      ))}
+                    </select>
+                    <input
+                      aria-label={`Previsao do pedido ${order.protocol}`}
+                      value={order.estimatedDelivery}
+                      onChange={(event) => updateStoredOrder(index, 'estimatedDelivery', event.target.value)}
+                    />
+                    <textarea
+                      aria-label={`Proxima etapa do pedido ${order.protocol}`}
+                      rows={3}
+                      value={order.nextStep}
+                      onChange={(event) => updateStoredOrder(index, 'nextStep', event.target.value)}
+                    />
+                    <button type="button" onClick={() => removeStoredOrder(index)}><Trash2 aria-hidden="true" className="inline-icon" /> Remover pedido</button>
+                  </div>
+                )) : (
+                  <p className="empty-state">Ainda nao ha pedidos salvos neste navegador.</p>
+                )}
+              </div>
+            </article>
+
+            <article className="admin-panel">
+              <h3><Save aria-hidden="true" className="inline-icon" /> Backup e restauracao</h3>
+              <div className="admin-actions">
+                <button type="button" onClick={exportAdminBackup}><FileText aria-hidden="true" className="inline-icon" /> Gerar backup JSON</button>
+                <button type="button" onClick={importAdminBackup}><Upload aria-hidden="true" className="inline-icon" /> Importar JSON</button>
+                <button type="button" onClick={resetAdminContent}><RotateCcw aria-hidden="true" className="inline-icon" /> Restaurar padrao</button>
+              </div>
+              <label htmlFor="admin-backup" className="full-field">
+                Backup JSON
+                <textarea
+                  id="admin-backup"
+                  rows={8}
+                  value={importContent}
+                  onChange={(event) => setImportContent(event.target.value)}
+                  placeholder="Gere um backup ou cole aqui um JSON para importar."
+                />
+              </label>
+            </article>
+          </div>
+        )}
       </section>
 
       <footer className="footer">
