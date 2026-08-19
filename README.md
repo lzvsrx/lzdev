@@ -1,46 +1,222 @@
-# Getting Started with Create React App
+# LZDevs Portfolio
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Portfolio profissional de Luiz Otavio Valenzi Sousa, desenvolvido em React e TypeScript com Vite. O projeto apresenta perfil, habilidades, servicos de informatica, projetos do GitHub, vitrine do sistema Cores & Fragrancias by Berenice e uma area completa de certificados com busca e links diretos para os documentos.
 
-## Available Scripts
+## Visao geral
 
-In the project directory, you can run:
+Este repositorio foi reconstruido com base no projeto original `luizotaviodevs`, preservando:
 
-### `npm start`
+- paleta visual original em azul escuro, roxo e lavanda;
+- foto de perfil e imagens do projeto Cores & Fragrancias;
+- links sociais e links de repositorios;
+- secoes de habilidades, bancos de dados, servicos, projetos e destaque;
+- todos os certificados locais publicados em `public/certificados`;
+- configuracao moderna com Vite, Vitest e TypeScript.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## Principais recursos
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+- Pagina unica responsiva para desktop e mobile.
+- Navegacao por ancoras: Sobre, Habilidades, Projetos, Certificados e Contato.
+- Hero com foto de perfil, links sociais e total de certificados publicados.
+- Linguagens de programacao com barras de progresso.
+- Lista de bancos de dados usados.
+- Servicos de informatica e desenvolvimento.
+- Grade de projetos GitHub.
+- Showcase completo do projeto Cores & Fragrancias by Berenice.
+- Busca de certificados por titulo, codigo, tipo ou nome do arquivo.
+- Links diretos para abrir certificados em PDF ou imagem.
+- Build otimizado para producao em `dist`.
 
-### `npm test`
+## Tecnologias
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- React 19
+- React DOM 19
+- TypeScript 5
+- Vite 7
+- Vitest
+- Testing Library
+- CSS puro responsivo
 
-### `npm run build`
+## Estrutura do projeto
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+```text
+.
+|-- index.html
+|-- package.json
+|-- package-lock.json
+|-- tsconfig.json
+|-- vite.config.ts
+|-- public/
+|   |-- certificados/
+|   |-- cores-dashboard.png
+|   |-- cores-login.png
+|   |-- cores-products.png
+|   |-- cores-users.png
+|   |-- favicon.ico
+|   |-- icone.png
+|   |-- logo192.png
+|   |-- logo512.png
+|   |-- manifest.json
+|   |-- profile.jpg
+|   `-- robots.txt
+`-- src/
+    |-- App.css
+    |-- App.test.tsx
+    |-- App.tsx
+    |-- certificates.ts
+    |-- index.css
+    |-- index.tsx
+    |-- setupTests.ts
+    `-- vite-env.d.ts
+```
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## Certificados
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Os certificados ficam em:
 
-### `npm run eject`
+```text
+public/certificados/
+```
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+A lista exibida no site e gerada no arquivo:
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+```text
+src/certificates.ts
+```
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+Cada item possui:
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+- `title`: titulo exibido no card;
+- `fileName`: nome seguro usado no projeto;
+- `originalName`: nome original do arquivo;
+- `type`: `PDF` ou `Imagem`;
+- `href`: caminho publico para abrir o certificado.
 
-## Learn More
+Atualmente o site publica 106 documentos entre PDFs e imagens.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+## Links usados no site
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+- LinkedIn: `https://www.linkedin.com/in/luiz-otavio-valenzi-sousa-1180bb360/`
+- Instagram: `https://www.instagram.com/luiz.otaviovs/`
+- GitHub: `https://github.com/lzvsrx`
+- Repositorio original: `https://github.com/lzvsrx/luizotaviodevs`
+- Projeto lzworldstech-dev: `https://github.com/lzvsrx/lzworldstech-dev`
+- Todos os repositorios: `https://github.com/lzvsrx?tab=repositories`
+
+## Como rodar localmente
+
+Instale as dependencias:
+
+```bash
+npm install
+```
+
+Inicie o servidor de desenvolvimento:
+
+```bash
+npm start
+```
+
+Por padrao, o Vite abre em:
+
+```text
+http://localhost:5173
+```
+
+## Scripts disponiveis
+
+```bash
+npm start
+```
+
+Inicia o servidor de desenvolvimento com Vite.
+
+```bash
+npm run dev
+```
+
+Alias para iniciar o servidor de desenvolvimento.
+
+```bash
+npm run typecheck
+```
+
+Executa a checagem de tipos TypeScript sem gerar arquivos.
+
+```bash
+npm run build
+```
+
+Executa `tsc --noEmit` e gera o build de producao em `dist`.
+
+```bash
+npm run preview
+```
+
+Serve localmente o build de producao gerado.
+
+```bash
+npm test
+```
+
+Executa os testes automatizados com Vitest.
+
+```bash
+npm run audit
+```
+
+Executa auditoria de seguranca das dependencias.
+
+## Seguranca
+
+O projeto foi migrado de Create React App para Vite para remover a cadeia antiga de dependencias do `react-scripts`, que puxava pacotes com alertas de seguranca.
+
+Medidas aplicadas:
+
+- `npm audit` validado com `0 vulnerabilities`;
+- links externos com `rel="noopener noreferrer"`;
+- `Content-Security-Policy` basica no `index.html`;
+- `object-src 'none'` para reduzir superficie de plugins e embeds;
+- build com typecheck obrigatorio;
+- `dist/` ignorado pelo Git;
+- dependencias antigas removidas: `react-scripts`, `web-vitals` e tipos do CRA.
+
+## Validacao
+
+Comandos executados com sucesso:
+
+```bash
+npm run typecheck
+npm run build
+npm test
+npm audit
+```
+
+Resultado da auditoria:
+
+```text
+found 0 vulnerabilities
+```
+
+## Build e deploy
+
+Para gerar uma versao de producao:
+
+```bash
+npm run build
+```
+
+Os arquivos finais ficam em:
+
+```text
+dist/
+```
+
+Essa pasta pode ser publicada em qualquer hospedagem estatica, como Vercel, Netlify, GitHub Pages ou servidor proprio.
+
+## Observacoes
+
+- O arquivo `public/index.html` foi removido porque Vite usa `index.html` na raiz do projeto.
+- A pasta `public/` continua sendo usada para imagens, manifesto, icones e certificados.
+- O conteudo visual e os assets principais foram preservados do repositorio base.
+- Os certificados foram incorporados como arquivos estaticos para que os links funcionem sem backend.
