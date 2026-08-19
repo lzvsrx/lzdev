@@ -69,6 +69,28 @@ const skills = [
   { name: 'JavaScript', percentage: 85, Icon: Code2 },
   { name: 'PHP', percentage: 80, Icon: Server },
   { name: 'Python', percentage: 75, Icon: Cpu },
+  { name: 'Analise de Dados com Python', percentage: 78, Icon: BarChart3 },
+  { name: 'Django', percentage: 74, Icon: Server },
+  { name: 'Java', percentage: 88, Icon: Code2 },
+  { name: 'Orientacao a Objetos', percentage: 86, Icon: Boxes },
+  { name: 'Estruturas de Dados', percentage: 82, Icon: Layers3 },
+  { name: 'Spring Boot', percentage: 76, Icon: Server },
+  { name: 'Spring Data JPA', percentage: 72, Icon: Database },
+  { name: 'Spring Security', percentage: 70, Icon: ShieldCheck },
+  { name: 'APIs REST e Swagger', percentage: 76, Icon: Globe },
+  { name: 'Maven e Gradle', percentage: 74, Icon: Package },
+  { name: 'JUnit e Mockito', percentage: 72, Icon: CheckCircle2 },
+  { name: 'SOLID e Design Patterns', percentage: 78, Icon: Sparkles },
+  { name: 'UML', percentage: 72, Icon: FileText },
+  { name: 'Unity 3D', percentage: 86, Icon: Gamepad2 },
+  { name: 'C# para Jogos', percentage: 78, Icon: Gamepad2 },
+  { name: 'Game Design', percentage: 82, Icon: Trophy },
+  { name: 'Fisica e IA em Jogos', percentage: 76, Icon: Cpu },
+  { name: 'IoT e Sensores', percentage: 74, Icon: MonitorCog },
+  { name: 'Redes de Computadores', percentage: 72, Icon: Globe },
+  { name: 'Direito Digital', percentage: 70, Icon: ShieldCheck },
+  { name: 'Empreendedorismo e Inovacao', percentage: 74, Icon: TrendingUp },
+  { name: 'Tecnico de Informatica', percentage: 88, Icon: Wrench },
   { name: 'React.js', percentage: 85, Icon: Code2 },
   { name: 'Node.js', percentage: 80, Icon: Server },
   { name: 'TypeScript', percentage: 70, Icon: Code2 },
@@ -343,6 +365,20 @@ const siteCatalog = {
   featuredProjectNames,
 };
 
+function mergeAdminSkills(storedSkills?: EditableSkill[]) {
+  const mergedSkills = [...(storedSkills ?? [])];
+
+  defaultAdminContent.skills.forEach((defaultSkill) => {
+    const alreadyExists = mergedSkills.some((skill) => skill.name.toLowerCase() === defaultSkill.name.toLowerCase());
+
+    if (!alreadyExists) {
+      mergedSkills.push(defaultSkill);
+    }
+  });
+
+  return mergedSkills;
+}
+
 function readAdminContent(): AdminContent {
   const parsedContent = readCachedRecord<Partial<AdminContent>>(adminContentStorageKey, {});
 
@@ -350,7 +386,7 @@ function readAdminContent(): AdminContent {
     ...defaultAdminContent,
     ...parsedContent,
     links: parsedContent.links ?? defaultAdminContent.links,
-    skills: parsedContent.skills ?? defaultAdminContent.skills,
+    skills: mergeAdminSkills(parsedContent.skills),
     databases: parsedContent.databases ?? defaultAdminContent.databases,
     services: parsedContent.services ?? defaultAdminContent.services,
     projectProgresses: parsedContent.projectProgresses ?? defaultAdminContent.projectProgresses,
@@ -377,9 +413,20 @@ function getSkillIcon(name: string) {
   const normalizedName = name.toLowerCase();
 
   if (normalizedName.includes('react native') || normalizedName.includes('flutter') || normalizedName.includes('swift') || normalizedName.includes('kotlin')) return Smartphone;
-  if (normalizedName.includes('php') || normalizedName.includes('node')) return Server;
-  if (normalizedName.includes('python')) return Cpu;
-  if (normalizedName.includes('html') || normalizedName.includes('css')) return Globe;
+  if (normalizedName.includes('unity') || normalizedName.includes('jogos') || normalizedName.includes('game')) return Gamepad2;
+  if (normalizedName.includes('spring') || normalizedName.includes('django') || normalizedName.includes('php') || normalizedName.includes('node')) return Server;
+  if (normalizedName.includes('data') || normalizedName.includes('analise')) return BarChart3;
+  if (normalizedName.includes('security') || normalizedName.includes('direito')) return ShieldCheck;
+  if (normalizedName.includes('iot') || normalizedName.includes('sensor')) return MonitorCog;
+  if (normalizedName.includes('maven') || normalizedName.includes('gradle')) return Package;
+  if (normalizedName.includes('junit') || normalizedName.includes('mockito')) return CheckCircle2;
+  if (normalizedName.includes('solid') || normalizedName.includes('design patterns')) return Sparkles;
+  if (normalizedName.includes('uml')) return FileText;
+  if (normalizedName.includes('empreendedor')) return TrendingUp;
+  if (normalizedName.includes('tecnico') || normalizedName.includes('informatica')) return Wrench;
+  if (normalizedName.includes('orientacao') || normalizedName.includes('estruturas')) return Layers3;
+  if (normalizedName.includes('python') || normalizedName.includes('ia')) return Cpu;
+  if (normalizedName.includes('api') || normalizedName.includes('redes') || normalizedName.includes('html') || normalizedName.includes('css')) return Globe;
 
   return Code2;
 }
@@ -499,7 +546,7 @@ function App() {
         ...defaultAdminContent,
         ...databaseAdminContent,
         links: databaseAdminContent.links ?? defaultAdminContent.links,
-        skills: databaseAdminContent.skills ?? defaultAdminContent.skills,
+        skills: mergeAdminSkills(databaseAdminContent.skills),
         databases: databaseAdminContent.databases ?? defaultAdminContent.databases,
         services: databaseAdminContent.services ?? defaultAdminContent.services,
         projectProgresses: databaseAdminContent.projectProgresses ?? defaultAdminContent.projectProgresses,

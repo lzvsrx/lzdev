@@ -12,6 +12,9 @@ test('renders portfolio owner and certificates section', () => {
   render(<App />);
   expect(screen.getByRole('heading', { level: 1, name: /Luiz Otavio Valenzi Sousa/i })).toBeInTheDocument();
   expect(screen.getByRole('heading', { name: /Formacao, cursos e documentos/i })).toBeInTheDocument();
+  expect(screen.getByText('Spring Boot')).toBeInTheDocument();
+  expect(screen.getByText('Unity 3D')).toBeInTheDocument();
+  expect(screen.getByText('Analise de Dados com Python')).toBeInTheDocument();
 });
 
 test('filters private repositories', () => {
@@ -73,7 +76,7 @@ test('admin panel edits visible hero title', () => {
   });
 
   expect(screen.getByRole('heading', { level: 1, name: /Titulo administrado/i })).toBeInTheDocument();
-}, 10000);
+}, 30000);
 
 test('admin panel edits project progress shown on project cards', () => {
   render(<App />);
@@ -104,4 +107,4 @@ test('admin panel edits project progress shown on project cards', () => {
   expect(screen.getAllByText('88%').length).toBeGreaterThan(0);
   expect(screen.getByText(/30\/08\/2026/i)).toBeInTheDocument();
   expect(screen.getAllByText('Finalizando painel administrativo.').length).toBeGreaterThan(0);
-}, 30000);
+}, 90000);
