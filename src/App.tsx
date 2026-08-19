@@ -187,7 +187,7 @@ const featuredProjectNames = [
 const projectCaseStudies = [
   {
     Icon: Trophy,
-    title: 'Portfolio lzvsrxdevs',
+    title: 'Portfolio Luiz Otavio Valenzi Sousa',
     repoName: 'lzdev',
     problem: 'Reunir certificados, contatos e repositorios em uma experiencia unica e facil de avaliar.',
     solution: 'Interface em React com busca de certificados, lista completa do GitHub e links de contato diretos.',
@@ -330,7 +330,7 @@ function App() {
     <main className="site-shell">
       <a className="skip-link" href="#conteudo">Pular para o conteudo</a>
       <nav className="topbar" aria-label="Navegacao principal">
-        <a className="brand" href="#inicio"><Rocket aria-hidden="true" className="inline-icon" /> lzvsrxdevs</a>
+        <a className="brand" href="#inicio"><Rocket aria-hidden="true" className="inline-icon" /> Luiz Otavio Valenzi Sousa</a>
         <div className="nav-links">
           <a href="#sobre"><BriefcaseBusiness aria-hidden="true" className="inline-icon" />Sobre</a>
           <a href="#habilidades"><Code2 aria-hidden="true" className="inline-icon" />Habilidades</a>
@@ -343,7 +343,7 @@ function App() {
       <section className="hero" id="inicio">
         <div className="hero-copy">
           <p className="eyebrow">Desenvolvedor Full Stack</p>
-          <h1>lzvsrxdevs</h1>
+          <h1>Luiz Otavio Valenzi Sousa</h1>
           <p className="hero-text">
             Desenvolvedor apaixonado por tecnologia, com experiencia em criacao de sites,
             aplicativos, programacao e servicos de informatica.
@@ -381,7 +381,7 @@ function App() {
         </div>
 
         <div className="hero-media" aria-label="Foto de perfil e resumo">
-          <img src="/profile.jpg" alt="lzvsrxdevs" className="profile-photo" />
+          <img src="/profile.jpg" alt="Luiz Otavio Valenzi Sousa" className="profile-photo" />
           <div className="hero-stats">
             <Award aria-hidden="true" className="stat-icon" />
             <strong>{certificates.length}</strong>
@@ -720,7 +720,7 @@ function App() {
       </section>
 
       <footer className="footer">
-        <p>2026 lzvsrxdevs. Todos os direitos reservados.</p>
+        <p>2026 Luiz Otavio Valenzi Sousa. Todos os direitos reservados.</p>
         <p>Desenvolvedor Full Stack</p>
       </footer>
     </main>

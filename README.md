@@ -1,6 +1,6 @@
-# lzvsrxdevs Portfolio
+# Luiz Otavio Valenzi Sousa Portfolio
 
-Portfolio profissional de lzvsrxdevs, desenvolvido em React e TypeScript com Vite. O projeto apresenta perfil, habilidades, servicos de informatica, projetos do GitHub, vitrine do sistema Cores & Fragrancias by Berenice e uma area completa de certificados com busca e links diretos para os documentos.
+Portfolio profissional de Luiz Otavio Valenzi Sousa, desenvolvido em React e TypeScript com Vite. O projeto apresenta perfil, habilidades, servicos de informatica, projetos do GitHub, vitrine do sistema Cores & Fragrancias by Berenice e uma area completa de certificados com busca e links diretos para os documentos.
 
 ## Visao geral
 
