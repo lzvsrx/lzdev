@@ -259,9 +259,10 @@ function App() {
       <section className="section projects-section" id="projetos">
         <div className="section-heading">
           <p className="eyebrow">Projetos GitHub</p>
-          <h2>Todos os repositorios publicos do perfil</h2>
+          <h2>Todos os repositorios do perfil</h2>
           <p className="section-support">
-            {githubRepositories.length} repositorios carregados do GitHub de Luiz Otavio.
+            {githubRepositories.length} repositorios carregados do GitHub de Luiz Otavio,
+            incluindo publicos e privados.
           </p>
         </div>
         <div className="projects-grid project-summary-grid">
@@ -284,6 +285,7 @@ function App() {
                 <span>Atualizado em {updatedAt}</span>
                 <span>{project.stars} estrelas</span>
                 <span>{project.forks} forks</span>
+                <span>{project.private ? 'Privado' : 'Publico'}</span>
                 {project.archived ? <span>Arquivado</span> : null}
               </div>
               <div className="repo-actions">

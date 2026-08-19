@@ -22,7 +22,7 @@ Este repositorio foi reconstruido com base no projeto original `luizotaviodevs`,
 - Lista de bancos de dados usados.
 - Servicos de informatica e desenvolvimento.
 - Grade de projetos GitHub.
-- Secao de projetos com todos os repositorios publicos do GitHub.
+- Secao de projetos com todos os repositorios publicos e privados do GitHub.
 - Showcase completo do projeto Cores & Fragrancias by Berenice.
 - Busca de certificados por titulo, codigo, tipo ou nome do arquivo.
 - Links diretos para abrir certificados em PDF ou imagem.
@@ -113,7 +113,9 @@ A secao `Projetos GitHub` usa os dados em:
 src/repositories.ts
 ```
 
-Esse arquivo lista os repositorios publicos do perfil `lzvsrx`, com nome, URL, descricao, linguagem principal, data de atualizacao, estrelas, forks, homepage e estado de arquivamento.
+Esse arquivo lista os repositorios publicos e privados do perfil `lzvsrx`, com nome, URL, descricao, linguagem principal, data de atualizacao, estrelas, forks, homepage, visibilidade e estado de arquivamento.
+
+Observacao: repositorios privados aparecem na lista do portfolio, mas o link do GitHub so abre para contas que tenham permissao de acesso ao repositorio.
 
 ## Como rodar localmente
 

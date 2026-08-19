@@ -8,6 +8,7 @@ export type GitHubRepository = {
   forks: number;
   homepage: string | null;
   archived: boolean;
+  private: boolean;
 };
 
 export const githubRepositories: GitHubRepository[] = [
@@ -20,7 +21,8 @@ export const githubRepositories: GitHubRepository[] = [
     "stars": 0,
     "forks": 0,
     "homepage": "https://lzdev.vercel.app",
-    "archived": false
+    "archived": false,
+    "private": false
   },
   {
     "name": "curso-java",
@@ -31,7 +33,8 @@ export const githubRepositories: GitHubRepository[] = [
     "stars": 0,
     "forks": 0,
     "homepage": null,
-    "archived": false
+    "archived": false,
+    "private": false
   },
   {
     "name": "aesdivinus-jogo",
@@ -42,7 +45,8 @@ export const githubRepositories: GitHubRepository[] = [
     "stars": 0,
     "forks": 0,
     "homepage": null,
-    "archived": false
+    "archived": false,
+    "private": false
   },
   {
     "name": "jogosunity",
@@ -53,7 +57,20 @@ export const githubRepositories: GitHubRepository[] = [
     "stars": 0,
     "forks": 0,
     "homepage": null,
-    "archived": false
+    "archived": false,
+    "private": false
+  },
+  {
+    "name": "FPS-HARDMINIGAME",
+    "url": "https://github.com/lzvsrx/FPS-HARDMINIGAME",
+    "description": "FPS HARD GAME",
+    "language": "C#",
+    "updatedAt": "2026-08-16T13:17:16Z",
+    "stars": 0,
+    "forks": 0,
+    "homepage": null,
+    "archived": false,
+    "private": true
   },
   {
     "name": "FPSHARDMINIGAME",
@@ -64,7 +81,8 @@ export const githubRepositories: GitHubRepository[] = [
     "stars": 0,
     "forks": 0,
     "homepage": null,
-    "archived": false
+    "archived": false,
+    "private": false
   },
   {
     "name": "FPSHARD",
@@ -75,7 +93,20 @@ export const githubRepositories: GitHubRepository[] = [
     "stars": 0,
     "forks": 0,
     "homepage": null,
-    "archived": false
+    "archived": false,
+    "private": false
+  },
+  {
+    "name": "FPS-HARD",
+    "url": "https://github.com/lzvsrx/FPS-HARD",
+    "description": "Jogo de FPSteste",
+    "language": "HTML",
+    "updatedAt": "2026-08-16T12:56:37Z",
+    "stars": 0,
+    "forks": 0,
+    "homepage": null,
+    "archived": false,
+    "private": true
   },
   {
     "name": "teraps",
@@ -86,7 +117,20 @@ export const githubRepositories: GitHubRepository[] = [
     "stars": 0,
     "forks": 0,
     "homepage": null,
-    "archived": false
+    "archived": false,
+    "private": false
+  },
+  {
+    "name": "aesdivinus",
+    "url": "https://github.com/lzvsrx/aesdivinus",
+    "description": null,
+    "language": "Python",
+    "updatedAt": "2026-07-21T23:59:06Z",
+    "stars": 0,
+    "forks": 0,
+    "homepage": null,
+    "archived": false,
+    "private": true
   },
   {
     "name": "lojacoresefragranciasbyberenice",
@@ -97,7 +141,8 @@ export const githubRepositories: GitHubRepository[] = [
     "stars": 0,
     "forks": 0,
     "homepage": "https://lojacoresefragranciasbyberenice.vercel.app",
-    "archived": false
+    "archived": false,
+    "private": false
   },
   {
     "name": "luizotaviodev",
@@ -108,7 +153,8 @@ export const githubRepositories: GitHubRepository[] = [
     "stars": 0,
     "forks": 0,
     "homepage": "https://luizotaviodev.vercel.app",
-    "archived": false
+    "archived": false,
+    "private": false
   },
   {
     "name": "cores-e-fragrancias-by-berenice-3.6",
@@ -119,7 +165,8 @@ export const githubRepositories: GitHubRepository[] = [
     "stars": 0,
     "forks": 0,
     "homepage": null,
-    "archived": false
+    "archived": false,
+    "private": false
   },
   {
     "name": "coresefragranciasloja",
@@ -130,7 +177,8 @@ export const githubRepositories: GitHubRepository[] = [
     "stars": 0,
     "forks": 0,
     "homepage": null,
-    "archived": false
+    "archived": false,
+    "private": false
   },
   {
     "name": "coresefragranciasbybereniceloja1",
@@ -141,7 +189,8 @@ export const githubRepositories: GitHubRepository[] = [
     "stars": 0,
     "forks": 0,
     "homepage": "https://coresefragranciasbybereniceloja1.vercel.app",
-    "archived": false
+    "archived": false,
+    "private": false
   },
   {
     "name": "lojacorefragranciasbyberenice",
@@ -152,7 +201,20 @@ export const githubRepositories: GitHubRepository[] = [
     "stars": 0,
     "forks": 0,
     "homepage": null,
-    "archived": false
+    "archived": false,
+    "private": false
+  },
+  {
+    "name": "jogo1",
+    "url": "https://github.com/lzvsrx/jogo1",
+    "description": null,
+    "language": null,
+    "updatedAt": "2026-06-29T22:08:38Z",
+    "stars": 0,
+    "forks": 0,
+    "homepage": null,
+    "archived": false,
+    "private": true
   },
   {
     "name": "luizotaviodevs",
@@ -163,7 +225,8 @@ export const githubRepositories: GitHubRepository[] = [
     "stars": 0,
     "forks": 0,
     "homepage": "https://luizotaviodevs.vercel.app",
-    "archived": false
+    "archived": false,
+    "private": false
   },
   {
     "name": "cores-e-fragrancias-by-berenice-3.5",
@@ -174,7 +237,8 @@ export const githubRepositories: GitHubRepository[] = [
     "stars": 0,
     "forks": 0,
     "homepage": null,
-    "archived": false
+    "archived": false,
+    "private": false
   },
   {
     "name": "NTB-Calibration",
@@ -185,7 +249,8 @@ export const githubRepositories: GitHubRepository[] = [
     "stars": 0,
     "forks": 0,
     "homepage": "https://onspace.ai",
-    "archived": false
+    "archived": false,
+    "private": false
   },
   {
     "name": "terapps",
@@ -196,7 +261,8 @@ export const githubRepositories: GitHubRepository[] = [
     "stars": 0,
     "forks": 0,
     "homepage": null,
-    "archived": false
+    "archived": false,
+    "private": false
   },
   {
     "name": "teraapps",
@@ -207,7 +273,8 @@ export const githubRepositories: GitHubRepository[] = [
     "stars": 0,
     "forks": 0,
     "homepage": null,
-    "archived": false
+    "archived": false,
+    "private": false
   },
   {
     "name": "tera-apps",
@@ -218,7 +285,8 @@ export const githubRepositories: GitHubRepository[] = [
     "stars": 0,
     "forks": 0,
     "homepage": null,
-    "archived": false
+    "archived": false,
+    "private": false
   },
   {
     "name": "tera-app",
@@ -229,7 +297,8 @@ export const githubRepositories: GitHubRepository[] = [
     "stars": 0,
     "forks": 0,
     "homepage": null,
-    "archived": false
+    "archived": false,
+    "private": false
   },
   {
     "name": "GOP-APP",
@@ -240,7 +309,8 @@ export const githubRepositories: GitHubRepository[] = [
     "stars": 0,
     "forks": 0,
     "homepage": null,
-    "archived": false
+    "archived": false,
+    "private": false
   },
   {
     "name": "coresefragranciasbyberenice-3.5",
@@ -251,7 +321,8 @@ export const githubRepositories: GitHubRepository[] = [
     "stars": 0,
     "forks": 0,
     "homepage": null,
-    "archived": false
+    "archived": false,
+    "private": false
   },
   {
     "name": "tera-ai",
@@ -262,7 +333,8 @@ export const githubRepositories: GitHubRepository[] = [
     "stars": 0,
     "forks": 0,
     "homepage": null,
-    "archived": false
+    "archived": false,
+    "private": false
   },
   {
     "name": "coresefragranciasbyberenice-3.4",
@@ -273,7 +345,8 @@ export const githubRepositories: GitHubRepository[] = [
     "stars": 0,
     "forks": 0,
     "homepage": null,
-    "archived": false
+    "archived": false,
+    "private": false
   },
   {
     "name": "coresefragrancaias-3.3",
@@ -284,7 +357,8 @@ export const githubRepositories: GitHubRepository[] = [
     "stars": 0,
     "forks": 0,
     "homepage": null,
-    "archived": false
+    "archived": false,
+    "private": false
   },
   {
     "name": "coresefragranciasbyberenice-3.2",
@@ -295,7 +369,8 @@ export const githubRepositories: GitHubRepository[] = [
     "stars": 0,
     "forks": 0,
     "homepage": null,
-    "archived": false
+    "archived": false,
+    "private": false
   },
   {
     "name": "tera",
@@ -306,7 +381,8 @@ export const githubRepositories: GitHubRepository[] = [
     "stars": 0,
     "forks": 0,
     "homepage": null,
-    "archived": false
+    "archived": false,
+    "private": false
   },
   {
     "name": "ntbengenhariaeservicos",
@@ -317,7 +393,8 @@ export const githubRepositories: GitHubRepository[] = [
     "stars": 0,
     "forks": 0,
     "homepage": null,
-    "archived": false
+    "archived": false,
+    "private": false
   },
   {
     "name": "lzworldstech-dev",
@@ -328,7 +405,20 @@ export const githubRepositories: GitHubRepository[] = [
     "stars": 0,
     "forks": 0,
     "homepage": null,
-    "archived": false
+    "archived": false,
+    "private": false
+  },
+  {
+    "name": "luizotavio-dev",
+    "url": "https://github.com/lzvsrx/luizotavio-dev",
+    "description": null,
+    "language": "HTML",
+    "updatedAt": "2026-03-22T21:08:29Z",
+    "stars": 0,
+    "forks": 0,
+    "homepage": null,
+    "archived": false,
+    "private": true
   },
   {
     "name": "coresefragranciasbybereniceloja3.1",
@@ -339,7 +429,8 @@ export const githubRepositories: GitHubRepository[] = [
     "stars": 0,
     "forks": 0,
     "homepage": null,
-    "archived": false
+    "archived": false,
+    "private": false
   },
   {
     "name": "portfolio2",
@@ -350,7 +441,32 @@ export const githubRepositories: GitHubRepository[] = [
     "stars": 0,
     "forks": 0,
     "homepage": "https://portfolio2-kappa-sepia.vercel.app",
-    "archived": false
+    "archived": false,
+    "private": false
+  },
+  {
+    "name": "nextjs-boilerplate2",
+    "url": "https://github.com/lzvsrx/nextjs-boilerplate2",
+    "description": null,
+    "language": "TypeScript",
+    "updatedAt": "2026-03-15T21:24:01Z",
+    "stars": 0,
+    "forks": 0,
+    "homepage": "https://nextjs-boilerplate2-ivory-nu.vercel.app",
+    "archived": false,
+    "private": true
+  },
+  {
+    "name": "nextjs-boilerplate",
+    "url": "https://github.com/lzvsrx/nextjs-boilerplate",
+    "description": null,
+    "language": "TypeScript",
+    "updatedAt": "2026-03-15T21:07:33Z",
+    "stars": 0,
+    "forks": 0,
+    "homepage": "https://nextjs-boilerplate-mu-hazel-w74r5hbm94.vercel.app",
+    "archived": false,
+    "private": true
   },
   {
     "name": "portfolio-luiz",
@@ -361,7 +477,8 @@ export const githubRepositories: GitHubRepository[] = [
     "stars": 0,
     "forks": 0,
     "homepage": "https://portfolio-luiz-sigma.vercel.app",
-    "archived": false
+    "archived": false,
+    "private": false
   },
   {
     "name": "port-luizotavio",
@@ -372,7 +489,8 @@ export const githubRepositories: GitHubRepository[] = [
     "stars": 0,
     "forks": 0,
     "homepage": null,
-    "archived": false
+    "archived": false,
+    "private": false
   },
   {
     "name": "potfolio-luizotavio",
@@ -383,7 +501,8 @@ export const githubRepositories: GitHubRepository[] = [
     "stars": 0,
     "forks": 0,
     "homepage": null,
-    "archived": false
+    "archived": false,
+    "private": false
   },
   {
     "name": "portfolio",
@@ -394,7 +513,8 @@ export const githubRepositories: GitHubRepository[] = [
     "stars": 0,
     "forks": 0,
     "homepage": "https://portfolio-topaz-one-72.vercel.app",
-    "archived": false
+    "archived": false,
+    "private": false
   },
   {
     "name": "coresefragranciasbybereniceloja3",
@@ -405,7 +525,8 @@ export const githubRepositories: GitHubRepository[] = [
     "stars": 0,
     "forks": 0,
     "homepage": null,
-    "archived": false
+    "archived": false,
+    "private": false
   },
   {
     "name": "TAGOCP_IA",
@@ -416,7 +537,8 @@ export const githubRepositories: GitHubRepository[] = [
     "stars": 0,
     "forks": 0,
     "homepage": null,
-    "archived": false
+    "archived": false,
+    "private": false
   },
   {
     "name": "unis2026",
@@ -427,7 +549,8 @@ export const githubRepositories: GitHubRepository[] = [
     "stars": 0,
     "forks": 0,
     "homepage": null,
-    "archived": false
+    "archived": false,
+    "private": false
   },
   {
     "name": "lzdatingapp",
@@ -438,7 +561,8 @@ export const githubRepositories: GitHubRepository[] = [
     "stars": 0,
     "forks": 0,
     "homepage": null,
-    "archived": false
+    "archived": false,
+    "private": false
   },
   {
     "name": "curso-django-projeto-1",
@@ -449,7 +573,8 @@ export const githubRepositories: GitHubRepository[] = [
     "stars": 0,
     "forks": 0,
     "homepage": null,
-    "archived": false
+    "archived": false,
+    "private": false
   },
   {
     "name": "coresefragranciasbybereniceloja2",
@@ -460,7 +585,8 @@ export const githubRepositories: GitHubRepository[] = [
     "stars": 0,
     "forks": 0,
     "homepage": null,
-    "archived": false
+    "archived": false,
+    "private": false
   },
   {
     "name": "coresefragranciasbybereniceloja",
@@ -471,7 +597,8 @@ export const githubRepositories: GitHubRepository[] = [
     "stars": 0,
     "forks": 0,
     "homepage": null,
-    "archived": false
+    "archived": false,
+    "private": false
   },
   {
     "name": "lzworldstech",
@@ -482,7 +609,8 @@ export const githubRepositories: GitHubRepository[] = [
     "stars": 0,
     "forks": 0,
     "homepage": null,
-    "archived": false
+    "archived": false,
+    "private": false
   },
   {
     "name": "coresefragrancias2",
@@ -493,7 +621,8 @@ export const githubRepositories: GitHubRepository[] = [
     "stars": 0,
     "forks": 0,
     "homepage": null,
-    "archived": false
+    "archived": false,
+    "private": false
   },
   {
     "name": "lznotes",
@@ -504,7 +633,8 @@ export const githubRepositories: GitHubRepository[] = [
     "stars": 0,
     "forks": 0,
     "homepage": null,
-    "archived": false
+    "archived": false,
+    "private": false
   },
   {
     "name": "coresefragancias",
@@ -515,7 +645,8 @@ export const githubRepositories: GitHubRepository[] = [
     "stars": 0,
     "forks": 0,
     "homepage": null,
-    "archived": false
+    "archived": false,
+    "private": false
   },
   {
     "name": "aula-1",
@@ -526,7 +657,8 @@ export const githubRepositories: GitHubRepository[] = [
     "stars": 0,
     "forks": 0,
     "homepage": null,
-    "archived": false
+    "archived": false,
+    "private": false
   },
   {
     "name": "cursoprojetodjango1",
@@ -537,7 +669,8 @@ export const githubRepositories: GitHubRepository[] = [
     "stars": 0,
     "forks": 0,
     "homepage": null,
-    "archived": false
+    "archived": false,
+    "private": false
   },
   {
     "name": "coresefragranciasbybereniceestoque2",
@@ -548,7 +681,8 @@ export const githubRepositories: GitHubRepository[] = [
     "stars": 0,
     "forks": 0,
     "homepage": null,
-    "archived": false
+    "archived": false,
+    "private": false
   },
   {
     "name": "cores-e-fragrancias-by-berenice2",
@@ -559,7 +693,8 @@ export const githubRepositories: GitHubRepository[] = [
     "stars": 0,
     "forks": 0,
     "homepage": null,
-    "archived": false
+    "archived": false,
+    "private": false
   },
   {
     "name": "coresefragranciasbybereniceestoque",
@@ -570,7 +705,8 @@ export const githubRepositories: GitHubRepository[] = [
     "stars": 0,
     "forks": 0,
     "homepage": null,
-    "archived": false
+    "archived": false,
+    "private": false
   },
   {
     "name": "coresefragranciasbyberenice",
@@ -581,7 +717,8 @@ export const githubRepositories: GitHubRepository[] = [
     "stars": 0,
     "forks": 0,
     "homepage": null,
-    "archived": false
+    "archived": false,
+    "private": false
   },
   {
     "name": "cores_e_fragrancias_by_berenice",
@@ -592,7 +729,8 @@ export const githubRepositories: GitHubRepository[] = [
     "stars": 0,
     "forks": 0,
     "homepage": null,
-    "archived": false
+    "archived": false,
+    "private": false
   },
   {
     "name": "cores-e-fragrancias-by-Berenice-estoque",
@@ -603,7 +741,8 @@ export const githubRepositories: GitHubRepository[] = [
     "stars": 0,
     "forks": 0,
     "homepage": null,
-    "archived": false
+    "archived": false,
+    "private": false
   },
   {
     "name": "cores-e-fragrancias-by-berenice",
@@ -614,7 +753,8 @@ export const githubRepositories: GitHubRepository[] = [
     "stars": 0,
     "forks": 0,
     "homepage": null,
-    "archived": false
+    "archived": false,
+    "private": false
   },
   {
     "name": "Crystal-assistant",
@@ -625,7 +765,8 @@ export const githubRepositories: GitHubRepository[] = [
     "stars": 0,
     "forks": 0,
     "homepage": null,
-    "archived": false
+    "archived": false,
+    "private": false
   },
   {
     "name": "Crystal_IA",
@@ -636,7 +777,8 @@ export const githubRepositories: GitHubRepository[] = [
     "stars": 0,
     "forks": 0,
     "homepage": null,
-    "archived": false
+    "archived": false,
+    "private": false
   },
   {
     "name": "nerdacess",
@@ -647,7 +789,8 @@ export const githubRepositories: GitHubRepository[] = [
     "stars": 0,
     "forks": 0,
     "homepage": null,
-    "archived": false
+    "archived": false,
+    "private": false
   },
   {
     "name": "lztech",
@@ -658,7 +801,8 @@ export const githubRepositories: GitHubRepository[] = [
     "stars": 0,
     "forks": 0,
     "homepage": null,
-    "archived": false
+    "archived": false,
+    "private": false
   },
   {
     "name": "Unis",
@@ -669,7 +813,8 @@ export const githubRepositories: GitHubRepository[] = [
     "stars": 0,
     "forks": 0,
     "homepage": null,
-    "archived": false
+    "archived": false,
+    "private": false
   },
   {
     "name": "lzarts",
@@ -680,6 +825,7 @@ export const githubRepositories: GitHubRepository[] = [
     "stars": 0,
     "forks": 0,
     "homepage": null,
-    "archived": false
+    "archived": false,
+    "private": false
   }
 ];
