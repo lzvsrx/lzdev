@@ -28,6 +28,7 @@ import {
   Package,
   Phone,
   Search,
+  Send,
   Server,
   ShieldCheck,
   Sparkles,
@@ -245,6 +246,22 @@ const visibilityOptions = [
 
 type VisibilityFilter = (typeof visibilityOptions)[number]['value'];
 
+type ServiceRequest = {
+  clientName: string;
+  clientContact: string;
+  serviceType: string;
+  budget: string;
+  details: string;
+};
+
+const initialServiceRequest: ServiceRequest = {
+  clientName: '',
+  clientContact: '',
+  serviceType: '',
+  budget: '',
+  details: '',
+};
+
 function ExternalIcon() {
   return <ExternalLink aria-hidden="true" className="icon" />;
 }
@@ -261,6 +278,7 @@ function App() {
   const [query, setQuery] = useState('');
   const [projectQuery, setProjectQuery] = useState('');
   const [visibilityFilter, setVisibilityFilter] = useState<VisibilityFilter>('all');
+  const [serviceRequest, setServiceRequest] = useState<ServiceRequest>(initialServiceRequest);
 
   const filteredCertificates = useMemo(() => {
     const normalizedQuery = query.trim().toLowerCase();
@@ -328,6 +346,35 @@ function App() {
       return searchable.includes(normalizedQuery);
     });
   }, [projectQuery, visibilityFilter]);
+
+  function updateServiceRequest(field: keyof ServiceRequest, value: string) {
+    setServiceRequest((currentRequest) => ({
+      ...currentRequest,
+      [field]: value,
+    }));
+  }
+
+  function handleServiceRequestSubmit(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+
+    const message = [
+      'Ola, Luiz Otavio! Quero pedir um servico pelo seu portfolio.',
+      '',
+      `Nome do cliente: ${serviceRequest.clientName}`,
+      `Contato do cliente: ${serviceRequest.clientContact}`,
+      `Servico desejado: ${serviceRequest.serviceType}`,
+      `Valor/orcamento informado: ${serviceRequest.budget}`,
+      '',
+      'Descricao do que precisa ser feito:',
+      serviceRequest.details,
+    ].join('\n');
+
+    window.open(
+      `https://wa.me/5535999215995?text=${encodeURIComponent(message)}`,
+      '_blank',
+      'noopener,noreferrer',
+    );
+  }
 
   return (
     <main className="site-shell">
@@ -703,6 +750,87 @@ function App() {
       </section>
 
       <section className="section links-section" id="contato">
+        <div className="section-heading">
+          <p className="eyebrow">Pedido de Servico</p>
+          <h2>Solicite um orcamento direto pelo WhatsApp</h2>
+          <p className="section-support">
+            Preencha os dados do servico, descreva tudo que precisa ser feito e envie a mensagem pronta para meu WhatsApp.
+          </p>
+        </div>
+        <form className="service-request-form" onSubmit={handleServiceRequestSubmit}>
+          <div className="form-grid">
+            <label htmlFor="client-name">
+              Nome do cliente
+              <input
+                id="client-name"
+                name="clientName"
+                type="text"
+                value={serviceRequest.clientName}
+                onChange={(event) => updateServiceRequest('clientName', event.target.value)}
+                placeholder="Digite seu nome"
+                required
+              />
+            </label>
+            <label htmlFor="client-contact">
+              Contato para retorno
+              <input
+                id="client-contact"
+                name="clientContact"
+                type="text"
+                value={serviceRequest.clientContact}
+                onChange={(event) => updateServiceRequest('clientContact', event.target.value)}
+                placeholder="WhatsApp, telefone ou e-mail"
+                required
+              />
+            </label>
+            <label htmlFor="service-type">
+              Servico desejado
+              <select
+                id="service-type"
+                name="serviceType"
+                value={serviceRequest.serviceType}
+                onChange={(event) => updateServiceRequest('serviceType', event.target.value)}
+                required
+              >
+                <option value="">Selecione um servico</option>
+                {services.map((service) => (
+                  <option key={service.title} value={service.title}>{service.title}</option>
+                ))}
+                <option value="Outro servico">Outro servico</option>
+              </select>
+            </label>
+            <label htmlFor="service-budget">
+              Valor ou orcamento disponivel
+              <input
+                id="service-budget"
+                name="budget"
+                type="text"
+                value={serviceRequest.budget}
+                onChange={(event) => updateServiceRequest('budget', event.target.value)}
+                placeholder="Ex: R$ 250,00 ou a combinar"
+                required
+              />
+            </label>
+          </div>
+          <label htmlFor="service-details" className="full-field">
+            Descreva tudo que precisa que eu faca
+            <textarea
+              id="service-details"
+              name="details"
+              value={serviceRequest.details}
+              onChange={(event) => updateServiceRequest('details', event.target.value)}
+              placeholder="Explique o problema, objetivo, prazo, tipo de equipamento/site/app e qualquer detalhe importante."
+              rows={6}
+              required
+            />
+          </label>
+          <button className="order-submit" type="submit">
+            <Send aria-hidden="true" className="inline-icon" /> Enviar pedido pelo WhatsApp <ExternalIcon />
+          </button>
+        </form>
+      </section>
+
+      <section className="section links-section">
         <div className="section-heading">
           <p className="eyebrow">Links</p>
           <h2>Contato e presenca online</h2>

@@ -29,6 +29,8 @@ Este repositorio foi reconstruido com base no projeto original `luizotaviodevs`,
 - Showcase completo do projeto Cores & Fragrancias by Berenice.
 - Busca de certificados por titulo, codigo, tipo ou nome do arquivo.
 - Links diretos para abrir certificados em PDF ou imagem.
+- Formulario de pedido de servico com nome, contato, servico, valor/orcamento e descricao completa.
+- Envio do pedido diretamente para o WhatsApp com a mensagem ja formatada.
 - SEO com canonical, metatags Open Graph/Twitter, `robots.txt` e `sitemap.xml`.
 - Acessibilidade com skip link, foco visivel e suporte a reducao de movimento.
 - Build otimizado para producao em `dist`.
@@ -114,6 +116,26 @@ Atualmente o site publica 106 documentos entre PDFs e imagens.
 - Repositorio original: `https://github.com/lzvsrx/luizotaviodevs`
 - Projeto lzworldstech-dev: `https://github.com/lzvsrx/lzworldstech-dev`
 - Todos os repositorios: `https://github.com/lzvsrx?tab=repositories`
+
+## Formulario de pedido
+
+A secao de contato possui um formulario para o cliente solicitar servicos diretamente pelo WhatsApp.
+
+Campos enviados:
+
+- nome do cliente;
+- contato para retorno;
+- servico desejado;
+- valor ou orcamento disponivel;
+- descricao completa do que precisa ser feito.
+
+Ao enviar, o site abre:
+
+```text
+https://wa.me/5535999215995
+```
+
+com uma mensagem pronta contendo todos os dados preenchidos.
 
 ## Repositorios GitHub
 
