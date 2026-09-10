@@ -111,7 +111,7 @@ Cada item possui:
 - `type`: `PDF` ou `Imagem`;
 - `href`: caminho publico para abrir o certificado.
 
-Atualmente o site publica 106 documentos entre PDFs e imagens.
+Atualmente o site publica 138 documentos entre PDFs e imagens.
 
 As habilidades exibidas no portfolio foram atualizadas com base nos certificados publicados, incluindo Java, orientacao a objetos, estruturas de dados, Spring Boot, Spring Data JPA, Spring Security, APIs REST, Swagger, Maven, Gradle, JUnit, Mockito, SOLID, Design Patterns, UML, Unity 3D, C# para jogos, Game Design, fisica e IA em jogos, Python, analise de dados com Python, Django, IoT, sensores, redes de computadores, direito digital, empreendedorismo, inovacao e tecnico de informatica.
 
@@ -279,6 +279,19 @@ src/repositories.ts
 ```
 
 Esse arquivo lista os repositorios publicos e privados do perfil `lzvsrx`, com nome, URL, descricao, linguagem principal, data de atualizacao, estrelas, forks, homepage, visibilidade e estado de arquivamento.
+
+Dados conferidos em 10/09/2026 pela API autenticada do GitHub: 75 repositorios (66 publicos e 9 privados). A lista inclui os sete projetos adicionados desde a revisao anterior: `LZ-AGENT`, `Angular`, `.net-e-CSharp`, `curso-c-`, `aesdivinuscomplete`, `aesdivinus-multiplataforma` e `aesdivinus-lzasantosworld`.
+
+Os cards sao ordenados pelo ultimo envio (`pushedAt`) e mostram a release publicada mais recente, quando existe, com data, versao, indicacao de pre-release e link direto. Envios de codigo e releases sao apresentados separadamente. As descricoes complementares (`summary`) dos projetos novos foram baseadas nos READMEs e na estrutura dos arquivos; elas preservam o estado de alfa, demo ou prototipo informado pelo projeto. `repositoriesSyncedAt` registra quando os dados foram consultados; este catalogo e uma fotografia versionada, sem consulta automatica no navegador.
+
+Releases recentes verificadas:
+
+| Projeto | Versao | Publicacao |
+| --- | --- | --- |
+| [AesDivinus Windows](https://github.com/lzvsrx/aesdivinus-lzasantosworld/releases/tag/v0.1.2-master-2026-09-09) (privado) | v0.1.2-master-2026-09-09 | 09/09/2026 |
+| [LZ-AGENT](https://github.com/lzvsrx/LZ-AGENT/releases/tag/v0.1.0-alpha.17) | v0.1.0-alpha.17 (pre-release) | 31/08/2026 |
+| [Aes Divinus Godot](https://github.com/lzvsrx/aesdivinuscomplete/releases/tag/v0.1.16) | v0.1.16 | 24/08/2026 |
+| [AESDIVINUS multiplataforma](https://github.com/lzvsrx/aesdivinus-multiplataforma/releases/tag/v1.9.2) | v1.9.2 | 21/08/2026 |
 
 Observacao: repositorios privados aparecem na lista do portfolio, mas o link do GitHub so abre para contas que tenham permissao de acesso ao repositorio.
 

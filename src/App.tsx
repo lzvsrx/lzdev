@@ -48,7 +48,7 @@ import {
 } from 'lucide-react';
 import './App.css';
 import { certificates } from './certificates';
-import { githubRepositories } from './repositories';
+import { githubRepositories, repositoriesSyncedAt } from './repositories';
 import { readCachedRecord, readDatabaseRecord, writeDatabaseRecord } from './siteDatabase';
 
 type IconComponent = LucideIcon;
@@ -199,13 +199,31 @@ const showcaseDetails = [
 ];
 
 const featuredProjectNames = [
+  'LZ-AGENT',
+  'aesdivinuscomplete',
+  'aesdivinus-multiplataforma',
+  'Angular',
   'lzdev',
   'lojacoresefragranciasbyberenice',
-  'jogosunity',
-  'Crystal-assistant',
 ];
 
 const projectCaseStudies = [
+  {
+    Icon: Cpu,
+    title: 'LZ Agent: assistente pessoal em alfa',
+    repoName: 'LZ-AGENT',
+    problem: 'Organizar tarefas, documentos e memoria de projetos em um assistente pessoal com controle do usuario.',
+    solution: 'Nucleo Python/FastAPI, SQLite, registro de acoes e interface web, com clientes de plataforma em desenvolvimento.',
+    impact: 'Reune memoria local e ferramentas em uma base extensivel. Recursos avancados e suporte de producao ainda estao em desenvolvimento.',
+  },
+  {
+    Icon: Gamepad2,
+    title: 'Aes Divinus: prototipo tatico em Godot',
+    repoName: 'aesdivinuscomplete',
+    problem: 'Levar os sistemas de um RPG tatico web para uma experiencia de jogo em Godot.',
+    solution: 'Migracao em andamento com missoes, arena de combate, inventario, saves locais e nucleo de regras em C++.',
+    impact: 'Disponibiliza um prototipo versionado para experimentar a campanha e acompanhar a evolucao da migracao.',
+  },
   {
     Icon: Trophy,
     title: 'Portfolio Luiz Otavio Valenzi Sousa',
@@ -381,6 +399,7 @@ const defaultAdminContent: AdminContent = {
 const siteCatalog = {
   certificates,
   githubRepositories,
+  repositoriesSyncedAt,
   showcaseFeatures: showcaseFeatures.map(({ label }) => ({ label })),
   showcaseGallery: showcaseGallery.map(({ image, title, text }) => ({ image, title, text })),
   showcaseDetails: showcaseDetails.map(({ title, text }) => ({ title, text })),
@@ -753,6 +772,9 @@ function App() {
       const searchable = [
         project.name,
         project.description,
+        project.summary,
+        project.latestRelease?.name,
+        project.latestRelease?.tag,
         project.language,
         project.homepage,
         projectProgress?.status,
@@ -1203,6 +1225,8 @@ function App() {
           <p className="section-support">
             {githubRepositories.length} repositorios carregados do GitHub de Luiz Otavio,
             incluindo publicos e privados.
+            {' '}Dados conferidos em {new Intl.DateTimeFormat('pt-BR', { timeZone: 'America/Sao_Paulo' }).format(new Date(repositoriesSyncedAt))}.
+            {' '}Ordenados pela atividade mais recente no GitHub.
           </p>
         </div>
         <div className="featured-projects" aria-label="Projetos em destaque">
@@ -1212,7 +1236,7 @@ function App() {
               <div>
                 <p className="mini-label">Destaque</p>
                 <h3>{project.name}</h3>
-                <p>{project.description ?? `Projeto em ${project.language ?? 'desenvolvimento'} com foco pratico no portfolio.`}</p>
+                <p>{project.summary ?? project.description ?? `Projeto em ${project.language ?? 'desenvolvimento'} com foco pratico no portfolio.`}</p>
               </div>
               <div className="repo-actions">
                 <a href={project.url} target="_blank" rel="noopener noreferrer">
@@ -1265,16 +1289,24 @@ function App() {
               <IconBadge Icon={project.private ? LockKeyhole : FolderGit2} />
               <h3>{project.name}</h3>
               <p>
-                {project.description ?? `Repositorio publico em ${project.language ?? 'desenvolvimento'}.`}
+                {project.summary ?? project.description ?? `Repositorio ${project.private ? 'privado' : 'publico'} em ${project.language ?? 'desenvolvimento'}.`}
               </p>
               <div className="repo-meta" aria-label={`Metadados do repositorio ${project.name}`}>
                 <span><Code2 aria-hidden="true" className="inline-icon" />{project.language ?? 'Sem linguagem'}</span>
                 <span><CalendarClock aria-hidden="true" className="inline-icon" />Atualizado em {updatedAt}</span>
+                <span><GitFork aria-hidden="true" className="inline-icon" />Ultimo envio em {new Intl.DateTimeFormat('pt-BR', { timeZone: 'America/Sao_Paulo' }).format(new Date(project.pushedAt))}</span>
                 <span><Star aria-hidden="true" className="inline-icon" />{project.stars} estrelas</span>
                 <span><GitFork aria-hidden="true" className="inline-icon" />{project.forks} forks</span>
                 <span>{project.private ? <Lock aria-hidden="true" className="inline-icon" /> : <Globe aria-hidden="true" className="inline-icon" />}{project.private ? 'Privado' : 'Publico'}</span>
                 {project.archived ? <span><Package aria-hidden="true" className="inline-icon" />Arquivado</span> : null}
               </div>
+              {project.latestRelease ? (
+                <p>
+                  <strong>{project.latestRelease.prerelease ? 'Pre-release' : 'Release'}:</strong>{' '}
+                  {project.latestRelease.name}{' — '}
+                  {new Intl.DateTimeFormat('pt-BR', { timeZone: 'America/Sao_Paulo' }).format(new Date(project.latestRelease.publishedAt))}
+                </p>
+              ) : null}
               {projectProgress ? (
                 <div className="project-progress-box" aria-label={`Andamento do projeto ${project.name}`}>
                   <div className="project-progress-header">
@@ -1292,6 +1324,11 @@ function App() {
                 <a href={project.url} target="_blank" rel="noopener noreferrer">
                 <FolderGit2 aria-hidden="true" className="inline-icon" /> Ver projeto <ExternalIcon />
                 </a>
+                {project.latestRelease ? (
+                  <a href={project.latestRelease.url} target="_blank" rel="noopener noreferrer">
+                    <Package aria-hidden="true" className="inline-icon" /> Ver release {project.latestRelease.tag}{project.private ? ' (acesso restrito)' : ''} <ExternalIcon />
+                  </a>
+                ) : null}
                 {project.homepage ? (
                   <a href={project.homepage} target="_blank" rel="noopener noreferrer">
                     <Globe aria-hidden="true" className="inline-icon" /> Abrir site <ExternalIcon />

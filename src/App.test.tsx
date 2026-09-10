@@ -1,7 +1,8 @@
 import React from 'react';
-import { cleanup, fireEvent, render, screen } from '@testing-library/react';
+import { cleanup, fireEvent, render, screen, within } from '@testing-library/react';
 import { afterEach, expect, test, vi } from 'vitest';
 import App from './App';
+import { githubRepositories } from './repositories';
 
 afterEach(() => {
   cleanup();
@@ -20,7 +21,21 @@ test('renders portfolio owner and certificates section', () => {
 test('filters private repositories', () => {
   render(<App />);
   fireEvent.click(screen.getByRole('button', { name: 'Privados' }));
-  expect(screen.getByText(/7 de 68/i)).toBeInTheDocument();
+  const privateCount = githubRepositories.filter((project) => project.private).length;
+  expect(screen.getByText(`${privateCount} de ${githubRepositories.length}`)).toBeInTheDocument();
+  expect(screen.queryByLabelText('Metadados do repositorio Angular')).not.toBeInTheDocument();
+});
+
+test('finds projects by release version and links to the published release', () => {
+  render(<App />);
+  fireEvent.change(screen.getByLabelText(/Buscar projeto/i), {
+    target: { value: 'v0.1.0-alpha.17' },
+  });
+  expect(screen.getByText(`1 de ${githubRepositories.length}`)).toBeInTheDocument();
+  expect(screen.getByRole('link', { name: /Ver release v0.1.0-alpha.17/i })).toHaveAttribute(
+    'href', 'https://github.com/lzvsrx/LZ-AGENT/releases/tag/v0.1.0-alpha.17',
+  );
+  expect(screen.getByText('Pre-release:')).toBeInTheDocument();
 });
 
 test('sends service request to WhatsApp with customer details', () => {
@@ -62,22 +77,24 @@ test('sends service request to WhatsApp with customer details', () => {
 }, 15000);
 
 test('admin panel edits visible hero title', () => {
-  render(<App />);
+  const { container } = render(<App />);
+  const admin = within(container.querySelector<HTMLElement>('#admin')!);
+  const hero = within(container.querySelector<HTMLElement>('#inicio')!);
 
-  fireEvent.change(screen.getByLabelText('Login administrativo'), {
+  fireEvent.change(admin.getByLabelText('Login administrativo'), {
     target: { value: 'admin' },
   });
-  fireEvent.change(screen.getByLabelText('Senha administrativa'), {
+  fireEvent.change(admin.getByLabelText('Senha administrativa'), {
     target: { value: 'lzadmin2026' },
   });
-  fireEvent.click(screen.getByRole('button', { name: /Entrar no painel/i }));
-  fireEvent.change(screen.getByLabelText('Nome/titulo da tela inicial'), {
+  fireEvent.click(admin.getByRole('button', { name: /Entrar no painel/i }));
+  fireEvent.change(admin.getByLabelText('Nome/titulo da tela inicial'), {
     target: { value: 'Titulo administrado' },
   });
 
-  expect(screen.getByRole('heading', { name: /Sincronizacao GitHub/i })).toBeInTheDocument();
-  expect(screen.getByText('data/admin-content.json')).toBeInTheDocument();
-  expect(screen.getByRole('heading', { level: 1, name: /Titulo administrado/i })).toBeInTheDocument();
+  expect(admin.getByRole('heading', { name: /Sincronizacao GitHub/i })).toBeInTheDocument();
+  expect(admin.getByText('data/admin-content.json')).toBeInTheDocument();
+  expect(hero.getByRole('heading', { level: 1, name: /Titulo administrado/i })).toBeInTheDocument();
 }, 30000);
 
 test('admin panel edits project progress shown on project cards', () => {

@@ -4,6 +4,15 @@ export type GitHubRepository = {
   description: string | null;
   language: string | null;
   updatedAt: string;
+  pushedAt: string;
+  summary?: string;
+  latestRelease: {
+    name: string;
+    tag: string;
+    publishedAt: string;
+    url: string;
+    prerelease: boolean;
+  } | null;
   stars: number;
   forks: number;
   homepage: string | null;
@@ -11,18 +20,152 @@ export type GitHubRepository = {
   private: boolean;
 };
 
+export const repositoriesSyncedAt = "2026-09-10T14:51:19.125837+00:00";
+
 export const githubRepositories: GitHubRepository[] = [
   {
     "name": "lzdev",
     "url": "https://github.com/lzvsrx/lzdev",
     "description": null,
     "language": "TypeScript",
-    "updatedAt": "2026-08-19T13:22:06Z",
+    "updatedAt": "2026-09-10T14:42:30Z",
+    "pushedAt": "2026-09-10T14:41:48Z",
     "stars": 0,
     "forks": 0,
     "homepage": "https://lzdev.vercel.app",
     "archived": false,
-    "private": false
+    "private": false,
+    "latestRelease": null,
+    "summary": "Portfolio em React e TypeScript com projetos GitHub, certificados, pedidos de servico e painel administrativo."
+  },
+  {
+    "name": "aesdivinus-lzasantosworld",
+    "url": "https://github.com/lzvsrx/aesdivinus-lzasantosworld",
+    "description": null,
+    "language": "C++",
+    "updatedAt": "2026-09-10T14:37:18Z",
+    "pushedAt": "2026-09-10T14:31:08Z",
+    "stars": 0,
+    "forks": 0,
+    "homepage": null,
+    "archived": false,
+    "private": true,
+    "latestRelease": {
+      "name": "AesDivinus Windows v0.1.2 - Mestre 09/09/2026",
+      "tag": "v0.1.2-master-2026-09-09",
+      "publishedAt": "2026-09-09T13:38:12Z",
+      "url": "https://github.com/lzvsrx/aesdivinus-lzasantosworld/releases/tag/v0.1.2-master-2026-09-09",
+      "prerelease": false
+    },
+    "summary": "Demo tecnica de RPG tatico 2D para Windows, em C++20 e SQLite, com combate por turnos, personalidades e saves locais. Campanha posterior experimental."
+  },
+  {
+    "name": "curso-c-",
+    "url": "https://github.com/lzvsrx/curso-c-",
+    "description": null,
+    "language": "C#",
+    "updatedAt": "2026-09-09T17:45:41Z",
+    "pushedAt": "2026-09-09T17:44:38Z",
+    "stars": 0,
+    "forks": 0,
+    "homepage": null,
+    "archived": false,
+    "private": true,
+    "latestRelease": null,
+    "summary": "Desafios de .NET e C#: fundamentos, orientacao a objetos, APIs, banco de dados, Azure e testes unitarios."
+  },
+  {
+    "name": "LZ-AGENT",
+    "url": "https://github.com/lzvsrx/LZ-AGENT",
+    "description": null,
+    "language": "Python",
+    "updatedAt": "2026-08-31T15:02:30Z",
+    "pushedAt": "2026-09-05T04:03:53Z",
+    "stars": 0,
+    "forks": 0,
+    "homepage": null,
+    "archived": false,
+    "private": false,
+    "latestRelease": {
+      "name": "v0.1.0-alpha.17",
+      "tag": "v0.1.0-alpha.17",
+      "publishedAt": "2026-08-31T14:33:00Z",
+      "url": "https://github.com/lzvsrx/LZ-AGENT/releases/tag/v0.1.0-alpha.17",
+      "prerelease": true
+    },
+    "summary": "Assistente pessoal em fase alfa, com nucleo Python/FastAPI, memoria local em SQLite, interface web e clientes de plataforma em desenvolvimento."
+  },
+  {
+    "name": ".net-e-CSharp",
+    "url": "https://github.com/lzvsrx/.net-e-CSharp",
+    "description": ".NET e C#",
+    "language": "C#",
+    "updatedAt": "2026-09-04T14:04:36Z",
+    "pushedAt": "2026-09-04T14:02:51Z",
+    "stars": 0,
+    "forks": 0,
+    "homepage": null,
+    "archived": false,
+    "private": false,
+    "latestRelease": null,
+    "summary": "Estudos de .NET e C# com projeto sobre tipos de construtores."
+  },
+  {
+    "name": "Angular",
+    "url": "https://github.com/lzvsrx/Angular",
+    "description": null,
+    "language": "TypeScript",
+    "updatedAt": "2026-09-04T13:18:15Z",
+    "pushedAt": "2026-09-04T13:17:21Z",
+    "stars": 0,
+    "forks": 0,
+    "homepage": null,
+    "archived": false,
+    "private": false,
+    "latestRelease": null,
+    "summary": "Exercicios e projetos de Web Components, TypeScript e Angular, incluindo componentes, ciclo de vida, diretivas e desafios praticos."
+  },
+  {
+    "name": "aesdivinuscomplete",
+    "url": "https://github.com/lzvsrx/aesdivinuscomplete",
+    "description": null,
+    "language": "JavaScript",
+    "updatedAt": "2026-08-24T23:34:32Z",
+    "pushedAt": "2026-08-24T23:34:09Z",
+    "stars": 0,
+    "forks": 0,
+    "homepage": null,
+    "archived": false,
+    "private": false,
+    "latestRelease": {
+      "name": "Aes Divinus Godot v0.1.16",
+      "tag": "v0.1.16",
+      "publishedAt": "2026-08-24T23:30:44Z",
+      "url": "https://github.com/lzvsrx/aesdivinuscomplete/releases/tag/v0.1.16",
+      "prerelease": false
+    },
+    "summary": "Prototipo de RPG tatico com versao web e migracao em andamento para Godot/C++, incluindo missoes, combate, inventario e saves locais."
+  },
+  {
+    "name": "aesdivinus-multiplataforma",
+    "url": "https://github.com/lzvsrx/aesdivinus-multiplataforma",
+    "description": null,
+    "language": "GDScript",
+    "updatedAt": "2026-08-21T13:11:18Z",
+    "pushedAt": "2026-08-21T13:02:38Z",
+    "stars": 0,
+    "forks": 0,
+    "homepage": null,
+    "archived": false,
+    "private": false,
+    "latestRelease": {
+      "name": "AESDIVINUS v1.9.2",
+      "tag": "v1.9.2",
+      "publishedAt": "2026-08-21T13:02:38Z",
+      "url": "https://github.com/lzvsrx/aesdivinus-multiplataforma/releases/tag/v1.9.2",
+      "prerelease": false
+    },
+    "summary": "Prototipo jogavel em Godot com combate, missoes, inventario, forja e controles de toque. Exportacoes para multiplas plataformas com limitacoes documentadas no iOS."
   },
   {
     "name": "curso-java",
@@ -30,11 +173,13 @@ export const githubRepositories: GitHubRepository[] = [
     "description": null,
     "language": "Java",
     "updatedAt": "2026-08-18T16:23:41Z",
+    "pushedAt": "2026-08-18T16:19:26Z",
     "stars": 0,
     "forks": 0,
     "homepage": null,
     "archived": false,
-    "private": false
+    "private": false,
+    "latestRelease": null
   },
   {
     "name": "aesdivinus-jogo",
@@ -42,11 +187,19 @@ export const githubRepositories: GitHubRepository[] = [
     "description": null,
     "language": "C++",
     "updatedAt": "2026-08-16T23:41:45Z",
+    "pushedAt": "2026-08-16T23:47:30Z",
     "stars": 0,
     "forks": 0,
     "homepage": null,
     "archived": false,
-    "private": false
+    "private": false,
+    "latestRelease": {
+      "name": "AESDIVINUS Build Definitiva",
+      "tag": "v0.1.0-definitiva",
+      "publishedAt": "2026-08-16T23:47:30Z",
+      "url": "https://github.com/lzvsrx/aesdivinus-jogo/releases/tag/v0.1.0-definitiva",
+      "prerelease": false
+    }
   },
   {
     "name": "jogosunity",
@@ -54,11 +207,13 @@ export const githubRepositories: GitHubRepository[] = [
     "description": "Jogos do curso da dio unity",
     "language": "C#",
     "updatedAt": "2026-08-16T19:51:53Z",
+    "pushedAt": "2026-08-16T19:51:16Z",
     "stars": 0,
     "forks": 0,
     "homepage": null,
     "archived": false,
-    "private": false
+    "private": false,
+    "latestRelease": null
   },
   {
     "name": "FPS-HARDMINIGAME",
@@ -66,11 +221,13 @@ export const githubRepositories: GitHubRepository[] = [
     "description": "FPS HARD GAME",
     "language": "C#",
     "updatedAt": "2026-08-16T13:17:16Z",
+    "pushedAt": "2026-08-16T13:14:34Z",
     "stars": 0,
     "forks": 0,
     "homepage": null,
     "archived": false,
-    "private": true
+    "private": true,
+    "latestRelease": null
   },
   {
     "name": "FPSHARDMINIGAME",
@@ -78,11 +235,13 @@ export const githubRepositories: GitHubRepository[] = [
     "description": null,
     "language": null,
     "updatedAt": "2026-08-16T12:59:44Z",
+    "pushedAt": "2026-08-16T12:59:15Z",
     "stars": 0,
     "forks": 0,
     "homepage": null,
     "archived": false,
-    "private": false
+    "private": false,
+    "latestRelease": null
   },
   {
     "name": "FPSHARD",
@@ -90,11 +249,13 @@ export const githubRepositories: GitHubRepository[] = [
     "description": null,
     "language": null,
     "updatedAt": "2026-08-16T12:58:32Z",
+    "pushedAt": "2026-08-16T12:58:15Z",
     "stars": 0,
     "forks": 0,
     "homepage": null,
     "archived": false,
-    "private": false
+    "private": false,
+    "latestRelease": null
   },
   {
     "name": "FPS-HARD",
@@ -102,11 +263,13 @@ export const githubRepositories: GitHubRepository[] = [
     "description": "Jogo de FPSteste",
     "language": "HTML",
     "updatedAt": "2026-08-16T12:56:37Z",
+    "pushedAt": "2026-08-16T12:56:32Z",
     "stars": 0,
     "forks": 0,
     "homepage": null,
     "archived": false,
-    "private": true
+    "private": true,
+    "latestRelease": null
   },
   {
     "name": "teraps",
@@ -114,11 +277,13 @@ export const githubRepositories: GitHubRepository[] = [
     "description": null,
     "language": "Python",
     "updatedAt": "2026-08-13T11:44:06Z",
+    "pushedAt": "2026-08-13T11:43:44Z",
     "stars": 0,
     "forks": 0,
     "homepage": null,
     "archived": false,
-    "private": false
+    "private": false,
+    "latestRelease": null
   },
   {
     "name": "aesdivinus",
@@ -126,11 +291,13 @@ export const githubRepositories: GitHubRepository[] = [
     "description": null,
     "language": "Python",
     "updatedAt": "2026-07-21T23:59:06Z",
+    "pushedAt": "2026-07-21T23:59:02Z",
     "stars": 0,
     "forks": 0,
     "homepage": null,
     "archived": false,
-    "private": true
+    "private": true,
+    "latestRelease": null
   },
   {
     "name": "lojacoresefragranciasbyberenice",
@@ -138,11 +305,13 @@ export const githubRepositories: GitHubRepository[] = [
     "description": null,
     "language": "JavaScript",
     "updatedAt": "2026-07-20T22:32:21Z",
+    "pushedAt": "2026-07-20T22:32:12Z",
     "stars": 0,
     "forks": 0,
     "homepage": "https://lojacoresefragranciasbyberenice.vercel.app",
     "archived": false,
-    "private": false
+    "private": false,
+    "latestRelease": null
   },
   {
     "name": "luizotaviodev",
@@ -150,11 +319,13 @@ export const githubRepositories: GitHubRepository[] = [
     "description": null,
     "language": "TypeScript",
     "updatedAt": "2026-07-14T14:37:48Z",
+    "pushedAt": "2026-07-14T14:36:06Z",
     "stars": 0,
     "forks": 0,
     "homepage": "https://luizotaviodev.vercel.app",
     "archived": false,
-    "private": false
+    "private": false,
+    "latestRelease": null
   },
   {
     "name": "cores-e-fragrancias-by-berenice-3.6",
@@ -162,11 +333,13 @@ export const githubRepositories: GitHubRepository[] = [
     "description": null,
     "language": "Python",
     "updatedAt": "2026-07-01T22:07:24Z",
+    "pushedAt": "2026-07-01T22:06:47Z",
     "stars": 0,
     "forks": 0,
     "homepage": null,
     "archived": false,
-    "private": false
+    "private": false,
+    "latestRelease": null
   },
   {
     "name": "coresefragranciasloja",
@@ -174,11 +347,13 @@ export const githubRepositories: GitHubRepository[] = [
     "description": null,
     "language": "TypeScript",
     "updatedAt": "2026-07-01T20:26:42Z",
+    "pushedAt": "2026-07-01T20:26:38Z",
     "stars": 0,
     "forks": 0,
     "homepage": null,
     "archived": false,
-    "private": false
+    "private": false,
+    "latestRelease": null
   },
   {
     "name": "coresefragranciasbybereniceloja1",
@@ -186,11 +361,13 @@ export const githubRepositories: GitHubRepository[] = [
     "description": null,
     "language": "JavaScript",
     "updatedAt": "2026-07-01T19:18:08Z",
+    "pushedAt": "2026-07-01T19:18:03Z",
     "stars": 0,
     "forks": 0,
     "homepage": "https://coresefragranciasbybereniceloja1.vercel.app",
     "archived": false,
-    "private": false
+    "private": false,
+    "latestRelease": null
   },
   {
     "name": "lojacorefragranciasbyberenice",
@@ -198,11 +375,13 @@ export const githubRepositories: GitHubRepository[] = [
     "description": null,
     "language": "JavaScript",
     "updatedAt": "2026-07-01T14:45:55Z",
+    "pushedAt": "2026-07-01T14:45:46Z",
     "stars": 0,
     "forks": 0,
     "homepage": null,
     "archived": false,
-    "private": false
+    "private": false,
+    "latestRelease": null
   },
   {
     "name": "jogo1",
@@ -210,11 +389,13 @@ export const githubRepositories: GitHubRepository[] = [
     "description": null,
     "language": null,
     "updatedAt": "2026-06-29T22:08:38Z",
+    "pushedAt": "2026-06-29T22:08:38Z",
     "stars": 0,
     "forks": 0,
     "homepage": null,
     "archived": false,
-    "private": true
+    "private": true,
+    "latestRelease": null
   },
   {
     "name": "luizotaviodevs",
@@ -222,11 +403,13 @@ export const githubRepositories: GitHubRepository[] = [
     "description": null,
     "language": "TypeScript",
     "updatedAt": "2026-06-20T14:26:22Z",
+    "pushedAt": "2026-06-20T14:20:06Z",
     "stars": 0,
     "forks": 0,
     "homepage": "https://luizotaviodevs.vercel.app",
     "archived": false,
-    "private": false
+    "private": false,
+    "latestRelease": null
   },
   {
     "name": "cores-e-fragrancias-by-berenice-3.5",
@@ -234,23 +417,13 @@ export const githubRepositories: GitHubRepository[] = [
     "description": null,
     "language": "Python",
     "updatedAt": "2026-06-09T20:51:05Z",
+    "pushedAt": "2026-06-09T20:50:49Z",
     "stars": 0,
     "forks": 0,
     "homepage": null,
     "archived": false,
-    "private": false
-  },
-  {
-    "name": "NTB-Calibration",
-    "url": "https://github.com/lzvsrx/NTB-Calibration",
-    "description": null,
-    "language": "TypeScript",
-    "updatedAt": "2026-05-14T11:10:59Z",
-    "stars": 0,
-    "forks": 0,
-    "homepage": "https://onspace.ai",
-    "archived": false,
-    "private": false
+    "private": false,
+    "latestRelease": null
   },
   {
     "name": "terapps",
@@ -258,11 +431,19 @@ export const githubRepositories: GitHubRepository[] = [
     "description": null,
     "language": "Dart",
     "updatedAt": "2026-05-11T14:06:00Z",
+    "pushedAt": "2026-05-11T13:59:09Z",
     "stars": 0,
     "forks": 0,
     "homepage": null,
     "archived": false,
-    "private": false
+    "private": false,
+    "latestRelease": {
+      "name": "TERA Android v1.2.2",
+      "tag": "v1.2.2",
+      "publishedAt": "2026-05-11T13:59:04Z",
+      "url": "https://github.com/lzvsrx/terapps/releases/tag/v1.2.2",
+      "prerelease": false
+    }
   },
   {
     "name": "teraapps",
@@ -270,11 +451,19 @@ export const githubRepositories: GitHubRepository[] = [
     "description": null,
     "language": "Dart",
     "updatedAt": "2026-05-11T00:51:27Z",
+    "pushedAt": "2026-05-11T00:51:22Z",
     "stars": 0,
     "forks": 0,
     "homepage": null,
     "archived": false,
-    "private": false
+    "private": false,
+    "latestRelease": {
+      "name": "Tera App v1.0.0",
+      "tag": "v1.0.0",
+      "publishedAt": "2026-05-10T22:40:49Z",
+      "url": "https://github.com/lzvsrx/teraapps/releases/tag/v1.0.0",
+      "prerelease": false
+    }
   },
   {
     "name": "tera-apps",
@@ -282,11 +471,13 @@ export const githubRepositories: GitHubRepository[] = [
     "description": null,
     "language": "Python",
     "updatedAt": "2026-05-10T21:52:10Z",
+    "pushedAt": "2026-05-10T21:52:06Z",
     "stars": 0,
     "forks": 0,
     "homepage": null,
     "archived": false,
-    "private": false
+    "private": false,
+    "latestRelease": null
   },
   {
     "name": "tera-app",
@@ -294,11 +485,13 @@ export const githubRepositories: GitHubRepository[] = [
     "description": null,
     "language": "Dart",
     "updatedAt": "2026-05-10T21:25:16Z",
+    "pushedAt": "2026-05-10T21:28:58Z",
     "stars": 0,
     "forks": 0,
     "homepage": null,
     "archived": false,
-    "private": false
+    "private": false,
+    "latestRelease": null
   },
   {
     "name": "GOP-APP",
@@ -306,11 +499,19 @@ export const githubRepositories: GitHubRepository[] = [
     "description": null,
     "language": "Dart",
     "updatedAt": "2026-05-05T22:12:26Z",
+    "pushedAt": "2026-05-05T22:12:22Z",
     "stars": 0,
     "forks": 0,
     "homepage": null,
     "archived": false,
-    "private": false
+    "private": false,
+    "latestRelease": {
+      "name": "Gestor Operacional Pro v1.0.0",
+      "tag": "v1.0.0",
+      "publishedAt": "2026-05-05T21:58:20Z",
+      "url": "https://github.com/lzvsrx/GOP-APP/releases/tag/v1.0.0",
+      "prerelease": false
+    }
   },
   {
     "name": "coresefragranciasbyberenice-3.5",
@@ -318,11 +519,13 @@ export const githubRepositories: GitHubRepository[] = [
     "description": null,
     "language": "Python",
     "updatedAt": "2026-05-01T18:21:29Z",
+    "pushedAt": "2026-05-01T18:21:24Z",
     "stars": 0,
     "forks": 0,
     "homepage": null,
     "archived": false,
-    "private": false
+    "private": false,
+    "latestRelease": null
   },
   {
     "name": "tera-ai",
@@ -330,11 +533,13 @@ export const githubRepositories: GitHubRepository[] = [
     "description": null,
     "language": "Python",
     "updatedAt": "2026-04-28T19:19:09Z",
+    "pushedAt": "2026-04-28T19:19:04Z",
     "stars": 0,
     "forks": 0,
     "homepage": null,
     "archived": false,
-    "private": false
+    "private": false,
+    "latestRelease": null
   },
   {
     "name": "coresefragranciasbyberenice-3.4",
@@ -342,11 +547,13 @@ export const githubRepositories: GitHubRepository[] = [
     "description": null,
     "language": "Python",
     "updatedAt": "2026-04-21T18:49:06Z",
+    "pushedAt": "2026-04-21T18:49:00Z",
     "stars": 0,
     "forks": 0,
     "homepage": null,
     "archived": false,
-    "private": false
+    "private": false,
+    "latestRelease": null
   },
   {
     "name": "coresefragrancaias-3.3",
@@ -354,11 +561,13 @@ export const githubRepositories: GitHubRepository[] = [
     "description": null,
     "language": "Python",
     "updatedAt": "2026-04-13T19:53:27Z",
+    "pushedAt": "2026-04-13T19:53:23Z",
     "stars": 0,
     "forks": 0,
     "homepage": null,
     "archived": false,
-    "private": false
+    "private": false,
+    "latestRelease": null
   },
   {
     "name": "coresefragranciasbyberenice-3.2",
@@ -366,11 +575,13 @@ export const githubRepositories: GitHubRepository[] = [
     "description": null,
     "language": "Python",
     "updatedAt": "2026-04-06T19:53:01Z",
+    "pushedAt": "2026-04-06T19:52:53Z",
     "stars": 0,
     "forks": 0,
     "homepage": null,
     "archived": false,
-    "private": false
+    "private": false,
+    "latestRelease": null
   },
   {
     "name": "tera",
@@ -378,11 +589,13 @@ export const githubRepositories: GitHubRepository[] = [
     "description": null,
     "language": "JavaScript",
     "updatedAt": "2026-04-02T15:34:10Z",
+    "pushedAt": "2026-04-02T15:34:06Z",
     "stars": 0,
     "forks": 0,
     "homepage": null,
     "archived": false,
-    "private": false
+    "private": false,
+    "latestRelease": null
   },
   {
     "name": "ntbengenhariaeservicos",
@@ -390,11 +603,13 @@ export const githubRepositories: GitHubRepository[] = [
     "description": null,
     "language": "Kotlin",
     "updatedAt": "2026-03-30T15:16:23Z",
+    "pushedAt": "2026-03-30T15:16:18Z",
     "stars": 0,
     "forks": 0,
     "homepage": null,
     "archived": false,
-    "private": false
+    "private": false,
+    "latestRelease": null
   },
   {
     "name": "lzworldstech-dev",
@@ -402,11 +617,13 @@ export const githubRepositories: GitHubRepository[] = [
     "description": null,
     "language": "Python",
     "updatedAt": "2026-03-28T13:26:47Z",
+    "pushedAt": "2026-03-28T13:26:44Z",
     "stars": 0,
     "forks": 0,
     "homepage": null,
     "archived": false,
-    "private": false
+    "private": false,
+    "latestRelease": null
   },
   {
     "name": "luizotavio-dev",
@@ -414,11 +631,13 @@ export const githubRepositories: GitHubRepository[] = [
     "description": null,
     "language": "HTML",
     "updatedAt": "2026-03-22T21:08:29Z",
+    "pushedAt": "2026-03-22T21:08:26Z",
     "stars": 0,
     "forks": 0,
     "homepage": null,
     "archived": false,
-    "private": true
+    "private": true,
+    "latestRelease": null
   },
   {
     "name": "coresefragranciasbybereniceloja3.1",
@@ -426,11 +645,13 @@ export const githubRepositories: GitHubRepository[] = [
     "description": null,
     "language": "Python",
     "updatedAt": "2026-03-21T13:29:36Z",
+    "pushedAt": "2026-03-21T13:29:33Z",
     "stars": 0,
     "forks": 0,
     "homepage": null,
     "archived": false,
-    "private": false
+    "private": false,
+    "latestRelease": null
   },
   {
     "name": "portfolio2",
@@ -438,11 +659,13 @@ export const githubRepositories: GitHubRepository[] = [
     "description": null,
     "language": "TypeScript",
     "updatedAt": "2026-03-15T21:34:09Z",
+    "pushedAt": "2026-03-15T21:34:06Z",
     "stars": 0,
     "forks": 0,
     "homepage": "https://portfolio2-kappa-sepia.vercel.app",
     "archived": false,
-    "private": false
+    "private": false,
+    "latestRelease": null
   },
   {
     "name": "nextjs-boilerplate2",
@@ -450,11 +673,13 @@ export const githubRepositories: GitHubRepository[] = [
     "description": null,
     "language": "TypeScript",
     "updatedAt": "2026-03-15T21:24:01Z",
+    "pushedAt": "2026-03-15T21:23:57Z",
     "stars": 0,
     "forks": 0,
     "homepage": "https://nextjs-boilerplate2-ivory-nu.vercel.app",
     "archived": false,
-    "private": true
+    "private": true,
+    "latestRelease": null
   },
   {
     "name": "nextjs-boilerplate",
@@ -462,11 +687,13 @@ export const githubRepositories: GitHubRepository[] = [
     "description": null,
     "language": "TypeScript",
     "updatedAt": "2026-03-15T21:07:33Z",
+    "pushedAt": "2026-03-15T21:07:30Z",
     "stars": 0,
     "forks": 0,
     "homepage": "https://nextjs-boilerplate-mu-hazel-w74r5hbm94.vercel.app",
     "archived": false,
-    "private": true
+    "private": true,
+    "latestRelease": null
   },
   {
     "name": "portfolio-luiz",
@@ -474,11 +701,13 @@ export const githubRepositories: GitHubRepository[] = [
     "description": null,
     "language": "TypeScript",
     "updatedAt": "2026-03-15T20:14:33Z",
+    "pushedAt": "2026-03-15T20:14:30Z",
     "stars": 0,
     "forks": 0,
     "homepage": "https://portfolio-luiz-sigma.vercel.app",
     "archived": false,
-    "private": false
+    "private": false,
+    "latestRelease": null
   },
   {
     "name": "port-luizotavio",
@@ -486,11 +715,13 @@ export const githubRepositories: GitHubRepository[] = [
     "description": null,
     "language": "CSS",
     "updatedAt": "2026-03-14T20:43:26Z",
+    "pushedAt": "2026-03-14T20:43:23Z",
     "stars": 0,
     "forks": 0,
     "homepage": null,
     "archived": false,
-    "private": false
+    "private": false,
+    "latestRelease": null
   },
   {
     "name": "potfolio-luizotavio",
@@ -498,11 +729,13 @@ export const githubRepositories: GitHubRepository[] = [
     "description": null,
     "language": "CSS",
     "updatedAt": "2026-03-14T20:29:18Z",
+    "pushedAt": "2026-03-14T20:32:54Z",
     "stars": 0,
     "forks": 0,
     "homepage": null,
     "archived": false,
-    "private": false
+    "private": false,
+    "latestRelease": null
   },
   {
     "name": "portfolio",
@@ -510,11 +743,13 @@ export const githubRepositories: GitHubRepository[] = [
     "description": null,
     "language": null,
     "updatedAt": "2026-03-14T19:56:19Z",
+    "pushedAt": "2026-03-14T19:56:16Z",
     "stars": 0,
     "forks": 0,
     "homepage": "https://portfolio-topaz-one-72.vercel.app",
     "archived": false,
-    "private": false
+    "private": false,
+    "latestRelease": null
   },
   {
     "name": "coresefragranciasbybereniceloja3",
@@ -522,11 +757,13 @@ export const githubRepositories: GitHubRepository[] = [
     "description": null,
     "language": "Python",
     "updatedAt": "2026-02-18T22:09:56Z",
+    "pushedAt": "2026-02-18T22:09:38Z",
     "stars": 0,
     "forks": 0,
     "homepage": null,
     "archived": false,
-    "private": false
+    "private": false,
+    "latestRelease": null
   },
   {
     "name": "TAGOCP_IA",
@@ -534,11 +771,13 @@ export const githubRepositories: GitHubRepository[] = [
     "description": null,
     "language": "Python",
     "updatedAt": "2026-02-11T22:26:35Z",
+    "pushedAt": "2026-02-11T22:26:32Z",
     "stars": 0,
     "forks": 0,
     "homepage": null,
     "archived": false,
-    "private": false
+    "private": false,
+    "latestRelease": null
   },
   {
     "name": "unis2026",
@@ -546,11 +785,13 @@ export const githubRepositories: GitHubRepository[] = [
     "description": null,
     "language": "Python",
     "updatedAt": "2026-02-05T13:18:12Z",
+    "pushedAt": "2026-02-05T13:18:07Z",
     "stars": 0,
     "forks": 0,
     "homepage": null,
     "archived": false,
-    "private": false
+    "private": false,
+    "latestRelease": null
   },
   {
     "name": "lzdatingapp",
@@ -558,11 +799,13 @@ export const githubRepositories: GitHubRepository[] = [
     "description": null,
     "language": "Python",
     "updatedAt": "2026-01-14T12:37:53Z",
+    "pushedAt": "2026-01-14T12:37:49Z",
     "stars": 0,
     "forks": 0,
     "homepage": null,
     "archived": false,
-    "private": false
+    "private": false,
+    "latestRelease": null
   },
   {
     "name": "curso-django-projeto-1",
@@ -570,11 +813,13 @@ export const githubRepositories: GitHubRepository[] = [
     "description": null,
     "language": "Python",
     "updatedAt": "2026-01-12T21:55:08Z",
+    "pushedAt": "2026-01-12T21:55:05Z",
     "stars": 0,
     "forks": 0,
     "homepage": null,
     "archived": false,
-    "private": false
+    "private": false,
+    "latestRelease": null
   },
   {
     "name": "coresefragranciasbybereniceloja2",
@@ -582,11 +827,13 @@ export const githubRepositories: GitHubRepository[] = [
     "description": null,
     "language": "Python",
     "updatedAt": "2026-01-07T22:02:40Z",
+    "pushedAt": "2026-01-07T22:02:36Z",
     "stars": 0,
     "forks": 0,
     "homepage": null,
     "archived": false,
-    "private": false
+    "private": false,
+    "latestRelease": null
   },
   {
     "name": "coresefragranciasbybereniceloja",
@@ -594,11 +841,13 @@ export const githubRepositories: GitHubRepository[] = [
     "description": null,
     "language": "Python",
     "updatedAt": "2026-01-07T13:23:11Z",
+    "pushedAt": "2026-01-07T13:23:07Z",
     "stars": 0,
     "forks": 0,
     "homepage": null,
     "archived": false,
-    "private": false
+    "private": false,
+    "latestRelease": null
   },
   {
     "name": "lzworldstech",
@@ -606,11 +855,13 @@ export const githubRepositories: GitHubRepository[] = [
     "description": null,
     "language": "Python",
     "updatedAt": "2025-12-31T15:26:15Z",
+    "pushedAt": "2025-12-31T15:26:11Z",
     "stars": 0,
     "forks": 0,
     "homepage": null,
     "archived": false,
-    "private": false
+    "private": false,
+    "latestRelease": null
   },
   {
     "name": "coresefragrancias2",
@@ -618,11 +869,13 @@ export const githubRepositories: GitHubRepository[] = [
     "description": null,
     "language": "Python",
     "updatedAt": "2025-12-31T12:31:14Z",
+    "pushedAt": "2025-12-31T12:31:11Z",
     "stars": 0,
     "forks": 0,
     "homepage": null,
     "archived": false,
-    "private": false
+    "private": false,
+    "latestRelease": null
   },
   {
     "name": "lznotes",
@@ -630,11 +883,13 @@ export const githubRepositories: GitHubRepository[] = [
     "description": null,
     "language": "Python",
     "updatedAt": "2025-12-22T19:57:23Z",
+    "pushedAt": "2025-12-22T19:57:19Z",
     "stars": 0,
     "forks": 0,
     "homepage": null,
     "archived": false,
-    "private": false
+    "private": false,
+    "latestRelease": null
   },
   {
     "name": "coresefragancias",
@@ -642,11 +897,27 @@ export const githubRepositories: GitHubRepository[] = [
     "description": null,
     "language": "Python",
     "updatedAt": "2025-12-19T10:54:10Z",
+    "pushedAt": "2025-12-19T10:54:07Z",
     "stars": 0,
     "forks": 0,
     "homepage": null,
     "archived": false,
-    "private": false
+    "private": false,
+    "latestRelease": null
+  },
+  {
+    "name": "NTB-Calibration",
+    "url": "https://github.com/lzvsrx/NTB-Calibration",
+    "description": null,
+    "language": "TypeScript",
+    "updatedAt": "2026-05-14T11:10:59Z",
+    "pushedAt": "2025-12-11T21:47:07Z",
+    "stars": 0,
+    "forks": 0,
+    "homepage": "https://onspace.ai",
+    "archived": false,
+    "private": false,
+    "latestRelease": null
   },
   {
     "name": "aula-1",
@@ -654,11 +925,13 @@ export const githubRepositories: GitHubRepository[] = [
     "description": null,
     "language": null,
     "updatedAt": "2025-12-05T21:37:37Z",
+    "pushedAt": "2025-12-05T21:37:37Z",
     "stars": 0,
     "forks": 0,
     "homepage": null,
     "archived": false,
-    "private": false
+    "private": false,
+    "latestRelease": null
   },
   {
     "name": "cursoprojetodjango1",
@@ -666,11 +939,13 @@ export const githubRepositories: GitHubRepository[] = [
     "description": null,
     "language": null,
     "updatedAt": "2025-12-05T21:05:27Z",
+    "pushedAt": "2025-12-05T21:05:27Z",
     "stars": 0,
     "forks": 0,
     "homepage": null,
     "archived": false,
-    "private": false
+    "private": false,
+    "latestRelease": null
   },
   {
     "name": "coresefragranciasbybereniceestoque2",
@@ -678,11 +953,13 @@ export const githubRepositories: GitHubRepository[] = [
     "description": null,
     "language": "Python",
     "updatedAt": "2025-12-04T10:27:26Z",
+    "pushedAt": "2025-12-04T10:27:22Z",
     "stars": 0,
     "forks": 0,
     "homepage": null,
     "archived": false,
-    "private": false
+    "private": false,
+    "latestRelease": null
   },
   {
     "name": "cores-e-fragrancias-by-berenice2",
@@ -690,11 +967,13 @@ export const githubRepositories: GitHubRepository[] = [
     "description": null,
     "language": null,
     "updatedAt": "2025-12-04T09:34:02Z",
+    "pushedAt": "2025-12-04T09:34:02Z",
     "stars": 0,
     "forks": 0,
     "homepage": null,
     "archived": false,
-    "private": false
+    "private": false,
+    "latestRelease": null
   },
   {
     "name": "coresefragranciasbybereniceestoque",
@@ -702,11 +981,13 @@ export const githubRepositories: GitHubRepository[] = [
     "description": null,
     "language": "Python",
     "updatedAt": "2025-11-02T22:15:30Z",
+    "pushedAt": "2025-11-02T22:15:27Z",
     "stars": 0,
     "forks": 0,
     "homepage": null,
     "archived": false,
-    "private": false
+    "private": false,
+    "latestRelease": null
   },
   {
     "name": "coresefragranciasbyberenice",
@@ -714,11 +995,13 @@ export const githubRepositories: GitHubRepository[] = [
     "description": null,
     "language": "Python",
     "updatedAt": "2025-10-15T22:20:15Z",
+    "pushedAt": "2025-10-15T22:20:11Z",
     "stars": 0,
     "forks": 0,
     "homepage": null,
     "archived": false,
-    "private": false
+    "private": false,
+    "latestRelease": null
   },
   {
     "name": "cores_e_fragrancias_by_berenice",
@@ -726,11 +1009,13 @@ export const githubRepositories: GitHubRepository[] = [
     "description": null,
     "language": "Python",
     "updatedAt": "2025-10-15T22:06:34Z",
+    "pushedAt": "2025-10-15T22:06:31Z",
     "stars": 0,
     "forks": 0,
     "homepage": null,
     "archived": false,
-    "private": false
+    "private": false,
+    "latestRelease": null
   },
   {
     "name": "cores-e-fragrancias-by-Berenice-estoque",
@@ -738,11 +1023,13 @@ export const githubRepositories: GitHubRepository[] = [
     "description": null,
     "language": "Python",
     "updatedAt": "2025-09-12T20:43:23Z",
+    "pushedAt": "2025-09-12T20:43:19Z",
     "stars": 0,
     "forks": 0,
     "homepage": null,
     "archived": false,
-    "private": false
+    "private": false,
+    "latestRelease": null
   },
   {
     "name": "cores-e-fragrancias-by-berenice",
@@ -750,11 +1037,13 @@ export const githubRepositories: GitHubRepository[] = [
     "description": null,
     "language": "Python",
     "updatedAt": "2025-09-05T22:16:27Z",
+    "pushedAt": "2025-09-05T22:16:24Z",
     "stars": 0,
     "forks": 0,
     "homepage": null,
     "archived": false,
-    "private": false
+    "private": false,
+    "latestRelease": null
   },
   {
     "name": "Crystal-assistant",
@@ -762,11 +1051,13 @@ export const githubRepositories: GitHubRepository[] = [
     "description": null,
     "language": "Python",
     "updatedAt": "2025-07-21T14:45:01Z",
+    "pushedAt": "2025-07-21T14:44:57Z",
     "stars": 0,
     "forks": 0,
     "homepage": null,
     "archived": false,
-    "private": false
+    "private": false,
+    "latestRelease": null
   },
   {
     "name": "Crystal_IA",
@@ -774,11 +1065,13 @@ export const githubRepositories: GitHubRepository[] = [
     "description": null,
     "language": "Python",
     "updatedAt": "2025-07-20T14:04:33Z",
+    "pushedAt": "2025-07-20T14:04:30Z",
     "stars": 0,
     "forks": 0,
     "homepage": null,
     "archived": false,
-    "private": false
+    "private": false,
+    "latestRelease": null
   },
   {
     "name": "nerdacess",
@@ -786,11 +1079,13 @@ export const githubRepositories: GitHubRepository[] = [
     "description": null,
     "language": "Python",
     "updatedAt": "2025-06-30T19:28:42Z",
+    "pushedAt": "2025-06-30T19:28:38Z",
     "stars": 0,
     "forks": 0,
     "homepage": null,
     "archived": false,
-    "private": false
+    "private": false,
+    "latestRelease": null
   },
   {
     "name": "lztech",
@@ -798,11 +1093,13 @@ export const githubRepositories: GitHubRepository[] = [
     "description": null,
     "language": "Kotlin",
     "updatedAt": "2025-06-25T20:29:21Z",
+    "pushedAt": "2025-06-25T20:29:17Z",
     "stars": 0,
     "forks": 0,
     "homepage": null,
     "archived": false,
-    "private": false
+    "private": false,
+    "latestRelease": null
   },
   {
     "name": "Unis",
@@ -810,11 +1107,13 @@ export const githubRepositories: GitHubRepository[] = [
     "description": null,
     "language": "Python",
     "updatedAt": "2025-06-23T15:15:49Z",
+    "pushedAt": "2025-06-23T15:15:46Z",
     "stars": 0,
     "forks": 0,
     "homepage": null,
     "archived": false,
-    "private": false
+    "private": false,
+    "latestRelease": null
   },
   {
     "name": "lzarts",
@@ -822,10 +1121,12 @@ export const githubRepositories: GitHubRepository[] = [
     "description": null,
     "language": "Python",
     "updatedAt": "2025-06-05T18:16:35Z",
+    "pushedAt": "2025-06-05T18:16:34Z",
     "stars": 0,
     "forks": 0,
     "homepage": null,
     "archived": false,
-    "private": false
+    "private": false,
+    "latestRelease": null
   }
 ];
