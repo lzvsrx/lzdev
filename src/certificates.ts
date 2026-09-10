@@ -748,5 +748,222 @@ export const certificates: Certificate[] = [
     "originalName": "ZOQ4RKSY.pdf",
     "type": "PDF",
     "href": "/certificados/ZOQ4RKSY.pdf"
+  },
+  {
+    "title": "Array e Listas em C#",
+    "fileName": "0KIQJIB4.pdf",
+    "originalName": "0KIQJIB4.pdf",
+    "type": "PDF",
+    "href": "/certificados/0KIQJIB4.pdf"
+  },
+  {
+    "title": "Trabalhando com Web Components no Front-end",
+    "fileName": "1AOZSMQP.pdf",
+    "originalName": "1AOZSMQP.pdf",
+    "type": "PDF",
+    "href": "/certificados/1AOZSMQP.pdf"
+  },
+  {
+    "title": "Trabalhando com Services no Angular",
+    "fileName": "49BKHQKO.pdf",
+    "originalName": "49BKHQKO.pdf",
+    "type": "PDF",
+    "href": "/certificados/49BKHQKO.pdf"
+  },
+  {
+    "title": "Trabalhando com Guards no Angular",
+    "fileName": "4YUGS1EW.pdf",
+    "originalName": "4YUGS1EW.pdf",
+    "type": "PDF",
+    "href": "/certificados/4YUGS1EW.pdf"
+  },
+  {
+    "title": "Módulos Angular",
+    "fileName": "7VTMB5YZ.pdf",
+    "originalName": "7VTMB5YZ.pdf",
+    "type": "PDF",
+    "href": "/certificados/7VTMB5YZ.pdf"
+  },
+  {
+    "title": "Avalie a Formação de Angular Developer",
+    "fileName": "82IBJU97.pdf",
+    "originalName": "82IBJU97.pdf",
+    "type": "PDF",
+    "href": "/certificados/82IBJU97.pdf"
+  },
+  {
+    "title": "Introdução às IDEs e Configuração de Ambiente .NET",
+    "fileName": "8DS7VFRK.pdf",
+    "originalName": "8DS7VFRK.pdf",
+    "type": "PDF",
+    "href": "/certificados/8DS7VFRK.pdf"
+  },
+  {
+    "title": "Materiais Complementares: Fundamentos de .NET",
+    "fileName": "9NJ32S5E.pdf",
+    "originalName": "9NJ32S5E.pdf",
+    "type": "PDF",
+    "href": "/certificados/9NJ32S5E.pdf"
+  },
+  {
+    "title": "Comentários e Boas Práticas em C#",
+    "fileName": "AMSYNUJW.pdf",
+    "originalName": "AMSYNUJW.pdf",
+    "type": "PDF",
+    "href": "/certificados/AMSYNUJW.pdf"
+  },
+  {
+    "title": "Criando um Blog com Angular",
+    "fileName": "CFQ33IFP.pdf",
+    "originalName": "CFQ33IFP.pdf",
+    "type": "PDF",
+    "href": "/certificados/CFQ33IFP.pdf"
+  },
+  {
+    "title": "Materiais Complementares: Single Page Application com Angular",
+    "fileName": "D9DNECUM.pdf",
+    "originalName": "D9DNECUM.pdf",
+    "type": "PDF",
+    "href": "/certificados/D9DNECUM.pdf"
+  },
+  {
+    "title": "Operadores Aritméticos em C#",
+    "fileName": "DGRMMPWG.pdf",
+    "originalName": "DGRMMPWG.pdf",
+    "type": "PDF",
+    "href": "/certificados/DGRMMPWG.pdf"
+  },
+  {
+    "title": "Materiais Complementares - Manipulando Fluxos no Angular",
+    "fileName": "DIV3QYI7.pdf",
+    "originalName": "DIV3QYI7.pdf",
+    "type": "PDF",
+    "href": "/certificados/DIV3QYI7.pdf"
+  },
+  {
+    "title": "Recriando a Interface da PlayStation Store com Angular",
+    "fileName": "DSU7D0JM.pdf",
+    "originalName": "DSU7D0JM.pdf",
+    "type": "PDF",
+    "href": "/certificados/DSU7D0JM.pdf"
+  },
+  {
+    "title": "Materiais Complementares - Aplicações inteligentes com Angular",
+    "fileName": "DYGNGA7T.pdf",
+    "originalName": "DYGNGA7T.pdf",
+    "type": "PDF",
+    "href": "/certificados/DYGNGA7T.pdf"
+  },
+  {
+    "title": "Materiais Complementares: Front-end Componentizados",
+    "fileName": "EK9UL93F.pdf",
+    "originalName": "EK9UL93F.pdf",
+    "type": "PDF",
+    "href": "/certificados/EK9UL93F.pdf"
+  },
+  {
+    "title": "Sintaxe e Tipos de Dados em C#",
+    "fileName": "F70XW02H.pdf",
+    "originalName": "F70XW02H.pdf",
+    "type": "PDF",
+    "href": "/certificados/F70XW02H.pdf"
+  },
+  {
+    "title": "Trabalhando com Pipes no Angular",
+    "fileName": "HB0Y5B6I.pdf",
+    "originalName": "HB0Y5B6I.pdf",
+    "type": "PDF",
+    "href": "/certificados/HB0Y5B6I.pdf"
+  },
+  {
+    "title": "Conhecendo as Estruturas de Repetição em C#",
+    "fileName": "I5SBEZJE.pdf",
+    "originalName": "I5SBEZJE.pdf",
+    "type": "PDF",
+    "href": "/certificados/I5SBEZJE.pdf"
+  },
+  {
+    "title": "Introdução ao Ecossistema Angular",
+    "fileName": "IMZQJ1UY.pdf",
+    "originalName": "IMZQJ1UY.pdf",
+    "type": "PDF",
+    "href": "/certificados/IMZQJ1UY.pdf"
+  },
+  {
+    "title": "Trabalhando com Rotas no Angular",
+    "fileName": "J73JHDFT.pdf",
+    "originalName": "J73JHDFT.pdf",
+    "type": "PDF",
+    "href": "/certificados/J73JHDFT.pdf"
+  },
+  {
+    "title": "Criando um Clone do BuzzFeed com Angular",
+    "fileName": "JWCFXJ6O.pdf",
+    "originalName": "JWCFXJ6O.pdf",
+    "type": "PDF",
+    "href": "/certificados/JWCFXJ6O.pdf"
+  },
+  {
+    "title": "Single Page Application com Angular",
+    "fileName": "KIBIVHHF.pdf",
+    "originalName": "KIBIVHHF.pdf",
+    "type": "PDF",
+    "href": "/certificados/KIBIVHHF.pdf"
+  },
+  {
+    "title": "TypeScript para Angular",
+    "fileName": "KNRGSRJK.pdf",
+    "originalName": "KNRGSRJK.pdf",
+    "type": "PDF",
+    "href": "/certificados/KNRGSRJK.pdf"
+  },
+  {
+    "title": "Tipos de Operadores em C#",
+    "fileName": "LARXHJTT.pdf",
+    "originalName": "LARXHJTT.pdf",
+    "type": "PDF",
+    "href": "/certificados/LARXHJTT.pdf"
+  },
+  {
+    "title": "Introdução ao .NET",
+    "fileName": "MR8ZF3V2.pdf",
+    "originalName": "MR8ZF3V2.pdf",
+    "type": "PDF",
+    "href": "/certificados/MR8ZF3V2.pdf"
+  },
+  {
+    "title": "LifeCycle Hooks Angular",
+    "fileName": "NMGJYUTS.pdf",
+    "originalName": "NMGJYUTS.pdf",
+    "type": "PDF",
+    "href": "/certificados/NMGJYUTS.pdf"
+  },
+  {
+    "title": "Trabalhando com Componentes Angular",
+    "fileName": "OO6KNRAD.pdf",
+    "originalName": "OO6KNRAD.pdf",
+    "type": "PDF",
+    "href": "/certificados/OO6KNRAD.pdf"
+  },
+  {
+    "title": "Conhecendo a Organização de um Programa C#",
+    "fileName": "QTZTANSX.pdf",
+    "originalName": "QTZTANSX.pdf",
+    "type": "PDF",
+    "href": "/certificados/QTZTANSX.pdf"
+  },
+  {
+    "title": "Construindo um Sistema para um Estacionamento com C#",
+    "fileName": "UHBV55VE.pdf",
+    "originalName": "UHBV55VE.pdf",
+    "type": "PDF",
+    "href": "/certificados/UHBV55VE.pdf"
+  },
+  {
+    "title": "Materiais Complementares: Introdução ao Angular",
+    "fileName": "WW8TO438.pdf",
+    "originalName": "WW8TO438.pdf",
+    "type": "PDF",
+    "href": "/certificados/WW8TO438.pdf"
   }
 ];
