@@ -965,5 +965,12 @@ export const certificates: Certificate[] = [
     "originalName": "WW8TO438.pdf",
     "type": "PDF",
     "href": "/certificados/WW8TO438.pdf"
+  },
+  {
+    "title": "Introdução ao React Native",
+    "fileName": "Q7L8QBJO.pdf",
+    "originalName": "Q7L8QBJO.pdf",
+    "type": "PDF",
+    "href": "/certificados/Q7L8QBJO.pdf"
   }
 ];
