@@ -1000,5 +1000,12 @@ export const certificates: Certificate[] = [
     "originalName": "VG3RIMRS.pdf",
     "type": "PDF",
     "href": "/certificados/VG3RIMRS.pdf"
+  },
+  {
+    "title": "Flexbox e Responsividade no React Native",
+    "fileName": "CEQGDLTD.pdf",
+    "originalName": "CEQGDLTD.pdf",
+    "type": "PDF",
+    "href": "/certificados/CEQGDLTD.pdf"
   }
 ];
