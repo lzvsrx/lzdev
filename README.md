@@ -45,11 +45,12 @@ Este repositorio foi reconstruido com base no projeto original `luizotaviodevs`,
 
 ## Tecnologias
 
-- React 19
-- React DOM 19
-- TypeScript 5
-- Vite 7
-- Vitest
+- Node.js 24.15 ou superior da linha 24, ou Node.js 26 ou superior
+- React 19.3
+- React DOM 19.3
+- TypeScript 7
+- Vite 8
+- Vitest 5
 - Testing Library
 - Lucide React
 - CSS puro responsivo
@@ -62,7 +63,7 @@ Este repositorio foi reconstruido com base no projeto original `luizotaviodevs`,
 |-- package.json
 |-- package-lock.json
 |-- tsconfig.json
-|-- vite.config.ts
+|-- vite.config.mts
 |-- public/
 |   |-- certificados/
 |   |-- cores-dashboard.png
