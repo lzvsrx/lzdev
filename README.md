@@ -111,7 +111,7 @@ Cada item possui:
 - `type`: `PDF` ou `Imagem`;
 - `href`: caminho publico para abrir o certificado.
 
-Atualmente o site publica 138 documentos entre PDFs e imagens.
+Atualmente o site publica 142 documentos entre PDFs e imagens.
 
 As habilidades exibidas no portfolio foram atualizadas com base nos certificados publicados, incluindo Java, orientacao a objetos, estruturas de dados, Spring Boot, Spring Data JPA, Spring Security, APIs REST, Swagger, Maven, Gradle, JUnit, Mockito, SOLID, Design Patterns, UML, Unity 3D, C# para jogos, Game Design, fisica e IA em jogos, Python, analise de dados com Python, Django, IoT, sensores, redes de computadores, direito digital, empreendedorismo, inovacao e tecnico de informatica.
 
