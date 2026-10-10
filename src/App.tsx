@@ -136,65 +136,101 @@ const services = [
 ];
 
 const showcaseFeatures = [
-  { label: 'PHP', Icon: Server },
-  { label: 'MySQL', Icon: Database },
-  { label: 'JavaScript', Icon: Code2 },
-  { label: 'Bootstrap', Icon: Layers3 },
-  { label: 'Dashboard', Icon: BarChart3 },
-  { label: 'Relatorios', Icon: FileText },
+  { label: 'React', Icon: Code2 },
+  { label: 'Node.js / Express', Icon: Server },
+  { label: 'SQLite / Turso', Icon: Database },
+  { label: 'Loja online', Icon: Globe },
+  { label: 'Gestão de estoque', Icon: Boxes },
+  { label: 'Relatórios CSV e PDF', Icon: FileText },
 ];
 
 const showcaseGallery = [
   {
-    image: '/cores-dashboard.png',
-    title: 'Dashboard Interativo',
-    text: 'Visualizacao de metricas de vendas e estoque com graficos comparativos.',
-    Icon: BarChart3,
+    image: '/cores-fragrancias/02-pesquisa-produtos.png',
+    title: 'Catálogo e busca de produtos',
+    text: 'Vitrine com pesquisa, filtros por marca, categoria e preço e informações detalhadas dos produtos.',
+    Icon: Search,
   },
   {
-    image: '/cores-products.png',
-    title: 'Gerenciamento de Produtos',
-    text: 'Cadastro completo com imagem, marca, tipo, preco e data de vencimento.',
+    image: '/cores-fragrancias/16-checkout-entrega.png',
+    title: 'Sacola e checkout',
+    text: 'Conferência de preços e estoque, escolha de entrega ou retirada e revisão do pedido antes da confirmação.',
     Icon: Package,
   },
   {
-    image: '/cores-users.png',
-    title: 'Gerenciamento de Usuarios',
-    text: 'Sistema de permissoes com diferentes niveis de acesso: Admin, Funcionario e Cliente.',
+    image: '/cores-fragrancias/18-meus-pedidos.png',
+    title: 'Área do cliente e pedidos',
+    text: 'Conta do cliente com histórico de pedidos, acompanhamento de status e confirmação imprimível.',
     Icon: Users,
+  },
+  {
+    image: '/cores-fragrancias/25-painel-administrativo.png',
+    title: 'Painel administrativo',
+    text: 'Visão de faturamento, vendas, estoque baixo, aniversariantes e produtos próximos do vencimento.',
+    Icon: BarChart3,
+  },
+  {
+    image: '/cores-fragrancias/26-produtos-estoque.png',
+    title: 'Produtos e estoque',
+    text: 'Cadastro de produtos com imagens, preços e validade, além de entradas, saídas e ajustes de estoque.',
+    Icon: Boxes,
+  },
+  {
+    image: '/cores-fragrancias/38-equipe.png',
+    title: 'Gestão da equipe',
+    text: 'Cadastros e permissões separados para administradores, funcionários e clientes.',
+    Icon: ShieldCheck,
+  },
+  {
+    image: '/cores-fragrancias/39-vendas-registro-fiscal.png',
+    title: 'Vendas e registros',
+    text: 'Registro de vendas, formas de pagamento, exportações e referências fiscais para controle interno.',
+    Icon: DollarSign,
+  },
+  {
+    image: '/cores-fragrancias/45-atendimento-admin.png',
+    title: 'Atendimento ao cliente',
+    text: 'Solicitações com protocolo, acompanhamento de prazo e histórico de respostas no portal.',
+    Icon: MessageCircle,
+  },
+  {
+    image: '/cores-fragrancias/49-mobile-checkout.png',
+    title: 'Experiência no celular',
+    text: 'Interface responsiva para consultar a loja, finalizar pedidos e acompanhar o atendimento pelo celular.',
+    Icon: Smartphone,
   },
 ];
 
 const showcaseDetails = [
   {
+    Icon: Globe,
+    title: 'Loja online integrada',
+    text: 'Catálogo público, cadastro e login de clientes, sacola e checkout com entrega ou retirada.',
+  },
+  {
     Icon: Boxes,
-    title: 'Controle de Estoque',
-    text: 'Acompanhamento em tempo real das quantidades disponiveis e alertas de estoque baixo.',
+    title: 'Estoque e validade',
+    text: 'Movimentações com motivo e responsável, reserva de estoque nos pedidos e controle de validade e perdas.',
   },
   {
     Icon: DollarSign,
-    title: 'Gestao de Vendas',
-    text: 'Registro completo de vendas com calculo automatico de totais e historico de transacoes.',
+    title: 'Pedidos e vendas',
+    text: 'Acompanhamento de pagamento, separação e entrega. Recebimentos e reembolsos são conferidos manualmente pela equipe.',
   },
   {
-    Icon: BarChart3,
-    title: 'Relatorios Financeiros',
-    text: 'Relatorios detalhados de produtos mais vendidos, faturamento total e analise de desempenho.',
-  },
-  {
-    Icon: Users,
-    title: 'Multi-Usuario',
-    text: 'Sistema com diferentes perfis de acesso e preferencias personalizadas por cliente.',
+    Icon: MessageCircle,
+    title: 'Atendimento com protocolo',
+    text: 'Portal para dúvidas, trocas, cancelamentos e solicitações de privacidade, com histórico de respostas.',
   },
   {
     Icon: Upload,
-    title: 'Importacao/Exportacao',
-    text: 'Funcionalidade de importar e exportar dados via CSV e gerar relatorios em PDF.',
+    title: 'Importação e relatórios',
+    text: 'Importação e exportação de produtos em CSV, exportação de vendas e geração de relatórios PDF.',
   },
   {
     Icon: ShieldCheck,
-    title: 'Seguranca',
-    text: 'Sistema de autenticacao seguro com senhas criptografadas e controle de sessao.',
+    title: 'Perfis de acesso',
+    text: 'Áreas de cliente e equipe separadas, autenticação e permissões para administrador e funcionário.',
   },
 ];
 
@@ -234,11 +270,11 @@ const projectCaseStudies = [
   },
   {
     Icon: BarChart3,
-    title: 'Cores & Fragrancias by Berenice',
+    title: 'Cores & Fragrâncias by Berenice',
     repoName: 'lojacoresefragranciasbyberenice',
-    problem: 'Controlar produtos, vendas, usuarios, estoque e relatorios sem depender de planilhas soltas.',
-    solution: 'Sistema com dashboard, cadastros, perfis de acesso, exportacao e relatorios financeiros.',
-    impact: 'Transforma uma rotina operacional em um fluxo rastreavel e mais profissional.',
+    problem: 'Integrar a loja de cosméticos à gestão de produtos, estoque, vendas e atendimento ao cliente.',
+    solution: 'Aplicação em React e Node.js com SQLite/Turso, catálogo, checkout, pedidos online e painel administrativo.',
+    impact: 'Centraliza a operação da loja, da escolha dos produtos ao acompanhamento de pedidos e atendimento.',
   },
   {
     Icon: Gamepad2,
@@ -1397,17 +1433,21 @@ function App() {
       <section className="section showcase-section">
         <div className="section-heading">
           <p className="eyebrow">Projeto em Destaque</p>
-          <h2>Cores & Fragrancias by Berenice</h2>
+          <h2>Cores & Fragrâncias by Berenice</h2>
         </div>
         <div className="showcase-header">
-          <img src="/cores-login.png" alt="Tela de login do Cores & Fragrancias" className="showcase-image" />
+          <a href="/cores-fragrancias/01-loja-principal.png" target="_blank" rel="noopener noreferrer" aria-label="Ampliar captura da loja Cores & Fragrâncias">
+            <img src="/cores-fragrancias/01-loja-principal.png" alt="Página principal da loja Cores & Fragrâncias by Berenice com catálogo de cosméticos" className="showcase-image" loading="lazy" decoding="async" />
+          </a>
           <div className="showcase-info">
             <p className="showcase-subtitle">
-              Sistema de Gerenciamento de Estoque para Loja de Cosmeticos
+              Loja online e gestão de cosméticos em uma única aplicação
             </p>
             <p className="showcase-description">
-              Sistema completo desenvolvido para controle de produtos, vendas, usuarios e relatorios
-              financeiros, permitindo uma gestao eficiente e profissional do negocio.
+              Aplicação full stack desenvolvida com React, API Node.js/Express e banco SQLite local
+              ou Turso remoto. Reúne catálogo com busca e filtros, sacola, checkout, pedidos online,
+              área do cliente e atendimento com protocolo. O painel da equipe integra produtos,
+              estoque, validade, vendas, permissões e relatórios CSV e PDF.
             </p>
             <div className="tag-row">
               {showcaseFeatures.map((feature) => (
@@ -1416,10 +1456,13 @@ function App() {
             </div>
           </div>
         </div>
+        <p className="showcase-caption">Capturas com dados fictícios de demonstração. Clique nas imagens para ver as telas completas.</p>
         <div className="showcase-gallery">
           {showcaseGallery.map((item) => (
             <article className="gallery-item" key={item.title}>
-              <img src={item.image} alt={item.title} />
+              <a href={item.image} target="_blank" rel="noopener noreferrer" aria-label={`Ampliar captura: ${item.title}`}>
+                <img src={item.image} alt={item.title} loading="lazy" decoding="async" />
+              </a>
               <div>
                 <h3><item.Icon aria-hidden="true" className="inline-icon" />{item.title}</h3>
                 <p>{item.text}</p>

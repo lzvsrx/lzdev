@@ -66,10 +66,7 @@ Este repositorio foi reconstruido com base no projeto original `luizotaviodevs`,
 |-- vite.config.mts
 |-- public/
 |   |-- certificados/
-|   |-- cores-dashboard.png
-|   |-- cores-login.png
-|   |-- cores-products.png
-|   |-- cores-users.png
+|   |-- cores-fragrancias/  # Capturas atuais da loja e do painel administrativo
 |   |-- favicon.ico
 |   |-- icone.png
 |   |-- logo192.png
@@ -416,3 +413,7 @@ Essa pasta pode ser publicada em qualquer hospedagem estatica, como Vercel, Netl
 - A pasta `public/` continua sendo usada para imagens, manifesto, icones e certificados.
 - O conteudo visual e os assets principais foram preservados do repositorio base.
 - Os certificados foram incorporados como arquivos estaticos para que os links funcionem sem backend.
+
+### Vitrine Cores & Fragrâncias by Berenice
+
+A seção apresenta a versão em React, Node.js/Express e SQLite/Turso, com loja online, checkout, pedidos, atendimento e gestão de estoque e vendas. As dez capturas em `public/cores-fragrancias/` vieram da documentação visual do projeto, usam dados fictícios e podem ser abertas em tamanho completo pelo visitante. As imagens da galeria carregam sob demanda.

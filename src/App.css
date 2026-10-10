@@ -951,11 +951,22 @@ textarea:focus-visible {
   overflow: hidden;
 }
 
+.gallery-item > a {
+  display: block;
+}
+
+.showcase-caption {
+  color: var(--muted);
+  line-height: 1.6;
+  margin-bottom: 18px;
+}
+
 .gallery-item img {
   display: block;
   width: 100%;
   aspect-ratio: 16 / 10;
-  object-fit: cover;
+  object-fit: contain;
+  background: #f7f4ef;
   border-bottom: 3px solid var(--primary);
 }
 
@@ -1494,6 +1505,12 @@ textarea:focus-visible {
 }
 
 @media (max-width: 820px) {
+  .showcase-header {
+    grid-template-columns: minmax(0, 1fr);
+    padding: 20px;
+    gap: 20px;
+  }
+
   .topbar {
     align-items: flex-start;
     flex-direction: column;
