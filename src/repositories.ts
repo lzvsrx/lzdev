@@ -308,7 +308,7 @@ export const githubRepositories: GitHubRepository[] = [
     "pushedAt": "2026-07-20T22:32:12Z",
     "stars": 0,
     "forks": 0,
-    "homepage": "https://lojacoresefragranciasbyberenice.vercel.app",
+    "homepage": "https://lojacoresefragranciasbyberenice.vercel.app/",
     "archived": false,
     "private": false,
     "latestRelease": null

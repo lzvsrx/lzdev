@@ -1454,6 +1454,9 @@ function App() {
                 <span key={feature.label}><feature.Icon aria-hidden="true" className="inline-icon" />{feature.label}</span>
               ))}
             </div>
+            <a className="primary-button" href="https://lojacoresefragranciasbyberenice.vercel.app/" target="_blank" rel="noopener noreferrer">
+              <Globe aria-hidden="true" className="inline-icon" /> Acessar site do projeto <ExternalIcon />
+            </a>
           </div>
         </div>
         <p className="showcase-caption">Capturas com dados fictícios de demonstração. Clique nas imagens para ver as telas completas.</p>
